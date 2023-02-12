@@ -4,22 +4,14 @@ import random
 
 
 class Dungeon:
-    """
-    Creates a Dungeon object to be used by the DungeonAdventure game. Creates
-    a maze of Room objects for the player (an Adventurer) to navigate.
-    """
 
     MAZE_SIZE = 4
 
-    def __init__(self, adventurer):
-        """
-        Creates a Dungeon object.
-        :param adventurer: Adventurer
-        """
+    def __init__(self) -> None:
         self.__current_location = None  # A Room's [row, col] coordinates
         self.__entrance_location = None  # A Room's [row, col] coordinates
         self.__exit_location = None  # A Room's [row, col] coordinates
-        self.__adventurer = adventurer
+        self.__adventurer = None
         self.__visited_rooms = [[False for y in range(Dungeon.MAZE_SIZE)]
                                 for x in range(Dungeon.MAZE_SIZE)]
         self.__maze = Dungeon.generate_maze()
@@ -36,7 +28,7 @@ class Dungeon:
 
     # Use recursive depth-first-search to traverse maze. Must be able to
     # collect all pillars and reach the exit in order to win.
-    def traverse(self):
+    def traverse(self) -> bool:
         row = self.__current_location[0]
         col = self.__current_location[1]
 
@@ -96,7 +88,7 @@ class Dungeon:
             and pillars["p"]
 
     @staticmethod
-    def generate_maze():
+    def generate_maze() -> list:
         """
         Generates a maze of Room objects.
         :return: list of lists of Room objects
@@ -162,7 +154,7 @@ class Dungeon:
         return maze
 
     @staticmethod
-    def get_random_location():
+    def get_random_location() -> list:
         """
         Returns a list of random [row, column] coordinates to randomly place
         items, pillars, etc. in the maze
@@ -173,7 +165,7 @@ class Dungeon:
         random_col = random.randint(0, Dungeon.MAZE_SIZE - 1)
         return [random_row, random_col]
 
-    def set_entrance_and_exit(self):
+    def set_entrance_and_exit(self) -> None:
         """
         Sets the entrance and exit of the maze.
         :return: None
@@ -198,7 +190,7 @@ class Dungeon:
         self.__maze[maze_entrance[0]][maze_entrance[1]].set_visited(True)
         self.add_visited_room(maze_entrance)  # IS THIS NEEDED?
 
-    def set_items(self):
+    def set_items(self) -> None:
         """
         Sets the pillars of OOP and items (healing potions, vision potions) of
         the room. Places the pillars in random locations. The room cannot
@@ -233,7 +225,7 @@ class Dungeon:
                 else:
                     self.__maze[i][j].add_items()
 
-    def clear_maze(self):
+    def clear_maze(self) -> None:
         for i in range(Dungeon.MAZE_SIZE):
             for j in range(Dungeon.MAZE_SIZE):
                 self.__maze[i][j].clear_all()
@@ -242,7 +234,7 @@ class Dungeon:
                 self.__exit_location = None
                 self.__maze[i][j].update()
 
-    def get_current_room(self):
+    def get_current_room(self) -> Room:
         """
         Returns the Room in the maze that the player is in.
         :return: Room
@@ -252,14 +244,14 @@ class Dungeon:
         return self.__maze[row][col]
 
     # Returns the current location of the player (List: [row, col] of maze)
-    def get_current_location(self):
+    def get_current_location(self) -> list:
         """
         Returns the coordinates [row, column] that the player is at.
         :return: list [row, column]
         """
         return self.__current_location
 
-    def set_current_location(self, row, col):
+    def set_current_location(self, row: int, col: int) -> None:
         """
         Sets the coordinates of the player.
         :param row: The row of the player.
@@ -268,14 +260,14 @@ class Dungeon:
         """
         self.__current_location = [row, col]
 
-    def show_current_room(self):
+    def show_current_room(self) -> None:
         """
         Prints the current room.
         :return: None
         """
         print(str(self.get_current_room()))
 
-    def add_visited_room(self, row_col_list):
+    def add_visited_room(self, row_col_list: list) -> None:
         """
         Adds a Room to this Dungeon's __visited_rooms list of lists.
         :param row_col_list: list [row, column] coordinates of the Room.
@@ -284,7 +276,7 @@ class Dungeon:
         self.__visited_rooms[row_col_list[0]][row_col_list[1]] = True
         self.__maze[row_col_list[0]][row_col_list[1]].set_visited(True)
 
-    def show_visited_rooms(self):
+    def show_visited_rooms(self) -> str:
         """
         Displays the rooms that have been visited.
         :return: None
@@ -327,7 +319,7 @@ class Dungeon:
 
         return entire_maze_string
 
-    def show_vp_rooms(self):
+    def show_vp_rooms(self) -> None:
         vp_maze_string = f"Vision potion activated. You can now see the " \
                          f"rooms around you.\n"
         loc = self.__current_location
@@ -437,8 +429,7 @@ class Dungeon:
 
         print(vp_maze_string)
 
-
-    def show_entire_dungeon(self):
+    def show_entire_dungeon(self) -> None:
         """
         Prints the entire dungeon (used for testing). Can be accessed with the
         hidden command 'show entire map'.
@@ -446,7 +437,7 @@ class Dungeon:
         """
         print(self.get_maze())
 
-    def get_maze(self):
+    def get_maze(self) -> str:
         """
         Prints the entire maze. Collects all the top lines in the first row of
         rooms, prints the top row (of all the rooms), then repeats this process
@@ -485,7 +476,7 @@ class Dungeon:
 
         return entire_maze_string
 
-    def move_player(self, direction):
+    def move_player(self, direction: str) -> None:
         """
         "Moves" the player (if the direction is a valid move). If the direction
         does not result in a valid move, then the player stays in the current
@@ -583,14 +574,19 @@ class Dungeon:
         else:  # If next_room is None, then the player cannot move.
             print("A boulder is blocking your path.")
 
-    def get_adventurer(self):
+    @property
+    def adventurer(self) -> Adventurer:
         """
         Returns the Adventurer object that this Dungeon uses.
         :return:
         """
         return self.__adventurer
 
-    def update(self):
+    @adventurer.setter
+    def adventurer(self, adventurer: Adventurer) -> None:
+        self.__adventurer = adventurer
+
+    def update(self) -> None:
         """
         Updates all the Rooms so that they can be displayed properly to the
         player.

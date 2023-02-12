@@ -17,46 +17,46 @@ class ControllerConsole(Controller):
         try:
             # Describes what the game is about, tells the player how to play the
             # game, and asks the player to input their name.
-            while not self.__model.get_quit() and not self.__model.get_player_has_won() \
-                    and not self.__model.get_player_is_dead():
+            while not self.__model.quit and not self.__model.player_won \
+                    and not self.__model.player_dead:
                 # Show initial player position (player should be placed in the
                 # entrance of the dungeon)
-                self.__model.get_dungeon().update()
+                self.__model.dungeon.update()
                 self.__view.print_current_room("Current room:")  # Needs to be implemented
-                self.__model.get_dungeon().show_current_room()
+                self.__model.dungeon.show_current_room()
                 self.__model.get_next_player_input()
-                if self.__model.get_dungeon().get_current_room().get_exit() \
-                        and self.__model.get_dungeon().get_adventurer().get_inv()[
+                if self.__model.dungeon.get_current_room().get_exit() \
+                        and self.__model.dungeon.get_adventurer().get_inv()[
                     "abstraction"] \
-                        and self.__model.get_dungeon().get_adventurer().get_inv()[
+                        and self.__model.dungeon.get_adventurer().get_inv()[
                     "encapsulation"] \
-                        and self.__model.get_dungeon().get_adventurer().get_inv()[
+                        and self.__model.dungeon.get_adventurer().get_inv()[
                     "inheritance"] \
-                        and self.__model.get_dungeon().get_adventurer().get_inv()[
+                        and self.__model.dungeon.get_adventurer().get_inv()[
                     "polymorphism"]:
-                    self.__model.set_player_has_won(True)
+                    self.__model.player_won = True
 
-                if self.__model.get_dungeon().get_adventurer().get_is_dead():
-                    self.__model.set_player_is_dead(True)
+                if self.__model.dungeon.get_adventurer().get_is_dead():
+                    self.__model.player_dead = True
 
         except Exception:
             print(f"Looks like your game encountered an error :(")
 
-        if self.__model.get_quit():
+        if self.__model.quit:
             # Shows entire dungeon at the end of the game
-            self.__model.get_dungeon().show_entire_dungeon()
+            self.__model.dungeon.show_entire_dungeon()
             print("Thanks for playing the dungeon adventure game.")
 
-        if self.__model.get_player_has_won():
+        if self.__model.player_won:
             # Shows entire dungeon at the end of the game
-            self.__model.get_dungeon().show_entire_dungeon()
+            self.__model.dungeon.show_entire_dungeon()
             print(f"Congratulations! You've escaped the dungeon. Now you can\n"
                   f"use your powers of OOP for good.\n\nThanks for playing the "
                   f"dungeon adventure game!")
 
-        if self.__model.get_player_is_dead():
+        if self.__model.player_dead:
             # Shows entire dungeon at the end of the game
-            self.__model.get_dungeon().show_entire_dungeon()
+            self.__model.dungeon.show_entire_dungeon()
             print(f"Sorry! You died. Better luck next time!")
 
     def get_next_player_input(self):
@@ -66,30 +66,30 @@ class ControllerConsole(Controller):
         """
         next_move = input("What is your next move (or command)? ")
         if next_move.lower() == "w":
-            self.__model.__dungeon.move_player("north")  # Move the player north
+            self.__model.dungeon.move_player("north")  # Move the player north
         elif next_move.lower() == "a":
-            self.__model.__dungeon.move_player("west")  # Move the player west
+            self.__model.dungeon.move_player("west")  # Move the player west
         elif next_move.lower() == "s":
-            self.__model.__dungeon.move_player("south")  # Move the player south
+            self.__model.dungeon.move_player("south")  # Move the player south
         elif next_move.lower() == "d":
-            self.__model.__dungeon.move_player("east")  # Move the player east
+            self.__model.dungeon.move_player("east")  # Move the player east
         elif next_move.lower() == "i":
             self.show_inventory()
         elif next_move.lower() == "h":
-            self.__model.__dungeon.get_adventurer().use_health_potion()
+            self.__model.dungeon.get_adventurer().use_health_potion()
             print(f"Healing potion used! Hit points increased to "
-                  f"{self.__model.__dungeon.get_adventurer().hp}.")
+                  f"{self.__model.dungeon.get_adventurer().hp}.")
         elif next_move.lower() == "v":
-            self.__model.__dungeon.show_vp_rooms()
+            self.__model.dungeon.show_vp_rooms()
         elif next_move.lower() == "m":
             DungeonAdventure.show_map_legend()
-            print(self.__model.get_dungeon().show_visited_rooms())
+            print(self.__model.dungeon.show_visited_rooms())
         elif next_move.lower() == "help":
             DungeonAdventure.show_help_menu()
         elif next_move.lower() == "show entire map":  # Prints entire dungeon
-            self.__model.get_dungeon().show_entire_dungeon()
+            self.__model.dungeon.show_entire_dungeon()
         elif next_move.lower() == "q":  # Quits the game
-            self.__model.set_quit(True)
+            self.__model.quit = True
         else:
             print(f"Sorry, you entered an invalid command.")
 

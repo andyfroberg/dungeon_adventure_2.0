@@ -14,3 +14,6 @@ if __name__ == "__main__":
 
     m.register_controller(c)
     v.register_controller(c)
+
+    v.show_start_screen()
+    c.set_up_game()

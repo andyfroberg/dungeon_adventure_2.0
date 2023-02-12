@@ -9,11 +9,11 @@ class Main:
 
 if __name__ == "__main__":
     m = Model()
-    v = ViewConsole()
-    c = ControllerConsole(m, v)
+    # v = ViewConsole()
+    # c = ControllerConsole(m, v)
 
-    m.register_controller(c)
-    v.register_controller(c)
+    # m.register_controller(c)
+    # v.register_controller(c)
 
-    v.show_start_screen()
-    c.set_up_game()
+    # v.show_start_screen()
+    # c.set_up_game()

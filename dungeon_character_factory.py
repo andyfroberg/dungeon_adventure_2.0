@@ -27,22 +27,22 @@ class DungeonCharacterFactory:
 
     # Monsters
     @staticmethod
-    def create_gremlin(self, name: str, stats: dict) -> Gremlin:
-        return Gremlin(name, stats)
+    def create_gremlin(self, stats: dict) -> Gremlin:
+        return Gremlin(DungeonCharacterFactory.generate_monster_name(), stats)
 
     @staticmethod
-    def create_ogre(self, name: str, stats: dict) -> Ogre:
-        return Ogre(name, stats)
+    def create_ogre(self, stats: dict) -> Ogre:
+        return Ogre(DungeonCharacterFactory.generate_monster_name(), stats)
 
     @staticmethod
-    def create_skeleton(self, name: str, stats: dict) -> Skeleton:
-        return Skeleton(name, stats)
+    def create_skeleton(self, stats: dict) -> Skeleton:
+        return Skeleton(DungeonCharacterFactory.generate_monster_name(), stats)
 
     @staticmethod
     def generate_monster_name():
         first = ["vold", "mung", "blist", "bron", "fear", "cold", "shax"]
         middle = ["a", "e", "i", "o", "u", "y"]
-        last = ["mort", "flan", "snort", "borg", "gart", "mox"]
+        last = ["mort", "flan", "snort", "borg", "gart", "mox", "bart"]
 
         full = first[randint(0, len(first) - 1)] \
                + middle[randint(0, len(middle) - 1)] \

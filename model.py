@@ -2,22 +2,20 @@ from controller import Controller
 from dungeon import Dungeon
 from dungeon_adventure import DungeonAdventure
 from hero import Hero
-# from warrior import Warrior
-# from priestess import Priestess
-# from thief import Thief
-from enum import Enum
-
+from warrior import Warrior
+from priestess import Priestess
+from thief import Thief
+from gremlin import Gremlin
+from ogre import Ogre
+from skeleton import Skeleton
+from game_difficulty import GameDifficulty
+from player import Player
 
 class Model:
-    GAME_DIFFICULTY = Enum()
-    GAME_DIFFICULTY.value = "EASY"
-    GAME_DIFFICULTY.value = "NORMAL"
-    GAME_DIFFICULTY.value = "HARD"
-    GAME_DIFFICULTY.value = "EXTREME"
-
-    def __init__(self) -> None:
+    def __init__(self, player: Player, game_difficulty: GameDifficulty) -> None:
         self.__quit = None
         self.__controller: Controller = None
+        self.__player = player
         self.__player_alive: bool = False
         self.__player_name: str = ""
         self.__player_inventory: dict = {
@@ -34,6 +32,7 @@ class Model:
         }
         self.__player_hp: int = Hero.hp
         self.__dungeon = Dungeon()
+        self.__game_difficulty = game_difficulty
 
     def register_controller(self, controller: Controller) -> bool:
         self.__controller = controller

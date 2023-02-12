@@ -17,6 +17,7 @@ class Dungeon:
         self.__maze = Dungeon.generate_maze()
         self.set_entrance_and_exit()
         self.set_items()
+        self.set_monsters()  ### NEW - Needs to be implemented ###
         self.update()
 
         while not self.traverse():
@@ -224,6 +225,9 @@ class Dungeon:
                     continue
                 else:
                     self.__maze[i][j].add_items()
+
+    def set_monsters(self):
+        pass  # NEEDS IMPL
 
     def clear_maze(self) -> None:
         for i in range(Dungeon.MAZE_SIZE):
@@ -570,6 +574,9 @@ class Dungeon:
             next_room.set_items(next_room_dict)
             next_room.set_contains_player(True)
             next_room.set_visited(True)
+
+            if next_room.contains_monster:
+                pass  # BATTLE
 
         else:  # If next_room is None, then the player cannot move.
             print("A boulder is blocking your path.")

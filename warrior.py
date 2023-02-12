@@ -1,5 +1,5 @@
-from hero import Hero
 from dungeon_character import DungeonCharacter
+from hero import Hero
 
 
 class Warrior(Hero):

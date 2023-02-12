@@ -8,6 +8,7 @@ class DungeonCharacter(metaclass=ABCMeta):
         self.__damage_range: tuple = stats["damage_range"]  # Model.GameDifficulty.EASY
         self.__attack_speed: int = stats["attack_speed"]  # Model.GameDifficulty.EASY
         self.__hit_prob: float = stats["hit_prob"]  # Model.GameDifficulty.EASY
+        self.__stats = stats
 
     @abstractmethod
     def attack(self) -> None:

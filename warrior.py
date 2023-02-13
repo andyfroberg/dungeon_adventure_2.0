@@ -1,5 +1,6 @@
 from hero import Hero
 from dungeon_character import DungeonCharacter
+import random
 
 
 class Warrior(Hero):
@@ -8,12 +9,33 @@ class Warrior(Hero):
         super().__init__(name, stats)
 
     def attack(self, opponent: DungeonCharacter) -> None:
-        opponent.hp -= self.damage_range
+        damage = random.randint(self.damage_range[0], self.damage_range[1])
+        chance = random.random()
+        if self.__attack_speed > opponent.attack_speed:
+            if chance <= self.hit_prob:
+                opponent.hp -= damage
+        elif self.__attack_speed == opponent.attack_speed:
+            if chance <= self.hit_prob:
+                opponent.hp -= damage
+            elif chance <= self.hit_prob and chance <= opponent.hit_prob:
+                opponent.hp -= damage
+            else:
+                self.hp -= damage
+        else:
+            if chance <= self.block:
+                # blocked
+                pass
+            else:
+                self.hp -= damage
 
     def special(self, opponent: DungeonCharacter) -> None:
         """
         Crushing blow
         :return:
         """
-        opponent.hp -= self.damage_range
+        new_hp = 0.4
+        damage = random.randint(75, 175)
+        chance = random.random()
+        if chance <= new_hp:
+            opponent.hp -= damage
 

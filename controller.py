@@ -53,7 +53,7 @@ class Controller(metaclass=ABCMeta):
     def quit_game(self) -> None:
         self.__model.quit = True
 
-    def player_wins(self) -> None:
+    def player_won(self) -> None:
         self.__model.player_won = True
 
     def player_dies(self) -> None:
@@ -69,7 +69,8 @@ class Controller(metaclass=ABCMeta):
         self.__model.notify_views()
 
     def quit(self):
-        pass
+        self.__model.quit = True
+        self.__model.notify_views()
 
 
 

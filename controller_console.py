@@ -1,13 +1,15 @@
 from controller import Controller
 from dungeon_adventure import DungeonAdventure
 from adventurer import Adventurer
+from model import Model
 
 class ControllerConsole(Controller):
     """A concrete implementation of the abstract class Controller. This
     ControllerConsole handles the user interactions displayed by a
     ViewConsole."""
-    def __init__(self):
+    def __init__(self, model: Model):
         super.__init__()
+        self.__model = model
 
     def set_up_game(self):
         da = DungeonAdventure(Adventurer(DungeonAdventure.ask_player_for_name()))

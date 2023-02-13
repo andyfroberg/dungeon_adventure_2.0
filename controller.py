@@ -4,10 +4,8 @@ from view import View
 
 
 class Controller(metaclass=ABCMeta):
-    def __init__(self, model: Model, view: View) -> None:
+    def __init__(self, model: Model) -> None:
         self.__model = model
-        self.__view = view
-        pass
 
     @abstractmethod
     def get_next_player_input(self):

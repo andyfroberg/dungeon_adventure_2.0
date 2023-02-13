@@ -4,9 +4,9 @@ from view import View
 
 
 class Controller(metaclass=ABCMeta):
-    def __init__(self) -> None:
-        # self.__model: Model = model
-        # self.__view: View = view
+    def __init__(self, model: Model, view: View) -> None:
+        self.__model = model
+        self.__view = view
         pass
 
     @abstractmethod

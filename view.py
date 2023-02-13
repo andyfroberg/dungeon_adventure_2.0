@@ -10,6 +10,14 @@ class View(metaclass=ABCMeta):
     def __init__(self) -> None:
         self.__controller: Controller = None
 
+    @abstractmethod
+    def update(self):
+        """
+        Abstract update method to update the View when notified by the model.
+        Must be implemented by all concrete views.
+        """
+        pass
+
     def register_controller(self, controller: Controller) -> bool:
         self.__controller = controller
 

@@ -5,7 +5,7 @@ import random
 
 class Dungeon:
 
-    MAZE_SIZE = 4
+    MAZE_SIZE = 4  # UPDATE LATER BASED ON GAME DIFFICULTY
 
     def __init__(self) -> None:
         self.__current_location = None  # A Room's [row, col] coordinates

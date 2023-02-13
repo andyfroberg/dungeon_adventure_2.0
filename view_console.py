@@ -9,6 +9,11 @@ class ViewConsole(View):
     def __init__(self, controller: Controller) -> None:
         self.__controller: Controller = controller
 
+    def update(self):
+        # The model has notified the views that its state has changed.
+        # This method must update this view with any changes.
+        pass
+
     def show_start_screen(self):
         """
         Shows the introduction to the game.

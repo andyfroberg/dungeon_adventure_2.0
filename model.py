@@ -1,4 +1,4 @@
-from controller import Controller
+from view import View
 from dungeon import Dungeon
 from dungeon_adventure import DungeonAdventure
 from hero import Hero
@@ -15,13 +15,15 @@ from game import Game
 class Model:
     def __init__(self, game: Game) -> None:
         self.__game = game
-        self.__controller: Controller = None
+        self.__views: list[View] = []
         self.__player_hp: int = Hero.hp
 
-    def register_controller(self, controller: Controller) -> bool:
-        self.__controller = controller
+    def register_view(self, view: View) -> bool:
+        self.__views.append(view)
 
-        return self.__controller is not None
+    def notify_views(self):
+        for view in self.__views:
+            view.update()
 
     def get_player_inventory(self) -> dict:
         return self.__player_inventory

@@ -5,6 +5,7 @@ from player import Player
 from model import Model
 from view import View
 from controller import Controller
+from dungeon import Dungeon
 
 
 class Game(metaclass=ABCMeta):
@@ -13,11 +14,12 @@ class Game(metaclass=ABCMeta):
                  controller: Controller) -> None:
         self.__game_type = game_type
         self.__game_difficulty = game_difficulty
+        self.__quit_game = False
         self.__player = player
         self.__model = model
         self.__view = view
         self.__controller = controller
-        self.__dungeon = dungeon
+        self.__dungeon = Dungeon()
 
     @abstractmethod
     def start(self):
@@ -41,6 +43,10 @@ class Game(metaclass=ABCMeta):
         :return: string
         """
         return self.__player_name
+
+    @property
+    def game_difficulty(self):
+        return self.__game_difficulty
 
     @player_name.setter
     def player_name(self, name: str) -> None:
@@ -69,21 +75,12 @@ class Game(metaclass=ABCMeta):
         self.__dungeon = dungeon
 
     @property
-    def quit(self) -> bool:
-        """
-        Returns if the player has quit the game.
-        :return: bool
-        """
-        return self.__quit
+    def quit_game(self) -> bool:
+        return self.__quit_game
 
-    @quit.setter
-    def quit(self, val: bool) -> None:
-        """
-        Sets if the player has quit the game.
-        :param truth_value: bool
-        :return: None
-        """
-        self.__quit = val
+    @quit_game.setter
+    def quit_game(self, quit_game: bool) -> None:
+        self.__quit_game = quit_game
 
     @property
     def player_won(self) -> bool:

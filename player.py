@@ -34,14 +34,6 @@ class Player:
         self.__alive = alive
 
     @property
-    def quit_game(self) -> bool:
-        return self.__quit_game
-
-    @quit.setter
-    def quit_game(self, quit_game: bool) -> None:
-        self.__quit_game = quit_game
-
-    @property
     def hero(self) -> Hero:
         return self.__hero
 

@@ -1,27 +1,31 @@
-from controller import Controller
-from dungeon import Dungeon
-from dungeon_adventure import DungeonAdventure
-from hero import Hero
-from warrior import Warrior
-from priestess import Priestess
-from thief import Thief
-from gremlin import Gremlin
-from ogre import Ogre
-from skeleton import Skeleton
+from abc import ABCMeta, abstractmethod, abstractproperty
+from game_type import GameType
 from game_difficulty import GameDifficulty
 from player import Player
-from game import Game
+from model import Model
+from view import View
+from controller import Controller
 
-class Model:
-    def __init__(self, game: Game) -> None:
-        self.__game = game
-        self.__controller: Controller = None
-        self.__player_hp: int = Hero.hp
 
-    def register_controller(self, controller: Controller) -> bool:
+class Game(metaclass=ABCMeta):
+    def __init__(self, game_type: GameType, game_difficulty: GameDifficulty,
+                 player: Player, model: Model, view: View,
+                 controller: Controller) -> None:
+        self.__game_type = game_type
+        self.__game_difficulty = game_difficulty
+        self.__player = player
+        self.__model = model
+        self.__view = view
         self.__controller = controller
+        self.__dungeon = dungeon
 
-        return self.__controller is not None
+    @abstractmethod
+    def start(self):
+        pass
+
+    @abstractmethod
+    def loop(self):
+        pass
 
     def get_player_inventory(self) -> dict:
         return self.__player_inventory
@@ -114,3 +118,9 @@ class Model:
         :return: None
         """
         self.__player_is_dead = val
+
+
+if __name__ == "__main__":
+    # Game menu will be displayed before this?
+    game = Game()
+    game.start()

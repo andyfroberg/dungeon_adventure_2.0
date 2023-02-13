@@ -4,6 +4,13 @@ from dungeon_character import DungeonCharacter
 
 class Monster(DungeonCharacter, metaclass=ABCMeta):
 
-    def __init__(self, stats: dict) -> None:
-        super().__init__(stats)
-        self.__block: float = 0.5
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self.__monster_stats: dict = {
+            "heal_prob": None,
+            "heal_range": []
+        }
+
+    @abstractmethod
+    def heal(self):
+        pass

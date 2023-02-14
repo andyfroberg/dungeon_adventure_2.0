@@ -56,7 +56,7 @@ class Controller(metaclass=ABCMeta):
     def player_won(self) -> None:
         self.__model.player_won = True
 
-    def player_dies(self) -> None:
+    def player_dead(self) -> None:
         self.__model.player_dead = True
 
     def update_player_hp(self, hp: int) -> None:

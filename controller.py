@@ -3,6 +3,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from dungeon import Dungeon
 from model import Model
 from view import View
+from adventurer import Adventurer
 
 
 class Controller(metaclass=ABCMeta):
@@ -11,7 +12,7 @@ class Controller(metaclass=ABCMeta):
         self.__view: View = view
 
     def start_game(self):
-        self.player = Player()
+        self.player = Adventurer()
         self.player.set_position(self.dungeon.start)
 
         # start the game loop

@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="96ce9220-d71b-4349-8278-2da3b905416d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gremlin.py" beforeDir="false" afterPath="$PROJECT_DIR$/gremlin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/monster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ogre.py" beforeDir="false" afterPath="$PROJECT_DIR$/ogre.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/priestess.py" beforeDir="false" afterPath="$PROJECT_DIR$/priestess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/skeleton.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thief.py" beforeDir="false" afterPath="$PROJECT_DIR$/thief.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/hero.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/warrior.py" beforeDir="false" afterPath="$PROJECT_DIR$/warrior.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

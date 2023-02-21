@@ -1,12 +1,14 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 from dungeon_character import DungeonCharacter
+from room import Room
 
 
 class Hero(DungeonCharacter, metaclass=ABCMeta):
 
-    def __init__(self, name: str, stats: dict) -> None:
+    def __init__(self, name: str, stats: dict, location) -> None:
         super().__init__(name, stats)
         self.__block: float = 0.5
+        self._location = location
 
     @abstractmethod
     def special(self, opponent: DungeonCharacter) -> None:

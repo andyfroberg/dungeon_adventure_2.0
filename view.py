@@ -3,12 +3,6 @@ from controller import Controller
 
 
 class View(metaclass=ABCMeta):
-    """
-    This abstract view is what each concrete view
-    (e.g., ConsoleView) should inherit from.
-    """
-    def __init__(self, controller: Controller) -> None:
-        self.__controller: Controller = controller
 
     @abstractmethod
     def update(self):
@@ -25,6 +19,10 @@ class View(metaclass=ABCMeta):
 
     @abstractmethod
     def show_start_screen(self):
+        pass
+
+    @abstractmethod
+    def register_controller(self, controller: Controller):
         pass
 
 

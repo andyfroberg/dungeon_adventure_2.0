@@ -1,11 +1,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
-from model import Model
-from view import View
 
 
 class Controller(metaclass=ABCMeta):
-    def __init__(self, model: Model) -> None:
-        self.__model = model
 
     @abstractmethod
     def get_next_player_input(self):

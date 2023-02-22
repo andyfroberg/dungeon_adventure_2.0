@@ -2,23 +2,22 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from game_type import GameType
 from game_difficulty import GameDifficulty
 from player import Player
-from model import Model
-from view import View
-from controller import Controller
+# from model import Model
+# from view import View
+# from controller import Controller
 from dungeon import Dungeon
 
 
 class Game(metaclass=ABCMeta):
     def __init__(self, game_type: GameType, game_difficulty: GameDifficulty,
-                 player: Player, model: Model, view: View,
-                 controller: Controller) -> None:
+                 player: Player) -> None:
         self.__game_type = game_type
         self.__game_difficulty = game_difficulty
         self.__quit_game = False
         self.__player = player
-        self.__model = model
-        self.__view = view
-        self.__controller = controller
+        # self.__model = model
+        # self.__view = view
+        # self.__controller = controller
         self.__dungeon = Dungeon()
 
     @abstractmethod

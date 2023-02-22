@@ -1,87 +1,89 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
-from hero import Hero
-from priestess import Priestess
-from warrior import Warrior
-from thief import Thief
-from monster import Monster
-from gremlin import Gremlin
-from ogre import Ogre
-from skeleton import Skeleton
+# from hero import Hero
+# from priestess import Priestess
+# from warrior import Warrior
+# from thief import Thief
+# from monster import Monster
+# from gremlin import Gremlin
+# from ogre import Ogre
+# from skeleton import Skeleton
 
 class DungeonCharacter(metaclass=ABCMeta):
 
     def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__dc_stats = self.set_up_dc_stats()
+        # self.__dc_stats = self.set_up_dc_stats()
 
+    @abstractmethod
     def set_up_dc_stats(self):
-        priestess = {
-            "hp": 75,
-            "attack_speed": 5,
-            "hit_prob": 0.7,
-            "damage_range": [25, 45],
-        }
-
-        thief = {
-            "hp": 75,
-            "attack_speed": 6,
-            "hit_prob": 0.8,
-            "damage_range": [20, 40],
-        }
-
-        warrior = {
-            "hp": 125,
-            "attack_speed": 4,
-            "hit_prob": 0.8,
-            "damage_range": [35, 60],
-        }
-
-        gremlin = {
-            "hp": 70,
-            "attack_speed": 5,
-            "hit_prob": 0.8,
-            "damage_range": [15, 30],
-        }
-
-        ogre = {
-            "hp": 200,
-            "attack_speed": 2,
-            "hit_prob": 0.6,
-            "damage_range": [30, 60],
-        }
-
-        skeleton = {
-            "hp": 100,
-            "attack_speed": 3,
-            "hit_prob": 0.8,
-            "damage_range": [30, 50],
-        }
-
-        if type(self) == Hero:
-            return Hero.set_up_stats()
-
-
-        if type(self) == Hero:
-            if type(self) == Priestess:
-                pass
-            elif type(self) == Thief:
-                pass
-            elif type(self) == Warrior:
-                pass
-            else:
-                raise TypeError("Not a valid DungeonCharacter type.")
-
-        elif type(self) == Monster:
-            if type(self) == Gremlin:
-                pass
-            elif type(self) == Ogre:
-                pass
-            elif type(self) == Skeleton:
-                pass
-            else:
-                raise TypeError("Not a valid DungeonCharacter type.")
-        else:
-            raise TypeError("Not a valid DungeonCharacter type.")
+        pass
+        # priestess = {
+        #     "hp": 75,
+        #     "attack_speed": 5,
+        #     "hit_prob": 0.7,
+        #     "damage_range": [25, 45],
+        # }
+        #
+        # thief = {
+        #     "hp": 75,
+        #     "attack_speed": 6,
+        #     "hit_prob": 0.8,
+        #     "damage_range": [20, 40],
+        # }
+        #
+        # warrior = {
+        #     "hp": 125,
+        #     "attack_speed": 4,
+        #     "hit_prob": 0.8,
+        #     "damage_range": [35, 60],
+        # }
+        #
+        # gremlin = {
+        #     "hp": 70,
+        #     "attack_speed": 5,
+        #     "hit_prob": 0.8,
+        #     "damage_range": [15, 30],
+        # }
+        #
+        # ogre = {
+        #     "hp": 200,
+        #     "attack_speed": 2,
+        #     "hit_prob": 0.6,
+        #     "damage_range": [30, 60],
+        # }
+        #
+        # skeleton = {
+        #     "hp": 100,
+        #     "attack_speed": 3,
+        #     "hit_prob": 0.8,
+        #     "damage_range": [30, 50],
+        # }
+        #
+        # if type(self) == Hero:
+        #     return Hero.set_up_stats()
+        #
+        #
+        # if type(self) == Hero:
+        #     if type(self) == Priestess:
+        #         pass
+        #     elif type(self) == Thief:
+        #         pass
+        #     elif type(self) == Warrior:
+        #         pass
+        #     else:
+        #         raise TypeError("Not a valid DungeonCharacter type.")
+        #
+        # elif type(self) == Monster:
+        #     if type(self) == Gremlin:
+        #         pass
+        #     elif type(self) == Ogre:
+        #         pass
+        #     elif type(self) == Skeleton:
+        #         pass
+        #     else:
+        #         raise TypeError("Not a valid DungeonCharacter type.")
+        # else:
+        #     raise TypeError("Not a valid DungeonCharacter type.")
 
     @abstractmethod
     def attack(self) -> None:

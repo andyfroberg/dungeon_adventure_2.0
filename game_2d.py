@@ -64,13 +64,24 @@ class Player:
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = self.speed
 
+
+        # if self.open_door(dx, dy):
+        #     self.game.dungeon.load_map(self.game.dungeon.second_room)
+
         if self.check_collision(dx, dy):
             self.x += dx
             self.y += dy
 
+        if self.open_door(dx, dy):
+            self.game.dungeon.load_map(self.game.dungeon.second_room)
+
     def check_collision(self, dx, dy):
         return (int(self.x + dx), int(self.y + dy)) not in self.game.dungeon.visible_map
 
+    def open_door(self, dx, dy):
+        door_position = (int(self.x + dx), int(self.y + dy))
+        return door_position in self.game.dungeon.visible_map \
+            and self.game.dungeon.visible_map[door_position] == 2
 
     def draw(self):
         pygame.draw.circle(self.game.screen,
@@ -83,7 +94,7 @@ class Dungeon:
         self.player = player
         self.START_MAP = [
             [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 2],
             [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
@@ -92,24 +103,32 @@ class Dungeon:
             [1, 1, 1, 1, 1, 1, 1, 1],
         ]
         self.visible_map = {}
-        self.get_map(self.START_MAP)
+        self.load_map(self.START_MAP)
+        self.second_room = [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+        ]
 
-    def get_map(self, room):
-        # for j, row in enumerate(self.map):
-        #     for i, value in enumerate(row):
-        #         if value:
-        #             self.world_map[(i, j)] = value
 
+
+    def load_map(self, room):
+        self.visible_map.clear()
         for i in range(len(room)):
             for j in range(len(room[i])):
                 if room[i][j]:
-                    self.visible_map[(i, j)] = room[i][j]
+                    self.visible_map[(j, i)] = room[i][j]  # Had to swap i, j - for some reason it works ???
 
     def draw(self):
         for location in self.visible_map:
             pygame.draw.rect(self.game.screen,                                  # Screen to write to
                              'white',                                           # Color
-                             (location[0] * 100, location[1] * 100, 100, 100),  # Rect size
+                             (location[1] * 100, location[0] * 100, 100, 100),  # Rect size
                              1,                                                 # Stroke size
                              10)                                                # Border radius
 

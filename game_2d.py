@@ -64,24 +64,51 @@ class Player:
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = self.speed
 
-
-        # if self.open_door(dx, dy):
-        #     self.game.dungeon.load_map(self.game.dungeon.second_room)
-
-        if self.check_collision(dx, dy):
+        if self.can_move_x(dx):
             self.x += dx
+
+        if self.can_move_y(dy):
             self.y += dy
 
-        if self.open_door(dx, dy):
+        # If the player hits a door, then take them to the new room.
+        if self.pass_through_door(dx, dy)[0]:
             self.game.dungeon.load_map(self.game.dungeon.second_room)
+            self.set_pos_new_room(dx, dy)
 
-    def check_collision(self, dx, dy):
-        return (int(self.x + dx), int(self.y + dy)) not in self.game.dungeon.visible_map
+    def can_move_x(self, dx):
+        return (int(self.x + dx), int(self.y)) not in self.game.dungeon.visible_map
 
-    def open_door(self, dx, dy):
-        door_position = (int(self.x + dx), int(self.y + dy))
-        return door_position in self.game.dungeon.visible_map \
-            and self.game.dungeon.visible_map[door_position] == 2
+    def can_move_y(self, dy):
+        return (int(self.x), int(self.y + dy)) not in self.game.dungeon.visible_map
+
+    def pass_through_door(self, dx, dy):
+        new_pos = (int(self.x + dx), int(self.y + dy))
+
+        return new_pos in self.game.dungeon.visible_map \
+            and self.game.dungeon.visible_map[new_pos] == 2, new_pos
+
+    def set_pos_new_room(self, dx, dy):
+
+        # Precondition - already have checked that door_pos is in
+        # dungeon.visible_map (in pass_through_door() function)
+        door_pos = (int(self.x + dx), int(self.y + dy))
+
+        if door_pos[1] == 0:  # heading north
+            self.y = len(self.game.dungeon.current_room[1]) - 1
+
+        elif door_pos[1] == len(self.game.dungeon.current_room[1]) - 1:  # heading south
+            self.y = 1
+
+        elif door_pos[0] == 0:  # heading west
+            self.x = len(self.game.dungeon.current_room) - 1
+
+        else:  # heading east
+            self.x = 1
+
+
+
+
+
 
     def draw(self):
         pygame.draw.circle(self.game.screen,
@@ -92,37 +119,53 @@ class Dungeon:
     def __init__(self, game, player):
         self.game = game
         self.player = player
+        self.current_room = None
         self.START_MAP = [
             [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 2],
             [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 2, 1, 1, 1],
         ]
         self.visible_map = {}
         self.load_map(self.START_MAP)
         self.second_room = [
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 1],
+            [1, 1, 2, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
+            [2, 0, 0, 0, 0, 0, 0, 2],
+            [1, 0, 0, 1, 1, 1, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 2, 1, 1, 1, 1, 1],
         ]
 
 
 
     def load_map(self, room):
+        self.current_room = room
         self.visible_map.clear()
         for i in range(len(room)):
             for j in range(len(room[i])):
                 if room[i][j]:
-                    self.visible_map[(j, i)] = room[i][j]  # Had to swap i, j - for some reason it works ???
+                    self.visible_map[(j, i)] = room[i][j]
+
+    # def load_map(self, room):
+    #     self.current_room = []
+    #     new_room = []
+    #     for i in range(len(room)):
+    #         col = []
+    #         for j in range(len(room[i])):
+    #             print(f'{i}, {j}')
+    #             col.append(room[i][j])
+    #         new_room.append(col)
+    #     self.current_room = new_room
+    #     print(self.current_room)
+
+
 
     def draw(self):
         for location in self.visible_map:
@@ -132,13 +175,23 @@ class Dungeon:
                              1,                                                 # Stroke size
                              10)                                                # Border radius
 
+    # def draw(self):
+    #     for i in range(len(self.current_room)):
+    #         for j in range(len(self.current_room[i])):
+    #             if self.current_room[i][j] > 0:
+    #                 pygame.draw.rect(self.game.screen,                                  # Screen to write to
+    #                                  'white',                                           # Color
+    #                                  (j * 100, i * 100, 100, 100),                      # Rect size
+    #                                  1,                                                 # Stroke size
+    #                                  10)                                                # Border radius
+
 class Settings:
     PLAYER_START_POS = (2, 2)
     PLAYER_START_ANGLE = 0
     PLAYER_SPEED = 0.05
     PLAYER_ROTATION_SPEED = 0.05
 
-    SCREEN_RESOLUTION = (1024, 768)
+    SCREEN_RESOLUTION = (1000, 800)
 
 if __name__ == "__main__":
     game = Game2D()

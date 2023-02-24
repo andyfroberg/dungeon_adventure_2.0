@@ -1,0 +1,13 @@
+
+
+Features
+[ ] Need key to open door
+[ ] Need boss key to open door to exit
+[ ] Need boss key to open door to exit
+
+
+
+
+Chores
+[ ] Set new player pos after going through a door
+[ ] Add sprites for dungeon and character

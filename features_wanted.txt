@@ -9,5 +9,6 @@ Features
 
 
 Chores
-[ ] Set new player pos after going through a door
+[X] Set new player pos after going through a door
 [ ] Add sprites for dungeon and character
+[ ] Data structure for getting all rooms

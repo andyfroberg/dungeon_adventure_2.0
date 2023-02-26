@@ -62,13 +62,22 @@ class View2D:
         #                       i * Settings.PIXEL_SCALE),
         #                      [self.visible_sprites])
 
-        for i, row in enumerate(dungeon.current_room):
-            for j, col in enumerate(row):
-                    self.room_ui[(i, j)] = dungeon.current_room[(i, j)]
-                    if self.room_ui[(i, j)] == 1:
-                        Tile((j * Settings.PIXEL_SCALE,
-                              i * Settings.PIXEL_SCALE),
-                             [self.visible_sprites])
+        # for i, row in enumerate(dungeon.current_room):
+        #     for j, col in enumerate(row):
+        #         self.room_ui[(j, i)] = dungeon.current_room[(j, i)]
+        #         if self.room_ui[(i, j)] == 1:
+        #             Tile((j * Settings.PIXEL_SCALE,
+        #                   i * Settings.PIXEL_SCALE),
+        #                  [self.visible_sprites])
+
+        self.room_ui = dungeon.current_room.copy()
+        for row, col in self.room_ui.keys():
+            if self.room_ui[(row, col)] == 1:
+                Tile((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                     [self.visible_sprites])
+
+
+
 
         self.visible_sprites.draw(self.surface)
 
@@ -94,4 +103,6 @@ class View2D:
                                               [self.player_sprites])
 
         self.player_sprite.rect.x = player.x * Settings.PIXEL_SCALE
-        self.player_sprite.rect.x = player.y * Settings.PIXEL_SCALE
+        self.player_sprite.rect.y = player.y * Settings.PIXEL_SCALE
+
+        self.player_sprites.draw(self.surface)

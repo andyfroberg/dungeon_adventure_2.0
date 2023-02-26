@@ -14,7 +14,7 @@ class Dungeon:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -38,12 +38,11 @@ class Dungeon:
 
 
     def load_room(self, room):
-        self.current_room_size = (len(room[0]), len(room))
+        # self.current_room_size = (len(room[0]), len(room))
 
-        for i, row in enumerate(room):
-            for j, col in enumerate(row):
-                if room[i][j]:
-                    self.current_room[(j, i)] = room[i][j]
+        for j, row in enumerate(room):
+            for i, value in enumerate(row):
+                self.current_room[(i, j)] = value
 
     def update(self):
         pass

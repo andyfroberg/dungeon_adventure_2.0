@@ -44,12 +44,14 @@ class Player:
             self.set_pos_new_room(dx, dy, dungeon)
 
     def can_move_x(self, dx, dungeon):
-        return (int(self.__x + dx),
-                int(self.__y)) not in dungeon.current_room
+        # return (int(self.__x + dx),
+        #         int(self.__y)) not in dungeon.current_room
+        return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
 
     def can_move_y(self, dy, dungeon):
-        return (int(self.__x),
-                int(self.__y + dy)) not in dungeon.current_room
+        # return (int(self.__x),
+        #         int(self.__y + dy)) not in dungeon.current_room
+        return dungeon.current_room[(int(self.__x), int(self.__y + dy))] == 0
 
     def can_pass_through_door(self, dx, dy, dungeon):
         new_pos = (int(self.__x + dx), int(self.__y + dy))
@@ -95,6 +97,23 @@ class Player:
     @name.setter
     def name(self, name: str) -> None:
         self.__name = name
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, x_pos):
+        self.__x = x_pos
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, y_pos):
+        self.__y = y_pos
+
 
     # @property
     # def won(self) -> bool:

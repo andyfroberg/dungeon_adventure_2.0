@@ -1,6 +1,7 @@
 import pygame
 import sys
 from model import Model
+from view_2d import View2D
 
 class Controller2D:
     def __init__(self):
@@ -44,4 +45,5 @@ class Controller2D:
 
 if __name__ == "__main__":
     game = Controller2D()
+    view = View2D(game.model)
     game.run()

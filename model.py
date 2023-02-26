@@ -22,7 +22,7 @@ class Model:
 
     def notify_views(self):
         for view in self.__views:
-            view.update()
+            view.update(self)  # Passes itself as state so that view can change accordingly
 
     def unregister_view(self, view_to_remove):
         for view in self.__views:
@@ -31,7 +31,7 @@ class Model:
 
     def update(self, keys_pressed):
         # Update player state
-        self.__player.update(keys_pressed)
+        self.__player.update(keys_pressed, self.__dungeon)
 
         # Update Dungeon state
         self.__dungeon.update()
@@ -44,6 +44,10 @@ class Model:
 
         # Notify views after model state has been updated
         self.notify_views()
+
+    @property
+    def player(self):
+        return self.__player
 
     def get_player_inventory(self) -> dict:
         return self.__player_inventory

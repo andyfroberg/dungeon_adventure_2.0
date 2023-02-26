@@ -9,13 +9,13 @@ class Player:
         self.__x = Settings.PLAYER_START_POS[0]
         self.__y = Settings.PLAYER_START_POS[1]
         self.speed = Settings.PLAYER_SPEED
-        self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
+        # self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
 
-    def update(self, keys_pressed):
+    def update(self, keys_pressed, dungeon):
         # Update player location
-        self.move(keys_pressed)
+        self.move(keys_pressed, dungeon)
 
-    def move(self, keys):
+    def move(self, keys, dungeon):
         dx, dy = 0, 0
 
         if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -30,56 +30,56 @@ class Player:
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = self.speed
 
-        if self.can_move_x(dx):
-            self.x += dx
-            self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
+        if self.can_move_x(dx, dungeon):
+            self.__x += dx
+            # self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
 
-        if self.can_move_y(dy):
-            self.y += dy
-            self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
+        if self.can_move_y(dy, dungeon):
+            self.__y += dy
+            # self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
 
         # If the player hits a door, then take them to the new room.
-        if self.can_pass_through_door(dx, dy):
-            self.game.dungeon.load_room(RoomFactory.build_room())
-            self.set_pos_new_room(dx, dy)
+        if self.can_pass_through_door(dx, dy, dungeon):
+            # self.game.dungeon.load_room(RoomFactory.build_room())
+            self.set_pos_new_room(dx, dy, dungeon)
 
-    def can_move_x(self, dx):
-        return (int(self.x + dx),
-                int(self.y)) not in self.game.dungeon.visible_room
+    def can_move_x(self, dx, dungeon):
+        return (int(self.__x + dx),
+                int(self.__y)) not in dungeon.current_room
 
-    def can_move_y(self, dy):
-        return (int(self.x),
-                int(self.y + dy)) not in self.game.dungeon.visible_room
+    def can_move_y(self, dy, dungeon):
+        return (int(self.__x),
+                int(self.__y + dy)) not in dungeon.current_room
 
-    def can_pass_through_door(self, dx, dy):
-        new_pos = (int(self.x + dx), int(self.y + dy))
+    def can_pass_through_door(self, dx, dy, dungeon):
+        new_pos = (int(self.__x + dx), int(self.__y + dy))
 
-        return new_pos in self.game.dungeon.visible_room \
-               and self.game.dungeon.visible_room[new_pos] == 2
+        return new_pos in dungeon.current_room \
+               and dungeon.current_room[new_pos] == 2
 
-    def set_pos_new_room(self, dx, dy):
+    def set_pos_new_room(self, dx, dy, dungeon):
         # Precondition - already have checked that door_pos is in
-        # dungeon.visible_room (in pass_through_door() function)
-        door_pos = (int(self.x + dx), int(self.y + dy))
+        # dungeon.current_room (in pass_through_door() function)
+        door_pos = (int(self.__x + dx), int(self.__y + dy))
 
         # heading north
         if door_pos[1] == 0:
-            self.y = game.dungeon.current_room_size[1] - 1
-            self.player_sprite.rect.y = (game.dungeon.current_room_size[
-                                             1] - 1) * Settings.PIXEL_SCALE
+            self.__y = dungeon.current_room_size[1] - 1
+            # self.player_sprite.rect.y = (dungeon.current_room_size[
+            #                                  1] - 1) * Settings.PIXEL_SCALE
         # heading south
         elif door_pos[1] == self.game.dungeon.current_room_size[1] - 1:
-            self.y = 1
-            self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
+            self.__y = 1
+            # self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
         # heading west
         elif door_pos[0] == 0:
-            self.x = self.game.dungeon.current_room_size[0] - 1
-            self.player_sprite.rect.x = (game.dungeon.current_room_size[
-                                             0] - 1) * Settings.PIXEL_SCALE
+            self.__x = self.game.dungeon.current_room_size[0] - 1
+            # self.player_sprite.rect.x = (game.dungeon.current_room_size[
+            #                                  0] - 1) * Settings.PIXEL_SCALE
         # heading east
         else:
-            self.x = 1
-            self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
+            self.__x = 1
+            # self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
 
     def draw(self):
         # Tile((self.x, self.y), [self.visible_sprites])

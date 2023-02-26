@@ -100,15 +100,16 @@ class Player(pygame.sprite.Sprite):
 
         if self.can_move_x(dx):
             self.x += dx
-            self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
 
         if self.can_move_y(dy):
             self.y += dy
-            self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
 
         # If the player hits a door, then take them to the new room.
         if self.can_pass_through_door(dx, dy):
-            self.game.dungeon.load_room(RoomFactory.build_room())
+            new_room = Room()
+            self.game.dungeon.load_room(new_room.second_room)
             self.set_pos_new_room(dx, dy)
 
     def can_move_x(self, dx):
@@ -131,19 +132,19 @@ class Player(pygame.sprite.Sprite):
         # heading north
         if door_pos[1] == 0:
             self.y = game.dungeon.current_room_size[1] - 1
-            self.player_sprite.rect.y = (game.dungeon.current_room_size[1] - 1) * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.y = (game.dungeon.current_room_size[1] - 1) * Settings.PIXEL_SCALE
         # heading south
         elif door_pos[1] == self.game.dungeon.current_room_size[1] - 1:
             self.y = 1
-            self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
         # heading west
         elif door_pos[0] == 0:
             self.x = self.game.dungeon.current_room_size[0] - 1
-            self.player_sprite.rect.x = (game.dungeon.current_room_size[0] - 1) * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.x = (game.dungeon.current_room_size[0] - 1) * Settings.PIXEL_SCALE
         # heading east
         else:
             self.x = 1
-            self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
+            # self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
 
     def draw(self):
         # Tile((self.x, self.y), [self.visible_sprites])

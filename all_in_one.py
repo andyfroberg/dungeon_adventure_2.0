@@ -36,11 +36,34 @@ class AllInOne:
             # 3) draw frame
             self.screen.fill('black')
             self.dungeon.draw()
+            if self.player.player_sprite not in self.dungeon.visible_sprites:
+                self.dungeon.visible_sprites.add(self.player.player_sprite)
             self.player.draw()
             pygame.display.set_caption('Dungeon Adventure 2.0')
             pygame.display.update()
             self.clock.tick(Settings.FPS)
 
+### Citation 002 - Pygame Documentation - Sprite Base Class
+### https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
+###
+class PlayerSprite(pygame.sprite.Sprite):
+    def __init__(self, player, groups):
+        super().__init__(groups)
+        self.player = player
+        self.image = pygame.image.load(
+            'sprites/warrior_sp_1.png').convert_alpha()
+        self.rect = self.image.get_rect(
+            center=(player.x * Settings.PIXEL_SCALE,  # Might need to be topleft=...
+                    player.y * Settings.PIXEL_SCALE))
+
+    def update(self):
+        self.rect.x = self.player.x * Settings.PIXEL_SCALE
+        self.rect.y = self.player.y * Settings.PIXEL_SCALE
+
+
+
+
+### End Citation 002
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, position, groups):
@@ -50,13 +73,14 @@ class Player(pygame.sprite.Sprite):
         self.y = Settings.PLAYER_START_POS[1]
         self.speed = Settings.PLAYER_SPEED
         self.angle = 0
+        self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
 
         # Create player sprite
-        self.image = pygame.image.load(
-            'sprites/warrior_sp_1.png').convert_alpha()
-        self.rect = self.image.get_rect(
-            center=(position[0] * Settings.PIXEL_SCALE,
-                     position[1] * Settings.PIXEL_SCALE))
+        # self.image = pygame.image.load(
+        #     'sprites/warrior_sp_1.png').convert_alpha()
+        # self.rect = self.image.get_rect(
+        #     center=(position[0] * Settings.PIXEL_SCALE,
+        #              position[1] * Settings.PIXEL_SCALE))
         # self.rect = self.image.get_rect()
 
     def move(self, keys):
@@ -76,15 +100,15 @@ class Player(pygame.sprite.Sprite):
 
         if self.can_move_x(dx):
             self.x += dx
-            self.rect.x += dx * Settings.PIXEL_SCALE
+            self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
 
         if self.can_move_y(dy):
             self.y += dy
-            self.rect.y += dy * Settings.PIXEL_SCALE
+            self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
 
         # If the player hits a door, then take them to the new room.
-        if self.pass_through_door(dx, dy):
-            self.game.dungeon.load_map(self.game.dungeon.second_room)
+        if self.can_pass_through_door(dx, dy):
+            self.game.dungeon.load_room(RoomFactory.build_room())
             self.set_pos_new_room(dx, dy)
 
     def can_move_x(self, dx):
@@ -93,7 +117,7 @@ class Player(pygame.sprite.Sprite):
     def can_move_y(self, dy):
         return (int(self.x), int(self.y + dy)) not in self.game.dungeon.visible_room
 
-    def pass_through_door(self, dx, dy):
+    def can_pass_through_door(self, dx, dy):
         new_pos = (int(self.x + dx), int(self.y + dy))
 
         return new_pos in self.game.dungeon.visible_room \
@@ -107,27 +131,31 @@ class Player(pygame.sprite.Sprite):
         # heading north
         if door_pos[1] == 0:
             self.y = game.dungeon.current_room_size[1] - 1
-            self.rect.y = (game.dungeon.current_room_size[1] - 1) * Settings.PIXEL_SCALE
+            self.player_sprite.rect.y = (game.dungeon.current_room_size[1] - 1) * Settings.PIXEL_SCALE
         # heading south
         elif door_pos[1] == self.game.dungeon.current_room_size[1] - 1:
             self.y = 1
-            self.rect.y = 1 * Settings.PIXEL_SCALE
+            self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
         # heading west
         elif door_pos[0] == 0:
             self.x = self.game.dungeon.current_room_size[0] - 1
-            self.rect.x = (game.dungeon.current_room_size[0] - 1) * Settings.PIXEL_SCALE
+            self.player_sprite.rect.x = (game.dungeon.current_room_size[0] - 1) * Settings.PIXEL_SCALE
         # heading east
         else:
             self.x = 1
-            self.rect.x = 1 * Settings.PIXEL_SCALE
+            self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
 
     def draw(self):
         # Tile((self.x, self.y), [self.visible_sprites])
 
-        pygame.draw.circle(self.game.screen,
-                           'green',
-                           (self.x * Settings.PIXEL_SCALE, self.y * Settings.PIXEL_SCALE),
-                           15)
+        # PlayerSprite(self, [self.game.dungeon.visible_sprites])
+        # self.game.dungeon.visible_sprites.update()
+        pass
+
+        # pygame.draw.circle(self.game.screen,
+        #                    'green',
+        #                    (self.x * Settings.PIXEL_SCALE, self.y * Settings.PIXEL_SCALE),
+        #                    15)
 
 ### Citation 001 - How to create a Zelda style game in python
 #   https://www.youtube.com/watch?v=cwWi05Icpw0
@@ -141,15 +169,8 @@ class Tile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=position)
 ### End Citation 001
 
-class Dungeon:
-    def __init__(self, game):
-        self.game = game
-        # self.player = player
-        self.current_room_size = (0, 0)
-        self.surface = pygame.display.get_surface()
-        self.player_sprites = pygame.sprite.Group()
-        self.visible_sprites = pygame.sprite.Group()
-        self.obstacle_sprites = pygame.sprite.Group()
+class Room:
+    def __init__(self):
         self.START_MAP = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -160,8 +181,6 @@ class Dungeon:
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ]
-        self.visible_room = {}
-        self.load_map(self.START_MAP)
         self.second_room = [
             [1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -172,8 +191,60 @@ class Dungeon:
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1],
         ]
+        self.third_room = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1],
+            [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+            [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ]
 
-    def load_map(self, room):
+
+class RoomFactory:
+    def __init__(self):
+        pass
+    @staticmethod
+    def build_room(room_width=14, room_height=8, **kwargs):
+        return [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ]
+
+
+class Dungeon:
+    def __init__(self, game):
+        # self.game = game
+        # self.player = player
+        self.all_rooms = {}
+        self.generate_dungeon()
+        self.current_room = None
+        self.current_room_size = (0, 0)
+        self.visible_room = {}
+        start_room = Room()
+        self.surface = pygame.display.get_surface()
+        self.player_sprites = pygame.sprite.Group()
+        self.visible_sprites = pygame.sprite.Group()
+        self.obstacle_sprites = pygame.sprite.Group()
+        self.load_room(start_room.START_MAP)
+
+    def generate_dungeon(self, size=4):
+        # loads all rooms into the all_rooms dictionary
+        for i in range(size):
+            for j in range(size):
+                room = RoomFactory.build_room()
+                self.all_rooms[(j, i)] = room
+
+
+    def load_room(self, room):
         self.current_room_size = (len(room[0]), len(room))
         self.visible_sprites.empty()  # Clear sprites from previous room
         self.visible_room.clear()
@@ -189,7 +260,7 @@ class Dungeon:
         self.visible_sprites.draw(self.surface)
         # self.player_sprites.draw(self.surface)
         # self.game.screen.blit(self.game.player.image, self.game.player.rect)
-        self.visible_sprites.update()
+        self.visible_sprites.update()  # Might need
         # for location in self.visible_room:
         #     pygame.draw.rect(self.game.screen,                                  # Screen to write to
         #                      'white',                                           # Color
@@ -203,7 +274,7 @@ class Settings:
 
     PLAYER_START_POS = (2, 2)
     PLAYER_START_ANGLE = 0
-    PLAYER_SPEED = 0.05
+    PLAYER_SPEED = 0.1
     PLAYER_ROTATION_SPEED = 0.05
 
     SCREEN_RESOLUTION = (700, 500)  # (width, height)

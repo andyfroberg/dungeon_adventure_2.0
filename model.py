@@ -1,32 +1,49 @@
+import pygame
 from dungeon import Dungeon
-from dungeon_adventure import DungeonAdventure
-from hero import Hero
-from warrior import Warrior
-from priestess import Priestess
-from thief import Thief
-from gremlin import Gremlin
-from ogre import Ogre
-from skeleton import Skeleton
-from game_difficulty import GameDifficulty
+from settings import Settings
+# from hero import Hero
+# from warrior import Warrior
+# from priestess import Priestess
+# from thief import Thief
+# from gremlin import Gremlin
+# from ogre import Ogre
+# from skeleton import Skeleton
 from player import Player
-from game import Game
-from controller import Controller
 
 class Model:
-    def __init__(self, game: Game) -> None:
-        self.__game = game
-        self.__controller: None
-        self.__player_hp: int = Hero.hp
+    def __init__(self):
+        self.__views = []
+        self.__dungeon = Dungeon()
+        self.__player = Player()
+        self.__clock = pygame.time.Clock()
 
-    # def register_view(self, view: View) -> bool:
-    #     self.__views.append(view)
-    #
-    # def notify_views(self):
-    #     for view in self.__views:
-    #         view.update()
+    def register_view(self, view):
+        self.__views.append(view)
 
-    def register_controller(self, controller):
-        self.__controller = controller
+    def notify_views(self):
+        for view in self.__views:
+            view.update()
+
+    def unregister_view(self, view_to_remove):
+        for view in self.__views:
+            if view == view_to_remove:
+                self.__views.remove(view_to_remove)
+
+    def update(self, keys_pressed):
+        # Update player state
+        self.__player.update(keys_pressed)
+
+        # Update Dungeon state
+        self.__dungeon.update()
+
+        # Update other model state
+        ######
+
+        # Update Pygame state
+        self.__clock.tick(Settings.FPS)
+
+        # Notify views after model state has been updated
+        self.notify_views()
 
     def get_player_inventory(self) -> dict:
         return self.__player_inventory

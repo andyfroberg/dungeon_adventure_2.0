@@ -11,12 +11,12 @@ class Dungeon:
         self.current_room = {}
         self.current_room_size = (0, 0)
         self.start_room = [
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ]
@@ -38,7 +38,7 @@ class Dungeon:
 
 
     def load_room(self, room):
-        # self.current_room_size = (len(room[0]), len(room))
+        self.current_room_size = (len(room[0]), len(room))
 
         for j, row in enumerate(room):
             for i, value in enumerate(row):

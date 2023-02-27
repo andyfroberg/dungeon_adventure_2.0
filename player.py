@@ -9,6 +9,7 @@ class Player:
         self.__x = Settings.PLAYER_START_POS[0]
         self.__y = Settings.PLAYER_START_POS[1]
         self.speed = Settings.PLAYER_SPEED
+        self.__hp = 100
         # self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
 
     def update(self, keys_pressed, dungeon):
@@ -70,12 +71,12 @@ class Player:
             # self.player_sprite.rect.y = (dungeon.current_room_size[
             #                                  1] - 1) * Settings.PIXEL_SCALE
         # heading south
-        elif door_pos[1] == self.game.dungeon.current_room_size[1] - 1:
+        elif door_pos[1] == dungeon.current_room_size[1] - 1:
             self.__y = 1
             # self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
         # heading west
         elif door_pos[0] == 0:
-            self.__x = self.game.dungeon.current_room_size[0] - 1
+            self.__x = dungeon.current_room_size[0] - 1
             # self.player_sprite.rect.x = (game.dungeon.current_room_size[
             #                                  0] - 1) * Settings.PIXEL_SCALE
         # heading east
@@ -114,6 +115,13 @@ class Player:
     def y(self, y_pos):
         self.__y = y_pos
 
+    @property
+    def hp(self):
+        return self.__hp
+
+    @hp.setter
+    def hp(self, new_hp):
+        self.__hp = new_hp
 
     # @property
     # def won(self) -> bool:

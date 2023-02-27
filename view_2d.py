@@ -14,6 +14,7 @@ class View2D:
 
         self.screen = pygame.display.set_mode(Settings.SCREEN_RESOLUTION)
         self.surface = pygame.display.get_surface()
+        self.clock = pygame.time.Clock()
 
         self.player_sprites = pygame.sprite.Group()
         self.visible_sprites = pygame.sprite.Group()
@@ -37,12 +38,15 @@ class View2D:
         self.draw_dungeon(dungeon) # can we pass only a subset of model state for only needed parts for dungeon?
         # draw player
         self.draw_player(player)# can we pass only a subset of model state for only needed parts for player?
+        # draw player HUD
+        self.draw_hud(player)
 
         # Extras
         pygame.display.set_caption('Dungeon Adventure 2.0')
 
         # Call update
         pygame.display.update()
+        self.clock.tick(Settings.FPS)
         # Might need to put pygame.clock.tick() here ??? (if so, add ref to clock in this class)
 
     # Maybe create # load_room() function to be called only when a new
@@ -76,9 +80,6 @@ class View2D:
                 Tile((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.visible_sprites])
 
-
-
-
         self.visible_sprites.draw(self.surface)
 
 
@@ -106,3 +107,16 @@ class View2D:
         self.player_sprite.rect.y = player.y * Settings.PIXEL_SCALE
 
         self.player_sprites.draw(self.surface)
+
+    def draw_hud(self, player):
+        pygame.draw.rect(self.screen, (20, 95, 95), (0, 400, 700, 100))
+
+
+
+        ##### There appears to be a known issue with Pygame fonts
+        ##### on M1 Macs. Can work on fixing this later. (Maybe
+        ##### just use sprites to spell out the HUD info?)
+        # my_font = pygame.font.Font('fonts/Mitr-Medium.ttf', 30)
+        #
+        # img = my_font.render('Some Text', True, (0, 0, 0))
+        # self.screen.blit(img, (10, 420))

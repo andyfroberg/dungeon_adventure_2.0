@@ -39,9 +39,6 @@ class Model:
         # Update other model state
         ######
 
-        # Update Pygame state
-        self.__clock.tick(Settings.FPS)
-
         # Notify views after model state has been updated
         self.notify_views()
 

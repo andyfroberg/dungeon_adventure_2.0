@@ -55,16 +55,16 @@ class View2D:
 
         self.room_ui = dungeon.current_room.copy()
         for row, col in self.room_ui.keys():
-            if self.room_ui[(row, col)] == 0:
+            if self.room_ui[(row, col)] == Settings.OPEN_FLOOR:
                 SpriteFloor((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.visible_sprites])
-            if self.room_ui[(row, col)] == 1:
+            if self.room_ui[(row, col)] == Settings.BRICK_WALL:
                 SpriteBrick((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.visible_sprites])
-            elif self.room_ui[(row, col)] == 2:
+            elif self.room_ui[(row, col)] == Settings.DOOR:
                 SpriteDoor((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.visible_sprites])
-            elif self.room_ui[(row, col)] == 3:
+            elif self.room_ui[(row, col)] == Settings.ROCK:
                 SpriteRock((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.visible_sprites])
 

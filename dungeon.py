@@ -59,3 +59,58 @@ class Dungeon:
         #                      1,                                                 # Stroke size
         #                      10)                                                # Border radius
 
+
+
+# class DungeonMap:
+#     def __init__(self):
+#         self.__count = 0
+#         self.__map = {}
+#
+#     def insert(self, room, coords):
+#         self.__map[(coords)] = room
+#
+#         if self.map[(coords[0])]
+#
+#
+#
+#
+# class DungeonRoomNode:
+#     def __init__(self, room=None, north=None, south=None, east=None, west=None):
+#         self.__Room = room
+#         self.__coords = (0, 0)
+#         self.__north = north
+#         self.__south = south
+#         self.__east = east
+#         self.__west = west
+#
+#     @property
+#     def north(self):
+#         return self.__north
+#
+#     @north.setter
+#     def north(self, dungeon_room_node):
+#         self.__north = dungeon_room_node
+#
+#     @property
+#     def south(self):
+#         return self.__south
+#
+#     @south.setter
+#     def south(self, dungeon_room_node):
+#         self.__south = dungeon_room_node
+#
+#     @property
+#     def east(self):
+#         return self.__east
+#
+#     @east.setter
+#     def east(self, dungeon_room_node):
+#         self.__east = dungeon_room_node
+#
+#     @property
+#     def west(self):
+#         return self.__west
+#
+#     @west.setter
+#     def west(self, dungeon_room_node):
+#         self.__west = dungeon_room_node

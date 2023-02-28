@@ -44,6 +44,7 @@ class Controller2D:
 
 
 if __name__ == "__main__":
-    game = Controller2D()
-    view = View2D(game.model)
-    game.run()
+    pass
+    # game = Controller2D()
+    # view = View2D(game.model)
+    # game.run()

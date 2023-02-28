@@ -1,4 +1,4 @@
-
+from game_difficulty import GameDifficulty
 
 class Settings:
     # Game Setup
@@ -6,6 +6,9 @@ class Settings:
     FPS = 60  # Frames per second
     PIXEL_SCALE = 50
     SPRITE_SCALE = 1
+
+    # Game Difficulty
+    GAME_DIFFICULTY = GameDifficulty.NORMAL
 
     # Player Stats
     PLAYER_START_POS = (2, 2)
@@ -15,6 +18,8 @@ class Settings:
     # Dungeon Character Stats
 
     # Room Settings
+    ROOM_MIN_WIDTH = 3
+    ROOM_MIN_HEIGHT = 3
     ROOM_MAX_WIDTH = 14
     ROOM_MAX_HEIGHT = 8
     OPEN_FLOOR = 0

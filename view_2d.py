@@ -1,12 +1,14 @@
 import pygame
 from settings import Settings
+from view import View
 from sprite_floor import SpriteFloor
 from sprite_brick import SpriteBrick
 from sprite_door import SpriteDoor
 from sprite_rock import SpriteRock
 from player_sprite import PlayerSprite
 
-class View2D:
+
+class View2D(View):
     def __init__(self, model):
         model.register_view(self)
 

@@ -1,6 +1,7 @@
 import pygame
 from settings import Settings
 from player_sprite import PlayerSprite
+import math
 
 
 class Player:
@@ -44,15 +45,23 @@ class Player:
             # self.game.dungeon.load_room(RoomFactory.build_room())
             self.set_pos_new_room(dx, dy, dungeon)
 
-    def can_move_x(self, dx, dungeon):
+    def can_move_x(self, dx, dungeon):  # USE Pygame collision instead
         # return (int(self.__x + dx),
         #         int(self.__y)) not in dungeon.current_room
-        return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
+        # return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
+        if dx < 0:  # Direction is west
+            return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
+        else:  # Direction is east
+            return dungeon.current_room[(math.ceil(self.__x + dx), int(self.__y))] == 0
 
-    def can_move_y(self, dy, dungeon):
+    def can_move_y(self, dy, dungeon):  # USE Pygame collision instead
         # return (int(self.__x),
         #         int(self.__y + dy)) not in dungeon.current_room
-        return dungeon.current_room[(int(self.__x), int(self.__y + dy))] == 0
+        # return dungeon.current_room[(int(self.__x), int(self.__y + dy)] == 0
+        if dy < 0:  # Direction is north
+            return dungeon.current_room[(int(self.__x), int(self.__y + dy))] == 0
+        else:  # Direction is south
+            return dungeon.current_room[(int(self.__x), math.ceil(self.__y + dy))] == 0
 
     def can_pass_through_door(self, dx, dy, dungeon):
         new_pos = (int(self.__x + dx), int(self.__y + dy))

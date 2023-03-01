@@ -14,8 +14,8 @@ class PlayerSprite(pygame.sprite.Sprite):
             center=(player.x * Settings.PIXEL_SCALE,  # Might need to be topleft=...
                     player.y * Settings.PIXEL_SCALE))
 
-    def update(self):
-        self.rect.x = self.player.x * Settings.PIXEL_SCALE
-        self.rect.y = self.player.y * Settings.PIXEL_SCALE
+    # def update(self):
+    #     self.rect.x = self.player.x * Settings.PIXEL_SCALE
+    #     self.rect.y = self.player.y * Settings.PIXEL_SCALE
 
 ### End Citation 002

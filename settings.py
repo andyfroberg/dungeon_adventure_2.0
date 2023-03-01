@@ -14,6 +14,7 @@ class Settings:
     PLAYER_START_POS = (2, 2)
     PLAYER_START_ANGLE = 0
     PLAYER_SPEED = 0.05
+    PLAYER_BOUNDING_RECT = 0.25
 
     # Dungeon Character Stats
 

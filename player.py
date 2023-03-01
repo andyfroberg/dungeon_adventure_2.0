@@ -8,7 +8,11 @@ class Player:
     def __init__(self):
         self.__name = ''
         self.__x = Settings.PLAYER_START_POS[0]
+        self.__x_left = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
+        self.__x_right = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
         self.__y = Settings.PLAYER_START_POS[1]
+        self.__y_top = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
+        self.__y_bottom = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
         self.speed = Settings.PLAYER_SPEED
         self.__hp = 100
         # self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
@@ -34,10 +38,14 @@ class Player:
 
         if self.can_move_x(dx, dungeon):
             self.__x += dx
+            self.__x_left = self.__x - Settings.PLAYER_BOUNDING_RECT
+            self.__x_right = self.__x + Settings.PLAYER_BOUNDING_RECT
             # self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
 
         if self.can_move_y(dy, dungeon):
             self.__y += dy
+            self.__y_top = self.__y - Settings.PLAYER_BOUNDING_RECT
+            self.__y_bottom = self.__y + Settings.PLAYER_BOUNDING_RECT
             # self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
 
         # If the player hits a door, then take them to the new room.
@@ -49,19 +57,25 @@ class Player:
         # return (int(self.__x + dx),
         #         int(self.__y)) not in dungeon.current_room
         # return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
+
         if dx < 0:  # Direction is west
-            return dungeon.current_room[(int(self.__x + dx), int(self.__y))] == 0
+            return dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.OPEN_FLOOR or \
+                dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.DOOR
         else:  # Direction is east
-            return dungeon.current_room[(math.ceil(self.__x + dx), int(self.__y))] == 0
+            return dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.OPEN_FLOOR or \
+                dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.DOOR
+
 
     def can_move_y(self, dy, dungeon):  # USE Pygame collision instead
         # return (int(self.__x),
         #         int(self.__y + dy)) not in dungeon.current_room
         # return dungeon.current_room[(int(self.__x), int(self.__y + dy)] == 0
         if dy < 0:  # Direction is north
-            return dungeon.current_room[(int(self.__x), int(self.__y + dy))] == 0
+            return dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.OPEN_FLOOR or \
+                   dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.DOOR
         else:  # Direction is south
-            return dungeon.current_room[(int(self.__x), math.ceil(self.__y + dy))] == 0
+            return dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.OPEN_FLOOR or \
+                   dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.DOOR
 
     def can_pass_through_door(self, dx, dy, dungeon):
         new_pos = (int(self.__x + dx), int(self.__y + dy))

@@ -1,5 +1,5 @@
 import random
-
+from dungeon_character_factory import DungeonCharacterFactory
 
 class Room:
     """
@@ -45,6 +45,14 @@ class Room:
         self.__top = "* * *"
         self.__mid = "*   *"
         self.__bottom = "* * *"
+        self.__contains_monster = random.randchoice(True, False)
+        self.__monster = None
+        if self.__contains_monster:
+            stats = {}  # Can this be generated in the DCFactory instead?
+            rand = random.randint(0, 2)
+            name = DungeonCharacterFactory.create_monster_name()
+            if rand == 0:
+                self.__monster = DungeonCharacterFactory.create_gremlin(name, stats)
 
     def get_top(self):
         """
@@ -437,6 +445,14 @@ class Room:
         :return: None
         """
         self.__vp_visited = truth_val
+
+    @property
+    def contains_monster(self) -> bool:
+        return self.__contains_monster
+
+    @contains_monster.setter
+    def contains_monster(self, val: bool) -> None:
+        self.__contains_monster = val
 
     def clear_all(self):
         self.__healing_potion_count = 0

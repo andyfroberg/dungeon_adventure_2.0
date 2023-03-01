@@ -1,53 +1,32 @@
-import pygame
-from dungeon import Dungeon
-from settings import Settings
-# from hero import Hero
-# from warrior import Warrior
-# from priestess import Priestess
-# from thief import Thief
-# from gremlin import Gremlin
-# from ogre import Ogre
-# from skeleton import Skeleton
+from abc import ABCMeta, abstractmethod, abstractproperty
+from game_type import GameType
+from game_difficulty import GameDifficulty
 from player import Player
+# from model import Model
+# from view import View
+# from controller import Controller
+from dungeon import Dungeon
 
-class Model:
-    def __init__(self):
-        self.__views = []
+
+class Game(metaclass=ABCMeta):
+    def __init__(self, game_type: GameType, game_difficulty: GameDifficulty,
+                 player: Player) -> None:
+        self.__game_type = game_type
+        self.__game_difficulty = game_difficulty
+        self.__quit_game = False
+        self.__player = player
+        # self.__model = model
+        # self.__view = view
+        # self.__controller = controller
         self.__dungeon = Dungeon()
-        self.__player = Player()
-        self.__clock = pygame.time.Clock()
 
-    def register_view(self, view):
-        self.__views.append(view)
+    @abstractmethod
+    def start(self):
+        pass
 
-    def notify_views(self):
-        for view in self.__views:
-            view.update(self)  # Passes itself as state so that view can change accordingly
-
-    def unregister_view(self, view_to_remove):
-        for view in self.__views:
-            if view == view_to_remove:
-                self.__views.remove(view_to_remove)
-
-    def update(self, keys_pressed):
-        # Update player state
-        self.__player.update(keys_pressed, self.__dungeon)
-
-        # Update Dungeon state
-        self.__dungeon.update()
-
-        # Update other model state
-        ######
-
-        # Update Pygame state
-        self.__clock.tick(Settings.FPS)
-
-        # Notify views after model state has been updated
-        self.notify_views()
-
-    @property
-    def player(self):
-        return self.__player
+    @abstractmethod
+    def loop(self):
+        pass
 
     def get_player_inventory(self) -> dict:
         return self.__player_inventory
@@ -63,6 +42,10 @@ class Model:
         :return: string
         """
         return self.__player_name
+
+    @property
+    def game_difficulty(self):
+        return self.__game_difficulty
 
     @player_name.setter
     def player_name(self, name: str) -> None:
@@ -91,21 +74,12 @@ class Model:
         self.__dungeon = dungeon
 
     @property
-    def quit(self) -> bool:
-        """
-        Returns if the player has quit the game.
-        :return: bool
-        """
-        return self.__quit
+    def quit_game(self) -> bool:
+        return self.__quit_game
 
-    @quit.setter
-    def quit(self, val: bool) -> None:
-        """
-        Sets if the player has quit the game.
-        :param truth_value: bool
-        :return: None
-        """
-        self.__quit = val
+    @quit_game.setter
+    def quit_game(self, quit_game: bool) -> None:
+        self.__quit_game = quit_game
 
     @property
     def player_won(self) -> bool:
@@ -140,3 +114,9 @@ class Model:
         :return: None
         """
         self.__player_is_dead = val
+
+
+if __name__ == "__main__":
+    # Game menu will be displayed before this?
+    game = Game()
+    game.start()

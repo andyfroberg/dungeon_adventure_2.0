@@ -1,0 +1,67 @@
+Index: priestess.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from hero import Hero\nfrom dungeon_character import DungeonCharacter\nimport random\nfrom room import Room\n\n\nclass Priestess(Hero):\n\n    def __init__(self, name: str, stats: dict) -> None:\n        super().__init__(name, stats)\n        self.__initial_hp = self.hp\n        self.__heal_range = range(0, 26)\n    def attack(self, opponent: DungeonCharacter) -> None:\n        damage = random.randint(self.damage_range[0], self.damage_range[1])\n        chance = random.random()\n        if chance <= self.hit_prob:\n            opponent.hp -= damage\n\n    def special(self) -> None:\n        \"\"\"\n        heal\n        :return:\n        \"\"\"\n        self.hp += self.__initial_hp - self.hp\n\n    def battle(self, opponent: DungeonCharacter):\n        if self.attack_speed > opponent.attack_speed:\n            while self.attack_speed > opponent.attack_speed:\n                self.attack(opponent)\n                self.attack_speed -= 1\n        elif self.attack_speed == opponent.attack_speed:\n            pass\n        else:\n            while self.attack_speed < opponent.attack_speed:\n                opponent.attack(self)\n                if self.hp in self.__heal_range:\n                    self.special()\n                opponent.attack_speed -= 1\n\n    def move(self, room):\n        \"\"\"This method updates the current location of the Adventurer\"\"\"\n        # check to make sure a room is being passed\n        if isinstance(room, Room):\n            self._location = room\n        else:\n            raise TypeError(\"That's not a room...\")\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/priestess.py b/priestess.py
+--- a/priestess.py	(revision a6c2920f1d2a366cdb981a81c5c99a98b2b2861b)
++++ b/priestess.py	(date 1677446791532)
+@@ -10,6 +10,7 @@
+         super().__init__(name, stats)
+         self.__initial_hp = self.hp
+         self.__heal_range = range(0, 26)
++        
+     def attack(self, opponent: DungeonCharacter) -> None:
+         damage = random.randint(self.damage_range[0], self.damage_range[1])
+         chance = random.random()
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"96ce9220-d71b-4349-8278-2da3b905416d\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/hero.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/hero.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/warrior.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/warrior.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2KvTjJCu0u9jRfL2cac4sv8mc7R\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"last_opened_file_path\": \"/Users/temesgentesfamichael/PycharmProjects/TCSS_504/Course_Project/dungeon_adventure_2.0\",\n    \"settings.editor.selected.configurable\": \"com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable\"\n  }\n}]]></component>\n  <component name=\"RunManager\">\n    <configuration name=\"dungeon_adventure\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"src\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"$PROJECT_DIR$/../../../TCSS_501/Assignment01/src/venv/bin/python\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/dungeon_adventure.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"true\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"96ce9220-d71b-4349-8278-2da3b905416d\" name=\"Changes\" comment=\"\" />\n      <created>1674854191195</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1674854191195</updated>\n      <workItem from=\"1674854192442\" duration=\"6192000\" />\n      <workItem from=\"1675021785129\" duration=\"42000\" />\n      <workItem from=\"1675042061660\" duration=\"4000\" />\n      <workItem from=\"1675404785063\" duration=\"598000\" />\n      <workItem from=\"1676036412581\" duration=\"4000\" />\n      <workItem from=\"1676054033808\" duration=\"3253000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a6c2920f1d2a366cdb981a81c5c99a98b2b2861b)
++++ b/.idea/workspace.xml	(date 1677039110309)
+@@ -1,11 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="96ce9220-d71b-4349-8278-2da3b905416d" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/hero.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/warrior.py" beforeDir="false" afterPath="$PROJECT_DIR$/warrior.py" afterDir="false" />
+-    </list>
++    <list default="true" id="96ce9220-d71b-4349-8278-2da3b905416d" name="Changes" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -35,16 +31,16 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "/Users/temesgentesfamichael/PycharmProjects/TCSS_504/Course_Project/dungeon_adventure_2.0",
+-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/temesgentesfamichael/PycharmProjects/TCSS_504/Course_Project/dungeon_adventure_2.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RunManager">
+     <configuration name="dungeon_adventure" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+       <module name="src" />

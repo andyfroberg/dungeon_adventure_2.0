@@ -1,0 +1,17 @@
+
+
+Features
+[ ] Need key to open door
+[ ] Need boss key to open door to exit
+[ ] Need boss key to open door to exit
+[ ] Inventory menu at bottom of screen
+[ ] Main game menu
+
+
+
+Chores
+[X] Set new player pos after going through a door
+[ ] Add sprites for dungeon and character
+[ ] Data structure for getting all rooms
+[ ] Fix collisions for player sprite - shouldn't intersect with walls on bottom and right edges
+

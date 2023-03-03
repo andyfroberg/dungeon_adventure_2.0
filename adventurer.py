@@ -140,10 +140,4 @@ class Adventurer:
 
 
 if __name__ == "__main__":
-    a = Adventurer("Andy")
-    print(a.hp)
-    a.use_health_potion()
-    print(a.hp)
-    a.take_pit_damage()
-    print(a.hp)
-    print(str(a))
+    pass

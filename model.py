@@ -18,6 +18,7 @@ class Model:
         self.__clock = pygame.time.Clock()
         self.__main_menu = True
         self.__pause_menu = False
+        self.__options_menu = False
         self.__battle = False
 
     def register_view(self, view):
@@ -32,15 +33,17 @@ class Model:
             if view == view_to_remove:
                 self.__views.remove(view_to_remove)
 
-    def update(self, keys_pressed, mouse_pos, mouse_clicked):
-        # Update player state
-        self.__player.update(keys_pressed, self.__dungeon)
+    def update(self, keys_pressed):
+        if not self.__main_menu and not self.__pause_menu \
+                and not self.__options_menu:
+            # Update player state
+            self.__player.update(keys_pressed, self.__dungeon)
 
-        # Update Dungeon state
-        self.__dungeon.update()
+            # Update Dungeon state
+            self.__dungeon.update()
 
-        # Update other model state
-        ######
+            if keys_pressed[pygame.K_ESCAPE]:
+                self.__pause_menu = True
 
         # Notify views after model state has been updated
         self.notify_views()

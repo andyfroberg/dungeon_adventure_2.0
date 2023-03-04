@@ -9,6 +9,7 @@ class Controller2D:
         self.__model = Model()
         self.__view = None
         self.__running = True
+        self.__mouse_clicked = False
 
     def run(self):
         while self.__running:
@@ -18,24 +19,29 @@ class Controller2D:
                     pygame.quit()
                     sys.exit()
 
-            # Get the keys pressed by the user as well as the mouse position.
-            keys = pygame.key.get_pressed()
-            mouse_pos = pygame.mouse.get_pos()
-            mouse_clicked = pygame.mouse.get_pressed()
+                # Get the keys the player is pressing this loop iteration.
+                keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_ESCAPE]:
-                pygame.quit()
-                sys.exit()
+                self.__mouse_clicked = False  # Reset to avoid multiple clicks
+                if self.__model.main_menu:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        for button in self.__view.main_menu_buttons:
+                            bounding_rect = pygame.Rect(button.rect)
+                            if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                                if button.name == 'new game':
+                                    self.model.main_menu = False  # start new game
+                                elif button.name == 'load game':
+                                    pass  # load saved game
+                                elif button.name == 'options':
+                                    pass  # options menu
 
-            if self.__model.main_menu or self.__model.pause_menu:
-                # Check if the user has pressed a button in the menu system.
-                for button in self.__view.main_menu_buttons:
-                    rect = button.rect
+                    if keys[pygame.K_ESCAPE]:
+                        self.__model.main_menu = False
 
-            # 2) Update model
-            # Player movement
-            # Should this be moved to the controller? Should all input handling be moved to controller?
-            self.__model.update(keys, mouse_pos, mouse_clicked)
+                if self.__model.pause_menu:
+                    pass
+
+            self.__model.update(keys)
 
     def register_view(self, view):
         self.__view = view

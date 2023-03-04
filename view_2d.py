@@ -84,6 +84,8 @@ class View2D(View):
         pause_menu.add_background('menu/main_menu_v1.png')
         self.__menus['pause'] = pause_menu
 
+        # Game over menu
+
     def load_battle(self):
         # Build pause menu
         attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)

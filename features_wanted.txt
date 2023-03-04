@@ -6,7 +6,15 @@ Features
 [ ] Need boss key to open door to exit
 [ ] Inventory menu at bottom of screen
 [ ] Main game menu
+[ ] Pause menu
+[ ] Death menu / game over menu (show what killed player - falling pit, ogre, etc.)
+[ ] Save and load game - (maybe use __str__ or __get_attr__ to create string of all instance fields,
+then load_state() or some other method to load the state back in when the player loads a game)
+[ ] Use a SQLite database
 
+Wishlist
+[ ] Installer (for windows, maybe for macOS or linux too)
+[ ] Deployed to cloud so that users can access game from a web browser
 
 
 Chores
@@ -15,3 +23,9 @@ Chores
 [ ] Data structure for getting all rooms
 [ ] Fix collisions for player sprite - shouldn't intersect with walls on bottom and right edges
 
+
+
+
+Extra Credit
+[ ] Artwork - menu screen, sprites, battle menus, etc.
+[ ] Cheats - god mode (destroy enemies in one strike, all dungeon keys and pillars immediately, etc.)

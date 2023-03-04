@@ -16,10 +16,10 @@ class Model:
         self.__dungeon = Dungeon()
         self.__player = Player()
         self.__clock = pygame.time.Clock()
-        self.__main_menu = False
+        self.__main_menu = True
         self.__pause_menu = False
         self.__options_menu = False
-        self.__battle = True
+        self.__battle = False
 
     def register_view(self, view):
         self.__views.append(view)

@@ -16,6 +16,9 @@ class Model:
         self.__dungeon = Dungeon()
         self.__player = Player()
         self.__clock = pygame.time.Clock()
+        self.__main_menu = True
+        self.__pause_menu = False
+        self.__battle = False
 
     def register_view(self, view):
         self.__views.append(view)
@@ -29,7 +32,7 @@ class Model:
             if view == view_to_remove:
                 self.__views.remove(view_to_remove)
 
-    def update(self, keys_pressed):
+    def update(self, keys_pressed, mouse_pos, mouse_clicked):
         # Update player state
         self.__player.update(keys_pressed, self.__dungeon)
 
@@ -52,6 +55,30 @@ class Model:
     @property
     def model(self):
         return self.__model
+
+    @property
+    def main_menu(self):
+        return self.__main_menu
+
+    @main_menu.setter
+    def main_menu(self, boolean):
+        self.__main_menu = boolean
+
+    @property
+    def pause_menu(self):
+        return self.__pause_menu
+
+    @pause_menu.setter
+    def pause_menu(self, boolean):
+        self.__pause_menu = boolean
+
+    @property
+    def battle(self):
+        return self.__battle
+
+    @main_menu.setter
+    def battle(self, boolean):
+        self.__battle = boolean
 
     @property
     def player_name(self) -> str:
@@ -137,3 +164,4 @@ class Model:
         :return: None
         """
         self.__player_is_dead = val
+

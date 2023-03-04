@@ -7,6 +7,7 @@ class Controller2D:
     def __init__(self):
         pygame.init()
         self.__model = Model()
+        self.__view = None
         self.__running = True
 
     def run(self):
@@ -17,18 +18,27 @@ class Controller2D:
                     pygame.quit()
                     sys.exit()
 
-            # get_pressed() returns a list of booleans of the key currently
-            # pressed by the user
+            # Get the keys pressed by the user as well as the mouse position.
             keys = pygame.key.get_pressed()
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_clicked = pygame.mouse.get_pressed()
 
             if keys[pygame.K_ESCAPE]:
                 pygame.quit()
                 sys.exit()
 
+            if self.__model.main_menu or self.__model.pause_menu:
+                # Check if the user has pressed a button in the menu system.
+                for button in self.__view.main_menu_buttons:
+                    rect = button.rect
+
             # 2) Update model
             # Player movement
             # Should this be moved to the controller? Should all input handling be moved to controller?
-            self.__model.update(keys)
+            self.__model.update(keys, mouse_pos, mouse_clicked)
+
+    def register_view(self, view):
+        self.__view = view
 
     @property
     def model(self):

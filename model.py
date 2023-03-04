@@ -16,17 +16,17 @@ class Model:
         self.__dungeon = Dungeon()
         self.__player = Player()
         self.__clock = pygame.time.Clock()
-        self.__main_menu = True
+        self.__main_menu = False
         self.__pause_menu = False
         self.__options_menu = False
-        self.__battle = False
+        self.__battle = True
 
     def register_view(self, view):
         self.__views.append(view)
 
     def notify_views(self):
         for view in self.__views:
-            view.update(self)  # Passes itself as state so that view can change accordingly
+            view.update(self)
 
     def unregister_view(self, view_to_remove):
         for view in self.__views:
@@ -79,7 +79,7 @@ class Model:
     def battle(self):
         return self.__battle
 
-    @main_menu.setter
+    @battle.setter
     def battle(self, boolean):
         self.__battle = boolean
 

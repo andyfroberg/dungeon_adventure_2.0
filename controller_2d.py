@@ -55,6 +55,20 @@ class Controller2D:
                     if keys[pygame.K_ESCAPE]:
                         self.__model.pause_menu = False
 
+                if self.__model.battle:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        for button in self.__view.menus['battle'].buttons:
+                            bounding_rect = pygame.Rect(button.rect)
+                            if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                                if button.name == 'continue':
+                                    self.model.pause_menu = False
+                                elif button.name == 'save game':
+                                    pass  # save game
+                                elif button.name == 'load game':
+                                    pass  # load saved game
+                                elif button.name == 'options':
+                                    pass  # options menu
+
             self.__model.update(keys)
 
     def register_view(self, view):

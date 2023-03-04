@@ -20,6 +20,7 @@ class View2D(View):
 
         self.__player_sprites = pygame.sprite.Group()
         self.__world_sprites = pygame.sprite.Group()
+        self.__monster_sprites = pygame.sprite.Group()
 
         self.__menus = {}
 
@@ -41,7 +42,9 @@ class View2D(View):
             return
 
         if model.battle:
-            pass
+            self.load_battle()
+            self.draw_battle()
+            return
 
 
         if pygame.mouse.get_visible():
@@ -81,9 +84,25 @@ class View2D(View):
         pause_menu.add_background('menu/main_menu_v1.png')
         self.__menus['pause'] = pause_menu
 
+    def load_battle(self):
+        # Build pause menu
+        attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
+        heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
+        battle_ui_buttons = [attack_btn, heal_btn]
+        battle_ui = Menu('Battle Menu Test', 'Dungeon Escape - Battle!', (10, 10, 10), battle_ui_buttons)
+        battle_ui.add_background('battle/battle_bg_brick.png')
+        self.__menus['battle'] = battle_ui
 
+    def draw_battle(self):
+        pygame.mouse.set_visible(True)
+        pygame.display.set_caption(self.__menus['battle'].caption)
+        self.__screen.fill(self.__menus['battle'].background_color)
+        self.__screen.blit(self.__menus['battle'].background_img, (0, 0))
+        self.__screen.blit(pygame.image.load('battle/battle_ogre.png').convert_alpha(), (0, 0))
+        for button in self.__menus['battle'].buttons:
+            self.__screen.blit(button.img, (button.x, button.y))
 
-
+        pygame.display.update()
 
     def draw_main_menu(self):
         pygame.mouse.set_visible(True)
@@ -106,10 +125,6 @@ class View2D(View):
             self.__screen.blit(button.img, (button.x, button.y))
 
         pygame.display.update()
-
-
-    def battle(self):
-        pass
 
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')
@@ -147,6 +162,9 @@ class View2D(View):
                      [self.__world_sprites])
             elif self.room_ui[(row, col)] == Settings.ROCK:
                 SpriteRock((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                     [self.__world_sprites])
+            elif self.room_ui[(row, col)] == Settings.OGRE:
+                SpriteDoor((row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                      [self.__world_sprites])
 
         self.__world_sprites.draw(self.__surface)

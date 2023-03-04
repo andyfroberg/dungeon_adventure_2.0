@@ -27,5 +27,6 @@ class Settings:
     BRICK_WALL = 1
     DOOR = 2
     ROCK = 3
+    OGRE = 4
 
 

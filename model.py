@@ -16,13 +16,17 @@ class Model:
         self.__dungeon = Dungeon()
         self.__player = Player()
         self.__clock = pygame.time.Clock()
+        self.__main_menu = True
+        self.__pause_menu = False
+        self.__options_menu = False
+        self.__battle = False
 
     def register_view(self, view):
         self.__views.append(view)
 
     def notify_views(self):
         for view in self.__views:
-            view.update(self)  # Passes itself as state so that view can change accordingly
+            view.update(self)
 
     def unregister_view(self, view_to_remove):
         for view in self.__views:
@@ -30,14 +34,16 @@ class Model:
                 self.__views.remove(view_to_remove)
 
     def update(self, keys_pressed):
-        # Update player state
-        self.__player.update(keys_pressed, self.__dungeon)
+        if not self.__main_menu and not self.__pause_menu \
+                and not self.__options_menu:
+            # Update player state
+            self.__player.update(keys_pressed, self.__dungeon)
 
-        # Update Dungeon state
-        self.__dungeon.update()
+            # Update Dungeon state
+            self.__dungeon.update()
 
-        # Update other model state
-        ######
+            if keys_pressed[pygame.K_ESCAPE]:
+                self.__pause_menu = True
 
         # Notify views after model state has been updated
         self.notify_views()
@@ -52,6 +58,30 @@ class Model:
     @property
     def model(self):
         return self.__model
+
+    @property
+    def main_menu(self):
+        return self.__main_menu
+
+    @main_menu.setter
+    def main_menu(self, boolean):
+        self.__main_menu = boolean
+
+    @property
+    def pause_menu(self):
+        return self.__pause_menu
+
+    @pause_menu.setter
+    def pause_menu(self, boolean):
+        self.__pause_menu = boolean
+
+    @property
+    def battle(self):
+        return self.__battle
+
+    @battle.setter
+    def battle(self, boolean):
+        self.__battle = boolean
 
     @property
     def player_name(self) -> str:
@@ -137,3 +167,4 @@ class Model:
         :return: None
         """
         self.__player_is_dead = val
+

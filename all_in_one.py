@@ -43,9 +43,6 @@ class AllInOne:
             pygame.display.update()
             self.clock.tick(Settings.FPS)
 
-### Citation 002 - Pygame Documentation - Sprite Base Class
-### https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
-###
 class PlayerSprite(pygame.sprite.Sprite):
     def __init__(self, player, groups):
         super().__init__(groups)
@@ -60,10 +57,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.rect.x = self.player.x * Settings.PIXEL_SCALE
         self.rect.y = self.player.y * Settings.PIXEL_SCALE
 
-
-
-
-### End Citation 002
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, position, groups):
@@ -158,17 +151,11 @@ class Player(pygame.sprite.Sprite):
         #                    (self.x * Settings.PIXEL_SCALE, self.y * Settings.PIXEL_SCALE),
         #                    15)
 
-### Citation 001 - How to create a Zelda style game in python
-#   https://www.youtube.com/watch?v=cwWi05Icpw0
-#
-# The sprite functionality of this game was heavily influenced by the
-# above video which explains how to use sprites in Pygame.
 class Tile(pygame.sprite.Sprite):
     def __init__(self, position, groups):
         super().__init__(groups)
         self.image = pygame.image.load('sprites/brick_brown_50x50_v3.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=position)
-### End Citation 001
 
 class Room:
     def __init__(self):

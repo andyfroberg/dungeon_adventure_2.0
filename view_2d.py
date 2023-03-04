@@ -1,6 +1,7 @@
 import pygame
 from settings import Settings
 from view import View
+from menu import Menu
 from button import Button
 from sprite_floor import SpriteFloor
 from sprite_brick import SpriteBrick
@@ -20,17 +21,18 @@ class View2D(View):
         self.__player_sprites = pygame.sprite.Group()
         self.__world_sprites = pygame.sprite.Group()
 
-        self.__main_menu_buttons = []
-        self.__pause_menu_buttons = []
-        self.__options_menu_buttons = []
+        self.__menus = {}
 
         # Dungeon visual elements
         self.room_ui = {}
 
         self.player_sprite = None
 
+        self.load_menus()
+
     def update(self, model):
         if model.main_menu:
+            # self.load_menus()
             self.draw_main_menu()
             return
 
@@ -50,34 +52,67 @@ class View2D(View):
         player = model.player
         self.draw_frame(dungeon, player)
 
+    def load_menus(self):
+        # Build main menu
+        main_new_game_btn = Button('new game', 'menu/new_game_v2_0.75x.png', 50, 200, 242, 34)
+        main_load_game_btn = Button('load game', 'menu/load_game_v2_0.75x.png', 50, 250, 242, 34)
+        main_options_btn = Button('options', 'menu/options_v1_0.75x.png', 50, 300, 242, 34)
+        main_menu_buttons = [main_new_game_btn, main_load_game_btn, main_options_btn]
+        main_menu = Menu('Main Menu', 'Dungeon Escape - Main Menu', (10,10,10), main_menu_buttons)
+        main_menu.add_background('menu/main_menu_v1.png')
+        self.__menus['main'] = main_menu
+
+        # Build character selection menu
+
+        # Build game difficulty menu
+
+        # Build options menu
+
+        # Build load game menu
+
+        # Build pause menu
+        pause_continue_btn = Button('continue', 'menu/continue.png', 50, 50, 323, 46)
+        pause_save_btn = Button('save', 'menu/save_game.png', 50,100, 323, 46)
+        pause_load_btn = Button('options', 'menu/load_game_v1.png', 50,150, 323, 46)
+        pause_options_btn = Button('options', 'menu/options_v1.png', 50, 200, 323, 46)
+        pause_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 250, 323, 46)
+        pause_menu_buttons = [pause_continue_btn, pause_save_btn, pause_load_btn, pause_options_btn, pause_main_menu_btn]
+        pause_menu = Menu('Pause Menu', 'Dungeon Escape - Paused', (10,10,10), pause_menu_buttons)
+        pause_menu.add_background('menu/main_menu_v1.png')
+        self.__menus['pause'] = pause_menu
+
+
+
+
+
     def draw_main_menu(self):
-        pygame.display.set_caption('Dungeon Adventure 2.0')
         pygame.mouse.set_visible(True)
-        self.__screen.fill((0, 0, 0))
-        main_menu_bg = pygame.image.load('menu/main_menu_v1.png')
-        dungeon_escape = pygame.image.load('menu/dungeon_escape_v1_1x.png')
-        new_game_btn = Button('new game', 'menu/new_game_v2_0.75x.png', 50, 200, 242, 34)
-        self.__main_menu_buttons.append(new_game_btn)
-        load_game_btn = Button('load game', 'menu/load_game_v2_0.75x.png', 50, 250, 242, 34)
-        self.__main_menu_buttons.append(load_game_btn)
-        options_btn = Button('options', 'menu/options_v1_0.75x.png', 50, 300, 242, 34)
-        self.__main_menu_buttons.append(options_btn)
-        self.__screen.blit(main_menu_bg, (0, 0))
-        self.__screen.blit(dungeon_escape, (10, 50))
-        self.__screen.blit(new_game_btn.img, (new_game_btn.x, new_game_btn.y))
-        self.__screen.blit(load_game_btn.img, (load_game_btn.x, load_game_btn.y))
-        self.__screen.blit(options_btn.img, (options_btn.x, options_btn.y))
+        pygame.display.set_caption(self.__menus['main'].caption)
+        self.__screen.fill(self.__menus['main'].background_color)
+        self.__screen.blit(self.__menus['main'].background_img, (0, 0))
+        self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
+        for button in self.__menus['main'].buttons:
+            self.__screen.blit(button.img, (button.x, button.y))
 
         pygame.display.update()
 
     def draw_pause_menu(self):
-        pass
+        pygame.mouse.set_visible(True)
+        pygame.display.set_caption(self.__menus['pause'].caption)
+        self.__screen.fill(self.__menus['pause'].background_color)
+        self.__screen.blit(self.__menus['pause'].background_img, (0, 0))
+        # self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
+        for button in self.__menus['pause'].buttons:
+            self.__screen.blit(button.img, (button.x, button.y))
+
+        pygame.display.update()
+
 
     def battle(self):
         pass
 
     def draw_frame(self, dungeon, player):
-        pygame.display.set_caption('Dungeon Adventure 2.0')
+        pygame.display.set_caption('Dungeon Escape')
         self.__screen.fill((178, 178, 178))
         # draw dungeon
         self.draw_dungeon(dungeon) # can we pass only a subset of model state for only needed parts for dungeon?
@@ -140,13 +175,5 @@ class View2D(View):
         # self.screen.blit(img, (20, 420))
 
     @property
-    def main_menu_buttons(self):
-        return self.__main_menu_buttons
-
-    @property
-    def pause_menu_buttons(self):
-        return self.__pause_menu_buttons
-
-    @property
-    def options_menu_buttons(self):
-        return self.__options_menu_buttons
+    def menus(self):
+        return self.__menus

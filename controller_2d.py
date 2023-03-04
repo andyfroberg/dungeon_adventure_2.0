@@ -25,7 +25,7 @@ class Controller2D:
                 self.__mouse_clicked = False  # Reset to avoid multiple clicks
                 if self.__model.main_menu:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        for button in self.__view.main_menu_buttons:
+                        for button in self.__view.menus['main'].buttons:
                             bounding_rect = pygame.Rect(button.rect)
                             if bounding_rect.collidepoint(pygame.mouse.get_pos()):
                                 if button.name == 'new game':
@@ -39,7 +39,21 @@ class Controller2D:
                         self.__model.main_menu = False
 
                 if self.__model.pause_menu:
-                    pass
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        for button in self.__view.menus['pause'].buttons:
+                            bounding_rect = pygame.Rect(button.rect)
+                            if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                                if button.name == 'continue':
+                                    self.model.pause_menu = False
+                                elif button.name == 'save game':
+                                    pass  # save game
+                                elif button.name == 'load game':
+                                    pass  # load saved game
+                                elif button.name == 'options':
+                                    pass  # options menu
+
+                    if keys[pygame.K_ESCAPE]:
+                        self.__model.pause_menu = False
 
             self.__model.update(keys)
 

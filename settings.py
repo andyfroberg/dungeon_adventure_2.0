@@ -9,6 +9,7 @@ class Settings:
     WINDOW_TOP_LEFT = (0, 0)  # "Origin" point of window at top left of screen
 
 
+
     # Game Difficulty
     GAME_DIFFICULTY = GameDifficulty.NORMAL
 
@@ -30,6 +31,10 @@ class Settings:
     DOOR = 2
     ROCK = 3
     OGRE = 4
+
+    # Backgrounge colors
+    BG_BLACK = (0, 0, 0)
+    ROOM_BG_FLOOR_COLOR = (178, 178, 178)  # Medium gray to match floor color
 
     # User Interface
     # Button sizes (get rid of "magic numbers")

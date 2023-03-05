@@ -5,7 +5,7 @@ import math
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, hero_type):
         self.__name = ''
         self.__x = Settings.PLAYER_START_POS[0]
         self.__x_left = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
@@ -15,6 +15,7 @@ class Player:
         self.__y_bottom = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
         self.speed = Settings.PLAYER_SPEED
         self.__hp = 100
+        self.__hero_type = hero_type  # Not needed
         # self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
 
     def update(self, keys_pressed, dungeon):
@@ -145,6 +146,10 @@ class Player:
     @hp.setter
     def hp(self, new_hp):
         self.__hp = new_hp
+
+    @property
+    def hero_type(self):
+        return self.__hero_type
 
     # @property
     # def won(self) -> bool:

@@ -3,6 +3,12 @@ from menu_ui import MenuUI
 from battle_ui import BattleUI
 from button  import Button
 from settings import Settings
+from warrior import Warrior
+from thief import Thief
+from priestess import Priestess
+from gremlin import Gremlin
+from ogre import Ogre
+from skeleton import Skeleton
 
 
 class UIOverlayFactory:
@@ -20,7 +26,6 @@ class UIOverlayFactory:
         main_menu = MenuUI('Main Menu', 'Dungeon Escape - Main Menu',
                             (10, 10, 10), [('menu/main_menu_v1.png', Settings.WINDOW_TOP_LEFT),
                                             ('menu/dungeon_escape_v1_1x.png', (10, 50))], main_menu_buttons)
-        # main_menu.add_background_layer('menu/main_menu_v1.png')
 
         return main_menu
 
@@ -39,12 +44,39 @@ class UIOverlayFactory:
                               pause_load_btn, pause_options_btn,
                               pause_main_menu_btn]
         pause_menu = MenuUI('Pause Menu', 'Dungeon Escape - Paused',
-                            (10, 10, 10), [('menu/main_menu_v1.png', Settings.WINDOW_TOP_LEFT)], pause_menu_buttons)
+                            (10, 10, 10), [('menu/main_menu_v1.png',
+                            Settings.WINDOW_TOP_LEFT)], pause_menu_buttons)
 
         return pause_menu
 
     @staticmethod
     def create_battle_menu(player, opponent):
-        pass
+        attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
+        heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
+        battle_ui_buttons = [attack_btn, heal_btn]
+        battle_ui = BattleUI('Battle Menu', 'Dungeon Escape - Battle!', Settings.BG_BLACK,
+                             [('battle/battle_bg_brick.png', Settings.WINDOW_TOP_LEFT)],
+                             battle_ui_buttons, player, opponent)
+
+        if isinstance(opponent, Gremlin):
+            pass
+        elif isinstance(opponent, Ogre):
+            battle_ui.add_battle_ui_layer('battle/battle_ogre.png', Settings.WINDOW_TOP_LEFT)
+        elif isinstance(opponent, Skeleton):
+            pass
+        else:
+            raise ValueError('The player does not have a valid Hero type.')
+
+
+        if isinstance(player, Priestess):
+            pass
+        elif isinstance(player, Thief):
+            pass
+        elif isinstance(player.hero_type, Warrior):
+            pass
+        else:
+            raise ValueError('The player does not have a valid Hero type.')
+
+        return battle_ui
 
 

@@ -56,6 +56,7 @@ class Controller2D:
                         self.__model.pause_menu = False
 
                 if self.__model.battle:
+                    self.__model.update(keys)
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         for button in self.__view.menus['battle'].buttons:
                             bounding_rect = pygame.Rect(button.rect)

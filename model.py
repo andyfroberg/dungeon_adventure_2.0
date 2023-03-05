@@ -2,24 +2,23 @@ import pygame
 from dungeon import Dungeon
 from settings import Settings
 # from hero import Hero
-# from warrior import Warrior
+from warrior import Warrior
 # from priestess import Priestess
 # from thief import Thief
-# from gremlin import Gremlin
-# from ogre import Ogre
-# from skeleton import Skeleton
+from ogre import Ogre ### DELETE LATER - for testing only
 from player import Player
 
 class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = Dungeon()
-        self.__player = Player()
+        self.__player = Player(Warrior('test warrior'))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True
         self.__pause_menu = False
         self.__options_menu = False
-        self.__battle = False
+        self.__battle = True
+        self.__opponent = Ogre("test")  # DELETE LATER - FOR TESTING ONLY
 
     def register_view(self, view):
         self.__views.append(view)
@@ -82,6 +81,10 @@ class Model:
     @battle.setter
     def battle(self, boolean):
         self.__battle = boolean
+
+    @property
+    def opponent(self):
+        return self.__opponent
 
     @property
     def player_name(self) -> str:

@@ -43,7 +43,7 @@ class View2D(View):
             return
 
         if model.battle:
-            self.load_battle()
+            self.load_battle(model.player, model.opponent)
             self.draw_battle()
             return
 
@@ -75,44 +75,37 @@ class View2D(View):
 
         # Game over menu
 
-    def load_battle(self):
+    def load_battle(self, player, opponent):
         # Build pause menu
-        attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
-        heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
-        battle_ui_buttons = [attack_btn, heal_btn]
-        battle_ui = MenuUI('Battle Menu Test', 'Dungeon Escape - Battle!', (10, 10, 10), [], battle_ui_buttons)
-        battle_ui.add_background_layer('battle/battle_bg_brick.png')
+        # attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
+        # heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
+        # battle_ui_buttons = [attack_btn, heal_btn]
+        # battle_ui = MenuUI('Battle Menu Test', 'Dungeon Escape - Battle!', (10, 10, 10), [], battle_ui_buttons)
+        # battle_ui.add_background_layer('battle/battle_bg_brick.png')
+        battle_ui = UIOverlayFactory.create_battle_menu(player, opponent)
         self.__menus['battle'] = battle_ui
 
     def draw_battle(self):
-        pygame.mouse.set_visible(True)
-        pygame.display.set_caption(self.__menus['battle'].caption)
-        self.__screen.fill(self.__menus['battle'].background_color)
-        self.__screen.blit(self.__menus['battle'].background_img, (0, 0))
-        self.__screen.blit(pygame.image.load('battle/battle_ogre.png').convert_alpha(), (0, 0))
-        for button in self.__menus['battle'].buttons:
-            self.__screen.blit(button.img, (button.x, button.y))
-
-        pygame.display.update()
+        # pygame.mouse.set_visible(True)
+        # pygame.display.set_caption(self.__menus['battle'].caption)
+        # self.__screen.fill(self.__menus['battle'].background_color)
+        # self.__screen.blit(self.__menus['battle'].background_img, (0, 0))
+        # self.__screen.blit(pygame.image.load('battle/battle_ogre.png').convert_alpha(), (0, 0))
+        # for button in self.__menus['battle'].buttons:
+        #     self.__screen.blit(button.img, (button.x, button.y))
+        #
+        # pygame.display.update()
+        self.__menus['battle'].draw(self)
 
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
 
     def draw_pause_menu(self):
         self.__menus['pause'].draw(self)
-        # pygame.mouse.set_visible(True)
-        # pygame.display.set_caption(self.__menus['pause'].caption)
-        # self.__screen.fill(self.__menus['pause'].background_color)
-        # self.__screen.blit(self.__menus['pause'].background_img, (0, 0))
-        # # self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
-        # for button in self.__menus['pause'].buttons:
-        #     self.__screen.blit(button.img, (button.x, button.y))
-        #
-        # pygame.display.update()
 
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')
-        self.__screen.fill((178, 178, 178))
+        self.__screen.fill(Settings.ROOM_BG_FLOOR_COLOR)
         # draw dungeon
         self.draw_dungeon(dungeon) # can we pass only a subset of model state for only needed parts for dungeon?
         # draw player

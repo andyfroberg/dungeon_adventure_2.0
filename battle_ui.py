@@ -1,7 +1,7 @@
-from menu import Menu
+from ui_overlay import UIOverlay
 
 
-class BattleMenu(Menu):
+class BattleUI(UIOverlay):
     def __init__(self, player, opponent, name='', caption='Dungeon Escape',
                  background_color=(0,0,0), buttons=[]):
         super().__init__(name, caption, background_color, buttons)

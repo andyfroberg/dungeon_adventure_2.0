@@ -1,13 +1,14 @@
 import pygame
 from settings import Settings
 from view import View
-from menu import Menu
+from menu_ui import MenuUI
 from button import Button
 from sprite_floor import SpriteFloor
 from sprite_brick import SpriteBrick
 from sprite_door import SpriteDoor
 from sprite_rock import SpriteRock
 from player_sprite import PlayerSprite
+from ui_overlay_factory import UIOverlayFactory
 
 
 class View2D(View):
@@ -57,12 +58,7 @@ class View2D(View):
 
     def load_menus(self):
         # Build main menu
-        main_new_game_btn = Button('new game', 'menu/new_game_v2_0.75x.png', 50, 200, 242, 34)
-        main_load_game_btn = Button('load game', 'menu/load_game_v2_0.75x.png', 50, 250, 242, 34)
-        main_options_btn = Button('options', 'menu/options_v1_0.75x.png', 50, 300, 242, 34)
-        main_menu_buttons = [main_new_game_btn, main_load_game_btn, main_options_btn]
-        main_menu = Menu('Main Menu', 'Dungeon Escape - Main Menu', (10,10,10), main_menu_buttons)
-        main_menu.add_background('menu/main_menu_v1.png')
+        main_menu = UIOverlayFactory.create_main_menu()
         self.__menus['main'] = main_menu
 
         # Build character selection menu
@@ -74,14 +70,7 @@ class View2D(View):
         # Build load game menu
 
         # Build pause menu
-        pause_continue_btn = Button('continue', 'menu/continue.png', 50, 50, 323, 46)
-        pause_save_btn = Button('save', 'menu/save_game.png', 50,100, 323, 46)
-        pause_load_btn = Button('options', 'menu/load_game_v1.png', 50,150, 323, 46)
-        pause_options_btn = Button('options', 'menu/options_v1.png', 50, 200, 323, 46)
-        pause_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 250, 323, 46)
-        pause_menu_buttons = [pause_continue_btn, pause_save_btn, pause_load_btn, pause_options_btn, pause_main_menu_btn]
-        pause_menu = Menu('Pause Menu', 'Dungeon Escape - Paused', (10,10,10), pause_menu_buttons)
-        pause_menu.add_background('menu/main_menu_v1.png')
+        pause_menu = UIOverlayFactory.create_pause_menu()
         self.__menus['pause'] = pause_menu
 
         # Game over menu
@@ -91,8 +80,8 @@ class View2D(View):
         attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
         heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
         battle_ui_buttons = [attack_btn, heal_btn]
-        battle_ui = Menu('Battle Menu Test', 'Dungeon Escape - Battle!', (10, 10, 10), battle_ui_buttons)
-        battle_ui.add_background('battle/battle_bg_brick.png')
+        battle_ui = MenuUI('Battle Menu Test', 'Dungeon Escape - Battle!', (10, 10, 10), [], battle_ui_buttons)
+        battle_ui.add_background_layer('battle/battle_bg_brick.png')
         self.__menus['battle'] = battle_ui
 
     def draw_battle(self):
@@ -107,26 +96,19 @@ class View2D(View):
         pygame.display.update()
 
     def draw_main_menu(self):
-        pygame.mouse.set_visible(True)
-        pygame.display.set_caption(self.__menus['main'].caption)
-        self.__screen.fill(self.__menus['main'].background_color)
-        self.__screen.blit(self.__menus['main'].background_img, (0, 0))
-        self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
-        for button in self.__menus['main'].buttons:
-            self.__screen.blit(button.img, (button.x, button.y))
-
-        pygame.display.update()
+        self.__menus['main'].draw(self)
 
     def draw_pause_menu(self):
-        pygame.mouse.set_visible(True)
-        pygame.display.set_caption(self.__menus['pause'].caption)
-        self.__screen.fill(self.__menus['pause'].background_color)
-        self.__screen.blit(self.__menus['pause'].background_img, (0, 0))
-        # self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
-        for button in self.__menus['pause'].buttons:
-            self.__screen.blit(button.img, (button.x, button.y))
-
-        pygame.display.update()
+        self.__menus['pause'].draw(self)
+        # pygame.mouse.set_visible(True)
+        # pygame.display.set_caption(self.__menus['pause'].caption)
+        # self.__screen.fill(self.__menus['pause'].background_color)
+        # self.__screen.blit(self.__menus['pause'].background_img, (0, 0))
+        # # self.__screen.blit(pygame.image.load('menu/dungeon_escape_v1_1x.png'), (10, 50))
+        # for button in self.__menus['pause'].buttons:
+        #     self.__screen.blit(button.img, (button.x, button.y))
+        #
+        # pygame.display.update()
 
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')
@@ -197,3 +179,7 @@ class View2D(View):
     @property
     def menus(self):
         return self.__menus
+
+    @property
+    def screen(self):
+        return self.__screen

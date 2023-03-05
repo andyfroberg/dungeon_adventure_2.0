@@ -1,11 +1,13 @@
 from game_difficulty import GameDifficulty
 
 class Settings:
-    # Game Setup
+    # Window Settings
     SCREEN_RESOLUTION = (700, 500)  # (width, height)
     FPS = 60  # Frames per second
     PIXEL_SCALE = 50
     SPRITE_SCALE = 1
+    WINDOW_TOP_LEFT = (0, 0)  # "Origin" point of window at top left of screen
+
 
     # Game Difficulty
     GAME_DIFFICULTY = GameDifficulty.NORMAL
@@ -28,5 +30,21 @@ class Settings:
     DOOR = 2
     ROCK = 3
     OGRE = 4
+
+    # User Interface
+    # Button sizes (get rid of "magic numbers")
+    BUTTON_WIDTH = 323
+    BUTTON_HEIGHT = 46
+    BUTTON_WIDTH_SMALL = 242
+    BUTTON_HEIGHT_SMALL = 34
+    # Button positions
+    BUTTON_X_LEFT_JUST = 50
+    BUTTON_Y_LEFT_JUST_FIRST = 50
+    BUTTON_Y_LEFT_JUST_NTH_SPACING = 50
+    BUTTON_SMALL_X_LEFT_JUST = 50
+    BUTTON_SMALL_Y_LEFT_JUST_FIRST = 50
+    BUTTON_SMALL_Y_LEFT_JUST_NTH_SPACING = 50
+    # Battle UI buttons
+
 
 

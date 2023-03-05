@@ -15,6 +15,7 @@ then load_state() or some other method to load the state back in when the player
 Wishlist
 [ ] Installer (for windows, maybe for macOS or linux too)
 [ ] Deployed to cloud so that users can access game from a web browser
+[ ] Animated walking of characters
 
 
 Chores

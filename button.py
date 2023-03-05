@@ -7,6 +7,7 @@ class Button:
         self.__image = pygame.image.load(img_path)
         self.__x = x_pos
         self.__y = y_pos
+        self.__pos = (self.__x, self.__y)
         # self.__rect = pygame.Rect(x_pos, y_pos, width, height)  # Can't store pygame Rect as a field apparently???
         self.__rect = (x_pos, y_pos, width, height)
 
@@ -34,3 +35,6 @@ class Button:
     def name(self):
         return self.__name
 
+    @property
+    def pos(self):
+        return self.__pos

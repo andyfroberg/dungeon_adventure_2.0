@@ -1,5 +1,6 @@
 import pygame
 from dungeon import Dungeon
+from dungeon_factory import DungeonFactory
 from settings import Settings
 # from hero import Hero
 from warrior import Warrior
@@ -11,14 +12,14 @@ from player import Player
 class Model:
     def __init__(self):
         self.__views = []
-        self.__dungeon = Dungeon()
+        self.__dungeon = Dungeon(DungeonFactory.create_dungeon_easy())
         self.__player = Player(Warrior('test warrior'))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True
         self.__pause_menu = False
         self.__options_menu = False
-        self.__battle = True
-        self.__opponent = Ogre("test")  # DELETE LATER - FOR TESTING ONLY
+        self.__battle = False
+        self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
 
     def register_view(self, view):
         self.__views.append(view)

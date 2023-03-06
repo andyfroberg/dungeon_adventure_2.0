@@ -15,12 +15,42 @@ class Player:
         self.__y_bottom = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
         self.speed = Settings.PLAYER_SPEED
         self.__hp = 100
+        self.__keys = 0
         self.__hero_type = hero_type  # Not needed
-        # self.player_sprite = PlayerSprite(self, [self.game.dungeon.visible_sprites])
 
     def update(self, keys_pressed, dungeon):
-        # Update player location
         self.move(keys_pressed, dungeon)
+
+    # def move(self, keys, dungeon):
+    #     dx, dy = 0, 0
+    #
+    #     if keys[pygame.K_w] or keys[pygame.K_UP]:
+    #         dy = -1 * self.speed
+    #
+    #     if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+    #         dx = -1 * self.speed
+    #
+    #     if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+    #         dy = self.speed
+    #
+    #     if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+    #         dx = self.speed
+    #
+    #     if self.can_move_x(dx, dungeon):
+    #         self.__x += dx
+    #         self.__x_left = self.__x - Settings.PLAYER_BOUNDING_RECT  # Move to View?
+    #         self.__x_right = self.__x + Settings.PLAYER_BOUNDING_RECT  # Move to View?
+    #
+    #     if self.can_move_y(dy, dungeon):
+    #         self.__y += dy
+    #         self.__y_top = self.__y - Settings.PLAYER_BOUNDING_RECT  # Move to View?
+    #         self.__y_bottom = self.__y + Settings.PLAYER_BOUNDING_RECT  # Move to View?
+    #
+    #     # If the player hits a door, then take them to the new room.
+    #     if self.can_pass_through_door(dx, dy, dungeon) and self.door_collision(dx, dy, dungeon):  # Use key?
+    #         # self.game.dungeon.load_room(RoomFactory.build_room())
+    #         dungeon.load_room(dungeon.all_rooms[(0, 1)])
+    #         self.set_pos_new_room(dx, dy, dungeon)
 
     def move(self, keys, dungeon):
         dx, dy = 0, 0
@@ -37,22 +67,75 @@ class Player:
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = self.speed
 
+        if dx > 0:  # Moving east
+            # If there is a door to the east
+            # -> go thru door (wait until center point of player is inside door square)
+            # else, just move east
+            if dungeon.current_room[(int(self.__x), int(self.__y))] == Settings.DOOR:
+                self.pass_through_door('east', dungeon)
+        elif dx < 0:  # Moving west
+            # If there is a door to the west
+            # -> go thru door
+            # else - just move west
+            if dungeon.current_room[(int(self.__x), int(self.__y))] == Settings.DOOR:
+                self.pass_through_door('west', dungeon)
+        else:  # No x movement
+            pass
+
+        if dy > 0:  # Moving south
+            if dungeon.current_room[(int(self.__x), int(self.__y))] == Settings.DOOR:
+                self.pass_through_door('south', dungeon)
+        elif dy < 0:  # Moving north
+            if dungeon.current_room[(int(self.__x), int(self.__y))] == Settings.DOOR:
+                self.pass_through_door('north', dungeon)
+        else:  # No y movement
+            pass
+
         if self.can_move_x(dx, dungeon):
             self.__x += dx
-            self.__x_left = self.__x - Settings.PLAYER_BOUNDING_RECT
-            self.__x_right = self.__x + Settings.PLAYER_BOUNDING_RECT
-            # self.player_sprite.rect.x += dx * Settings.PIXEL_SCALE
+            self.__x_left = self.__x - Settings.PLAYER_BOUNDING_RECT  # Move to View?
+            self.__x_right = self.__x + Settings.PLAYER_BOUNDING_RECT  # Move to View?
 
         if self.can_move_y(dy, dungeon):
             self.__y += dy
-            self.__y_top = self.__y - Settings.PLAYER_BOUNDING_RECT
-            self.__y_bottom = self.__y + Settings.PLAYER_BOUNDING_RECT
-            # self.player_sprite.rect.y += dy * Settings.PIXEL_SCALE
+            self.__y_top = self.__y - Settings.PLAYER_BOUNDING_RECT  # Move to View?
+            self.__y_bottom = self.__y + Settings.PLAYER_BOUNDING_RECT  # Move to View?
 
-        # If the player hits a door, then take them to the new room.
-        if self.can_pass_through_door(dx, dy, dungeon):
-            # self.game.dungeon.load_room(RoomFactory.build_room())
-            self.set_pos_new_room(dx, dy, dungeon)
+        # # If the player hits a door, then take them to the new room.
+        # if self.can_pass_through_door(dx, dy, dungeon) and self.door_collision(dx, dy, dungeon):  # Use key?
+        #     # self.game.dungeon.load_room(RoomFactory.build_room())
+        #     dungeon.load_room(dungeon.all_rooms[(0, 1)])
+        #     self.set_pos_new_room(dx, dy, dungeon)
+
+    def pass_through_door(self, direction, dungeon):
+        if direction == 'north':
+            dungeon.load_room(dungeon.all_rooms[(0, 1)])
+            self.__y = dungeon.current_room_size[1] - 1
+        if direction == 'south':
+            dungeon.load_room(dungeon.all_rooms[(0, 1)])
+            self.__y = 1
+        if direction == 'east':
+            dungeon.load_room(dungeon.all_rooms[(0, 1)])
+            self.__x = 1
+        if direction == 'west':
+            dungeon.load_room(dungeon.all_rooms[(0, 1)])
+            self.__x = dungeon.current_room_size[0] - 1
+
+    # def door_collision(self, dx, dy, dungeon):
+    #     dx_is_door = False
+    #     dy_is_door = False
+    #
+    #     if dx < 0:  # Direction is west
+    #         dx_is_door = dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.DOOR
+    #     else:  # Direction is east
+    #         dx_is_door = dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.DOOR
+    #
+    #     if dy < 0:  # Direction is north
+    #         dy_is_door = dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.DOOR
+    #     else:  # Direction is south
+    #         dy_is_door = dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.DOOR
+    #
+    #     return dx_is_door or dy_is_door
 
     def can_move_x(self, dx, dungeon):  # USE Pygame collision instead
         # return (int(self.__x + dx),
@@ -78,42 +161,50 @@ class Player:
             return dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.OPEN_FLOOR or \
                    dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.DOOR
 
-    def can_pass_through_door(self, dx, dy, dungeon):
-        new_pos = (int(self.__x + dx), int(self.__y + dy))
+    # def can_pass_through_door(self, dx, dy, dungeon):
+    #     new_pos = (int(self.__x + dx), int(self.__y + dy))
+    #
+    #     return new_pos in dungeon.current_room \
+    #            and dungeon.current_room[new_pos] == Settings.DOOR
 
-        return new_pos in dungeon.current_room \
-               and dungeon.current_room[new_pos] == 2
+    # def set_pos_new_room(self, dx, dy, dungeon):
+    #     # Precondition - already have checked that door_pos is in
+    #     # dungeon.current_room (in pass_through_door() function)
+    #     door_pos = (int(self.__x + dx), int(self.__y + dy))
+    #
+    #     # heading north
+    #     if door_pos[1] == 0:
+    #         self.__y = dungeon.current_room_size[1] - 1
+    #         # self.player_sprite.rect.y = (dungeon.current_room_size[
+    #         #                                  1] - 1) * Settings.PIXEL_SCALE
+    #     # heading south
+    #     elif door_pos[1] == dungeon.current_room_size[1] - 1:
+    #         self.__y = 1
+    #         # self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
+    #     # heading west
+    #     elif door_pos[0] == 0:
+    #         self.__x = dungeon.current_room_size[0] - 1
+    #         # self.player_sprite.rect.x = (game.dungeon.current_room_size[
+    #         #                                  0] - 1) * Settings.PIXEL_SCALE
+    #     # heading east
+    #     else:
+    #         self.__x = 1
+    #         # self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
 
-    def set_pos_new_room(self, dx, dy, dungeon):
-        # Precondition - already have checked that door_pos is in
-        # dungeon.current_room (in pass_through_door() function)
-        door_pos = (int(self.__x + dx), int(self.__y + dy))
+    def draw(self, view):
+        if not view.player_sprite:  # player_sprite vs player_sprites in View class. Is this too confusing?
+            view.player_sprite = PlayerSprite(self, [view.player_sprites])
 
-        # heading north
-        if door_pos[1] == 0:
-            self.__y = dungeon.current_room_size[1] - 1
-            # self.player_sprite.rect.y = (dungeon.current_room_size[
-            #                                  1] - 1) * Settings.PIXEL_SCALE
-        # heading south
-        elif door_pos[1] == dungeon.current_room_size[1] - 1:
-            self.__y = 1
-            # self.player_sprite.rect.y = 1 * Settings.PIXEL_SCALE
-        # heading west
-        elif door_pos[0] == 0:
-            self.__x = dungeon.current_room_size[0] - 1
-            # self.player_sprite.rect.x = (game.dungeon.current_room_size[
-            #                                  0] - 1) * Settings.PIXEL_SCALE
-        # heading east
+        view.player_sprite.rect.x = self.__x * Settings.PIXEL_SCALE
+        view.player_sprite.rect.y = self.__y * Settings.PIXEL_SCALE
+
+        view.player_sprites.draw(view.surface)
+
+    def use_key(self):
+        if self.__keys > 0:
+            self.__keys -= 1
         else:
-            self.__x = 1
-            # self.player_sprite.rect.x = 1 * Settings.PIXEL_SCALE
-
-    def draw(self):
-        # Tile((self.x, self.y), [self.visible_sprites])
-
-        # PlayerSprite(self, [self.game.dungeon.visible_sprites])
-        # self.game.dungeon.visible_sprites.update()
-        pass
+            raise ValueError("The player does not have enough keys")
 
     @property
     def name(self) -> str:
@@ -150,6 +241,11 @@ class Player:
     @property
     def hero_type(self):
         return self.__hero_type
+
+    @property
+    def keys(self):
+        return self.__keys
+
 
     # @property
     # def won(self) -> bool:

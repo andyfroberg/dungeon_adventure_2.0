@@ -26,11 +26,13 @@ class Settings:
     ROOM_MIN_HEIGHT = 3
     ROOM_MAX_WIDTH = 14
     ROOM_MAX_HEIGHT = 8
-    OPEN_FLOOR = 0
-    BRICK_WALL = 1
-    DOOR = 2
-    ROCK = 3
-    OGRE = 4
+
+    # Sprite Values
+    OPEN_FLOOR = 'F'
+    BRICK_WALL = 'B'
+    DOOR = 'D'
+    ROCK = 'R'
+    OGRE = 'o'
 
     # Backgrounge colors
     BG_BLACK = (0, 0, 0)

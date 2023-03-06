@@ -79,4 +79,8 @@ class UIOverlayFactory:
 
         return battle_ui
 
+    @staticmethod
+    def create_hud_ui(player, dungeon):
+        pass
+
 

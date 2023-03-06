@@ -5,7 +5,7 @@ import math
 
 
 class Player:
-    def __init__(self, hero_type):
+    def __init__(self, hero_type):  # hero_type param for informal testing only
         self.__name = ''
         self.__x = Settings.PLAYER_START_POS[0]
         self.__x_left = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
@@ -16,7 +16,7 @@ class Player:
         self.speed = Settings.PLAYER_SPEED
         self.__hp = 100
         self.__keys = 0
-        self.__hero_type = hero_type  # Not needed
+        self.__hero_type = hero_type  # Not needed - for testing only
 
     def update(self, keys_pressed, dungeon):
         self.move(keys_pressed, dungeon)

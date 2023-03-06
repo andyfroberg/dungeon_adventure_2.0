@@ -2,6 +2,7 @@ import pygame
 from settings import Settings
 from view import View
 from ui_overlay_factory import UIOverlayFactory
+from hud import HUD  # Move creation to UIOverlayFactory?
 
 
 class View2D(View):
@@ -68,9 +69,17 @@ class View2D(View):
 
         # Game over menu
 
+        # Load HUD
+        self.load_hud()
+
     def load_battle(self, player, opponent):
         battle_ui = UIOverlayFactory.create_battle_menu(player, opponent)
         self.__menus['battle'] = battle_ui
+
+    def load_hud(self):  # passing dungeon might not be needed // # Move creation to UIOverlayFactory?
+        hud_ui = HUD('HUD', '', Settings.BG_BLACK, [], [], None)
+        hud_ui.add_hud_ui_layer('hud/hud_health_0.25x.png', Settings.HUD_RECT)
+        self.__menus['hud'] = hud_ui
 
     def draw_battle(self):
         self.__menus['battle'].draw(self)
@@ -101,7 +110,8 @@ class View2D(View):
         player.draw(self)
 
     def draw_hud(self, player):
-        pygame.draw.rect(self.__screen, (20, 95, 95), (0, 400, 700, 100))
+        # pygame.draw.rect(self.__screen, (20, 95, 95), (0, 400, 700, 100))
+        self.__menus['hud'].draw(self)
 
         ##### There appears to be a known issue with Pygame fonts
         ##### on M1 Macs. Can work on fixing this later. (Maybe

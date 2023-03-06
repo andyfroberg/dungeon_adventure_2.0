@@ -57,4 +57,8 @@ class Settings:
     # Battle UI buttons
 
 
+    # HUD
+    HUD_RECT = (0, 400, 700, 100)
+
+
 

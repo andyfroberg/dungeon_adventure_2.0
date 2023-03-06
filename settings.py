@@ -14,7 +14,7 @@ class Settings:
     GAME_DIFFICULTY = GameDifficulty.NORMAL
 
     # Player Stats
-    PLAYER_START_POS = (2, 2)
+    PLAYER_START_POS = (2.25, 1)
     PLAYER_START_ANGLE = 0
     PLAYER_SPEED = 0.05
     PLAYER_BOUNDING_RECT = 0.25
@@ -30,6 +30,7 @@ class Settings:
     # Sprite Values
     OPEN_FLOOR = 'F'
     BRICK_WALL = 'B'
+    GATE = "G"
     DOOR = 'D'
     ROCK = 'R'
     OGRE = 'o'

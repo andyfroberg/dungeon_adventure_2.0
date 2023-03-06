@@ -2,6 +2,7 @@ from sprite_brick import SpriteBrick
 from sprite_door import  SpriteDoor
 from sprite_rock import SpriteRock
 from sprite_floor import SpriteFloor
+from sprite_gate import SpriteGate
 from settings import Settings
 
 
@@ -9,6 +10,7 @@ class Dungeon:
     def __init__(self, rooms={}):
         self.__all_rooms = rooms
         self.__current_room = {}
+        self.__current_room_loc = (0, 0)  # Can we start at a room other than (0, 0)?
         self.__current_room_size = (0, 0)
         self.__entry_room = self.__all_rooms[(0, 0)]
         self.load_room(self.__entry_room)
@@ -48,12 +50,13 @@ class Dungeon:
                 SpriteRock(
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
-            elif view.room_ui[(row, col)] == Settings.OGRE:
-                SpriteDoor(
+            elif view.room_ui[(row, col)] == Settings.GATE:
+                SpriteGate(
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
 
         view.world_sprites.draw(view.surface)
+        print(self.__current_room_loc)
 
     @property
     def all_rooms(self):
@@ -66,3 +69,11 @@ class Dungeon:
     @property
     def current_room_size(self):
         return self.__current_room_size
+
+    @property
+    def current_room_loc(self):
+        return self.__current_room_loc
+
+    @current_room_loc.setter
+    def current_room_loc(self, new_loc):
+        self.__current_room_loc = new_loc

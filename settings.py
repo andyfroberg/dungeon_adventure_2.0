@@ -28,12 +28,14 @@ class Settings:
     ROOM_MAX_HEIGHT = 8
 
     # Sprite Values
+    EXIT = 'e'
     OPEN_FLOOR = 'F'
     BRICK_WALL = 'B'
     GATE = "G"
     DOOR = 'D'
     ROCK = 'R'
     OGRE = 'o'
+    PILLAR_A = 'A'
 
     # Backgrounge colors
     BG_BLACK = (0, 0, 0)

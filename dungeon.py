@@ -3,6 +3,8 @@ from sprite_door import  SpriteDoor
 from sprite_rock import SpriteRock
 from sprite_floor import SpriteFloor
 from sprite_gate import SpriteGate
+from sprite_exit import SpriteExit
+from sprite_pillar import SpritePillar
 from settings import Settings
 
 
@@ -21,9 +23,6 @@ class Dungeon:
         for j, row in enumerate(room):
             for i, value in enumerate(row):
                 self.__current_room[(i, j)] = value
-
-    def __str__(self):
-        return str(self.__current_room)
 
     def update(self):
         pass
@@ -54,9 +53,16 @@ class Dungeon:
                 SpriteGate(
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
+            elif view.room_ui[(row, col)] == Settings.EXIT:
+                SpriteExit(
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.world_sprites])
+            elif view.room_ui[(row, col)] == Settings.PILLAR_A:
+                SpritePillar(
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.world_sprites])
 
         view.world_sprites.draw(view.surface)
-        print(self.__current_room_loc)
 
     @property
     def all_rooms(self):

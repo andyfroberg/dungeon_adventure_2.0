@@ -12,7 +12,7 @@ class HUD(UIOverlay):
         self.__player = player
         self.__hud_ui_layers = []  # is this needed?
 
-    def draw(self, view):
+    def draw(self, view, player):
         pygame.mouse.set_visible(True)
         pygame.draw.rect(view.screen, Settings.BG_BLACK, Settings.HUD_RECT)
 
@@ -28,7 +28,9 @@ class HUD(UIOverlay):
             for layer, pos in self.__hud_ui_layers:
                 view.screen.blit(layer, pos)
 
-        pygame.display.update(Settings.HUD_RECT)
+        pygame.draw.rect(view.screen, (0, 250, 0), (100, 450, player.hp * 0.75 , 10))
+
+        # pygame.display.update(Settings.HUD_RECT)  # Drastically reduces performance. Workaround?
 
     def add_hud_ui_layer(self, img_path, img_pos):
         self.__hud_ui_layers.append((pygame.image.load(img_path), img_pos))

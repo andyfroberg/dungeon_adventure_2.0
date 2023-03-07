@@ -15,6 +15,7 @@ class View2D(View):
 
         self.__player_sprites = pygame.sprite.Group()
         self.__world_sprites = pygame.sprite.Group()
+        self.__item_sprites = pygame.sprite.Group()
         self.__monster_sprites = pygame.sprite.Group()
 
         self.__menus = {}
@@ -78,7 +79,13 @@ class View2D(View):
 
     def load_hud(self):  # passing dungeon might not be needed // # Move creation to UIOverlayFactory?
         hud_ui = HUD('HUD', '', Settings.BG_BLACK, [], [], None)
-        hud_ui.add_hud_ui_layer('hud/hud_health_0.25x.png', Settings.HUD_RECT)
+        hud_ui.add_hud_ui_layer('hud/hud_health_0.25x.png', Settings.HUD_POS_HEALTH)
+        hud_ui.add_hud_ui_layer('hud/pillar_a_bw_50x50.png', Settings.HUD_POS_PILLAR_A)
+        hud_ui.add_hud_ui_layer('hud/pillar_e_bw_50x50.png', Settings.HUD_POS_PILLAR_E)
+        hud_ui.add_hud_ui_layer('hud/pillar_i_bw_50x50.png', Settings.HUD_POS_PILLAR_I)
+        hud_ui.add_hud_ui_layer('hud/pillar_p_bw_50x50.png', Settings.HUD_POS_PILLAR_P)
+        hud_ui.add_hud_ui_layer('sprites/potion_health_50x50.png', Settings.HUD_POS_POTION_HEALTH)
+        hud_ui.add_hud_ui_layer('hud/use_health_potion_0.25x.png', (320, 430))
         self.__menus['hud'] = hud_ui
 
     def draw_battle(self):
@@ -111,7 +118,8 @@ class View2D(View):
 
     def draw_hud(self, player):
         # pygame.draw.rect(self.__screen, (20, 95, 95), (0, 400, 700, 100))
-        self.__menus['hud'].draw(self)
+        # pass
+        self.__menus['hud'].draw(self, player)
 
         ##### There appears to be a known issue with Pygame fonts
         ##### on M1 Macs. Can work on fixing this later. (Maybe
@@ -160,4 +168,14 @@ class View2D(View):
     @player_sprites.setter
     def player_sprites(self, sprites):
         self.__player_sprites = sprites
+
+    @property
+    def item_sprites(self):
+        return self.__item_sprites
+
+    @item_sprites.setter
+    def item_sprites(self, sprites):
+        self.__item_sprites = sprites
+
+
 

@@ -92,20 +92,63 @@ class Player:
 
     def can_move_x(self, dx, dungeon):  # USE Pygame collision instead
         if dx < 0:  # Direction is west
-            return dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.OPEN_FLOOR or \
-                dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.DOOR
+            return dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.OPEN_FLOOR \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.DOOR \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.PIT \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.PILLAR_A \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.PILLAR_E \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.PILLAR_I \
+                   or dungeon.current_room[(int(self.__x_left + dx), int(self.__y))] == Settings.PILLAR_P
         else:  # Direction is east
-            return dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.OPEN_FLOOR or \
-                dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.DOOR
+            return dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.OPEN_FLOOR \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.DOOR \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.PIT \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.PILLAR_A \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.PILLAR_E \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.PILLAR_I \
+                   or dungeon.current_room[(int(self.__x_right + dx), int(self.__y))] == Settings.PILLAR_P \
+
+                # if dx < 0:  # Direction is west
+        #     return dungeon.current_room[(int(self.__x_left + dx),
+        #         int(self.__y))] == (Settings.OPEN_FLOOR or Settings.DOOR \
+        #         or Settings.PILLAR_A or Settings.PILLAR_E \
+        #         or Settings.PILLAR_I or Settings.PILLAR_P or Settings.PIT)
+        # else:  # Direction is east
+        #     return dungeon.current_room[(int(self.__x_right + dx),
+        #         int(self.__y))] == (Settings.OPEN_FLOOR or Settings.DOOR \
+        #         or Settings.PILLAR_A or Settings.PILLAR_E \
+        #         or Settings.PILLAR_I or Settings.PILLAR_P or Settings.PIT)
 
 
     def can_move_y(self, dy, dungeon):  # USE Pygame collision instead
         if dy < 0:  # Direction is north
-            return dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.OPEN_FLOOR or \
-                   dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.DOOR
+            return dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.OPEN_FLOOR \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.DOOR \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.PIT \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.PILLAR_A \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.PILLAR_E \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.PILLAR_I \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_top + dy))] == Settings.PILLAR_P
+
         else:  # Direction is south
-            return dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.OPEN_FLOOR or \
-                   dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.DOOR
+            return dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.OPEN_FLOOR \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.DOOR \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.PIT \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.PILLAR_A \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.PILLAR_E \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.PILLAR_I \
+                   or dungeon.current_room[(int(self.__x), int(self.__y_bottom + dy))] == Settings.PILLAR_P
+
+        # if dy < 0:  # Direction is north
+        #     return dungeon.current_room[(int(self.__x),
+        #         int(self.__y_top + dy))] == (Settings.OPEN_FLOOR or Settings.DOOR \
+        #         or Settings.PILLAR_A or Settings.PILLAR_E \
+        #         or Settings.PILLAR_I or Settings.PILLAR_P or Settings.PIT)
+        # else:  # Direction is south
+        #     return dungeon.current_room[(int(self.__x),
+        #         int(self.__y_bottom + dy))] == (Settings.OPEN_FLOOR or Settings.DOOR \
+        #         or Settings.PILLAR_A or Settings.PILLAR_E \
+        #         or Settings.PILLAR_I or Settings.PILLAR_P or Settings.PIT)
 
     def draw(self, view):
         if not view.player_sprite:  # player_sprite vs player_sprites in View class. Is this too confusing?

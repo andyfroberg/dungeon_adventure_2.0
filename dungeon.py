@@ -1,10 +1,5 @@
-from sprite_brick import SpriteBrick
-from sprite_door import  SpriteDoor
-from sprite_rock import SpriteRock
-from sprite_floor import SpriteFloor
-from sprite_gate import SpriteGate
-from sprite_exit import SpriteExit
-from sprite_pillar import SpritePillar
+from world_sprite import WorldSprite
+from item_sprite import ItemSprite
 from settings import Settings
 
 
@@ -29,40 +24,58 @@ class Dungeon:
 
     def draw(self, view):  # Draws a "dungeon" but is only a room. Should the Room class draw instead of Dungeon class?
         view.world_sprites.empty()  # Clear sprites from previous room
+        view.item_sprites.empty()
         view.room_ui.clear()
 
         view.room_ui = self.__current_room.copy()
         for row, col in view.room_ui.keys():
             if view.room_ui[(row, col)] == Settings.OPEN_FLOOR:
-                SpriteFloor(
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             if view.room_ui[(row, col)] == Settings.BRICK_WALL:
-                SpriteBrick(
+                WorldSprite(Settings.SPRITE_PATHS['brick'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             elif view.room_ui[(row, col)] == Settings.DOOR:
-                SpriteDoor(
+                WorldSprite(Settings.SPRITE_PATHS['door'],
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.world_sprites])
+            elif view.room_ui[(row, col)] == Settings.PIT:
+                WorldSprite(Settings.SPRITE_PATHS['pit'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             elif view.room_ui[(row, col)] == Settings.ROCK:
-                SpriteRock(
+                WorldSprite(Settings.SPRITE_PATHS['rock'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             elif view.room_ui[(row, col)] == Settings.GATE:
-                SpriteGate(
+                WorldSprite(Settings.SPRITE_PATHS['gate'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             elif view.room_ui[(row, col)] == Settings.EXIT:
-                SpriteExit(
+                WorldSprite(Settings.SPRITE_PATHS['exit'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
                     [view.world_sprites])
             elif view.room_ui[(row, col)] == Settings.PILLAR_A:
-                SpritePillar(
+                ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
                     (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
-                    [view.world_sprites])
+                    [view.item_sprites])
+            elif view.room_ui[(row, col)] == Settings.PILLAR_E:
+                ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.item_sprites])
+            elif view.room_ui[(row, col)] == Settings.PILLAR_I:
+                ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.item_sprites])
+            elif view.room_ui[(row, col)] == Settings.PILLAR_P:
+                ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+                    (row * Settings.PIXEL_SCALE, col * Settings.PIXEL_SCALE),
+                    [view.item_sprites])
 
         view.world_sprites.draw(view.surface)
+        view.item_sprites.draw(view.surface)
 
     @property
     def all_rooms(self):

@@ -4,6 +4,7 @@ from adventurer import Adventurer
 from dungeon import Dungeon
 from dungeon_adventure import DungeonAdventure
 
+
 class DungeonTests(unittest.TestCase):
     """This class tests the main functionality of the DrawingProgram
     and related classes."""

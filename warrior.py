@@ -17,13 +17,10 @@ class Warrior(Hero):
         }
 
     def attack(self, opponent: DungeonCharacter) -> None:
-        # sucess = True
         damage = random.randint(self.damage_range[0], self.damage_range[1])
         chance = random.random()
         if chance <= self.hit_prob:
             opponent.hp -= damage
-        # else:
-        #      sucess = False
 
     def block(self, opponent: DungeonCharacter):
         block_p = random.random()
@@ -49,7 +46,7 @@ class Warrior(Hero):
                 self.attack(opponent)
                 self.attack_speed -= 1
         elif self.attack_speed == opponent.attack_speed:
-            pass
+            self.attack(opponent)
         else:
             while self.attack_speed < opponent.attack_speed:
                 self.block(opponent)

@@ -18,13 +18,10 @@ class Ogre(Monster):
         }
 
     def attack(self, opponent: DungeonCharacter) -> None:
-        # sucess = True
         damage = random.randint(self.damage_range[0], self.damage_range[1])
         chance = random.random()
         if chance <= self.hit_prob:
             opponent.hp -= damage
-        # else:
-        #      sucess = False
 
     def heal(self):
         heal_p = random.randint(self.heal_range[0], self.heal_range[1])
@@ -38,7 +35,7 @@ class Ogre(Monster):
                 self.attack(opponent)
                 self.attack_speed -= 1
         elif self.attack_speed == opponent.attack_speed:
-            pass
+            self.attack(opponent)
         else:
             while self.attack_speed < opponent.attack_speed:
                 opponent.attack(self)

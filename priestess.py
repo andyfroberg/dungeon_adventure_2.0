@@ -27,7 +27,7 @@ class Priestess(Hero):
 
     def block(self, opponent: DungeonCharacter):
         block_p = random.random()
-        if block_p <= self.block_prob:
+        if block_p <= self.block_prob: # chance to block is in the prob
             pass
         else:
             opponent.attack(self)
@@ -47,7 +47,7 @@ class Priestess(Hero):
                 self.attack(opponent)
                 self.attack_speed -= 1
         elif self.attack_speed == opponent.attack_speed:
-            pass
+            self.attack(opponent)
         else:
             while self.attack_speed < opponent.attack_speed:
                 self.block(opponent)

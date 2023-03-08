@@ -3,6 +3,7 @@ from settings import Settings
 from tile import Tile
 from player_sprite import PlayerSprite
 
+
 class View2D:
     def __init__(self, model):
         model.register_view(self)

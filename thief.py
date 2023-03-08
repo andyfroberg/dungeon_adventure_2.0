@@ -54,7 +54,7 @@ class Thief(Hero):
                 self.attack(opponent)
                 self.attack_speed -= 1
         elif self.attack_speed == opponent.attack_speed:
-            pass
+            self.attack(opponent)
         else:
             while self.attack_speed < opponent.attack_speed:
                 self.block(opponent)

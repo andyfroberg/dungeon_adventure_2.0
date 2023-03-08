@@ -35,7 +35,7 @@ class Skeleton(Monster):
                 self.attack(opponent)
                 self.attack_speed -= 1
         elif self.attack_speed == opponent.attack_speed:
-            pass
+            self.attack(opponent)
         else:
             while self.attack_speed < opponent.attack_speed:
                 opponent.attack(self)

@@ -38,6 +38,22 @@ class HUD(UIOverlay):
     def remove_hud_ui_layer(self, img_path):
         pass
 
+    def add_item(self, item):
+        if item.item_type == 'pillar_a':
+            self.add_hud_ui_layer(Settings.SPRITE_PATHS['pillar_a'],
+                                  Settings.HUD_POS_PILLAR_A)
+
+        if item.item_type == 'pillar_e':
+            self.add_hud_ui_layer(Settings.SPRITE_PATHS['pillar_e'],
+                                  Settings.HUD_POS_PILLAR_E)
+
+        if item.item_type == 'pillar_i':
+            self.add_hud_ui_layer(Settings.SPRITE_PATHS['pillar_i'],
+                                  Settings.HUD_POS_PILLAR_I)
+
+        if item.item_type == 'pillar_p':
+            self.add_hud_ui_layer(Settings.SPRITE_PATHS['pillar_p'],
+                                  Settings.HUD_POS_PILLAR_P)
 
     @property
     def name(self):

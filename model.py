@@ -19,7 +19,7 @@ class Model:
         self.__pause_menu = False
         self.__options_menu = False
         self.__battle = False
-        self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
+        # self.__opponent = Ogre('Ogre 1')  # DELETE LATER - FOR TESTING ONLY
 
     def register_view(self, view):
         self.__views.append(view)
@@ -40,7 +40,7 @@ class Model:
             self.__player.update(keys_pressed, self.__dungeon)
 
             # Update Dungeon state
-            self.__dungeon.update()
+            self.__dungeon.update()  # Currently nothing in this method
 
             if keys_pressed[pygame.K_ESCAPE]:
                 self.__pause_menu = True

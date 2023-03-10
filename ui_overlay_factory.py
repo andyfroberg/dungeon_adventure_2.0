@@ -65,7 +65,7 @@ class UIOverlayFactory:
         elif isinstance(opponent, Skeleton):
             pass
         else:
-            raise ValueError('The player does not have a valid Hero type.')
+            raise ValueError('The opponent does not have a valid Hero type.')
 
 
         if isinstance(player, Priestess):

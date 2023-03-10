@@ -2,6 +2,8 @@ import pygame
 from settings import Settings
 from view import View
 from ui_overlay_factory import UIOverlayFactory
+from player_sprite import PlayerSprite
+from item_sprite import ItemSprite
 from hud import HUD  # Move creation to UIOverlayFactory?
 
 
@@ -15,6 +17,7 @@ class View2D(View):
 
         self.__player_sprites = pygame.sprite.Group()
         self.__world_sprites = pygame.sprite.Group()
+        self.__door_sprites = pygame.sprite.Group()
         self.__item_sprites = pygame.sprite.Group()
         self.__monster_sprites = pygame.sprite.Group()
 
@@ -23,9 +26,28 @@ class View2D(View):
         # Dungeon visual elements
         self.__room_ui = {}
 
-        self.__player_sprite = None
+        self.__player_sprite = PlayerSprite(model.player, [self.__player_sprites])
 
         self.load_menus()
+        self.load_items()  # MOVE INTO ROOM IF POSSIBLE (needs view reference)
+
+
+    def load_items(self):
+        ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
+                       (3 * Settings.PIXEL_SCALE, 3 * Settings.PIXEL_SCALE),
+                       'pillar_a', [self.__item_sprites])
+
+        ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
+                       (4 * Settings.PIXEL_SCALE, 4 * Settings.PIXEL_SCALE),
+                       'pillar_e', [self.__item_sprites])
+
+        ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
+                       (6 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
+                       'pillar_i', [self.__item_sprites])
+
+        ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+                       (9 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
+                       'pillar_p', [self.__item_sprites])
 
     def update(self, model):
         if model.main_menu:
@@ -101,6 +123,8 @@ class View2D(View):
         pygame.display.set_caption('Dungeon Escape')
         self.__screen.fill(Settings.ROOM_BG_FLOOR_COLOR)
         self.draw_dungeon(dungeon)
+        self.__item_sprites.draw(self.__surface)
+        self.__door_sprites.draw(self.__surface)
         self.draw_player(player)
         self.draw_hud(player)
 
@@ -142,10 +166,6 @@ class View2D(View):
         return self.__screen
 
     @property
-    def world_sprites(self):
-        return self.__world_sprites
-
-    @property
     def room_ui(self):
         return self.__room_ui
 
@@ -170,12 +190,36 @@ class View2D(View):
         self.__player_sprites = sprites
 
     @property
+    def world_sprites(self):
+        return self.__world_sprites
+
+    @world_sprites.setter
+    def world_sprites(self, sprites):
+        self.__world_sprites = sprites
+
+    @property
     def item_sprites(self):
         return self.__item_sprites
 
     @item_sprites.setter
     def item_sprites(self, sprites):
         self.__item_sprites = sprites
+
+    @property
+    def door_sprites(self):
+        return self.__door_sprites
+
+    @door_sprites.setter
+    def door_sprites(self, sprites):
+        self.__door_sprites = sprites
+
+    @property
+    def monster_sprites(self):
+        return self.__monster_sprites
+
+    @monster_sprites.setter
+    def monster_sprites(self, sprites):
+        self.__monster_sprites = sprites
 
 
 

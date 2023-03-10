@@ -30,7 +30,7 @@ class Settings:
     OPEN_FLOOR = 'F'
     BRICK_WALL = 'B'
     GATE = "G"
-    DOOR = 'D'
+    DOOR = 'D'  # No longer needed? Check codebase for 'Settings.DOOR' occurrences
     PIT = 'p'
     ROCK = 'R'
     OGRE = 'o'

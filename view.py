@@ -2,7 +2,6 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 
 
 class View(metaclass=ABCMeta):
-<<<<<<< HEAD
     """
     This abstract view is what each concrete view
     (e.g., ConsoleView) should inherit from.
@@ -32,8 +31,7 @@ class View(metaclass=ABCMeta):
             print("Game in progress")
 
 
-    
-=======
+
 
     def __init__(self):
         pass
@@ -54,4 +52,4 @@ class View(metaclass=ABCMeta):
 
 
 
->>>>>>> main
+

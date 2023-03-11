@@ -6,7 +6,6 @@ class ViewConsole(View):
     abstract class View. The ViewConsole class displays
     the Dungeon Adventure game to the player in the
     console."""
-<<<<<<< HEAD
     def __init__(self, controller: Controller) -> None:
         self.__controller: Controller = controller
         self.__model = controller.model
@@ -33,7 +32,7 @@ class ViewConsole(View):
     def display_player_status(self, hp: int, inventory: dict) -> None:
         print(f"HP: {hp}")
         print(f"Inventory: {inventory}")
-=======
+
     def __init__(self) -> None:
         self.__controller: Controller = None
 
@@ -109,4 +108,4 @@ class ViewConsole(View):
         """
         return input(f"Please enter your name to start the game: ")
 
->>>>>>> main
+

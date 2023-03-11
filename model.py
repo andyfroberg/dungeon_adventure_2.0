@@ -37,7 +37,7 @@ class Model:
         if not self.__main_menu and not self.__pause_menu \
                 and not self.__options_menu:
             # Update player state
-            self.__player.update(keys_pressed, self.__dungeon)
+            # self.__player.update(keys_pressed, self.__dungeon)
 
             # Update Dungeon state
             self.__dungeon.update()  # Currently nothing in this method

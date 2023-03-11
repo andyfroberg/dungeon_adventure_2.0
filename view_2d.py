@@ -2,6 +2,9 @@ import pygame
 from settings import Settings
 from view import View
 from ui_overlay_factory import UIOverlayFactory
+from world_sprite import WorldSprite
+from item_sprite import ItemSprite
+from door_sprite import DoorSprite
 from player_sprite import PlayerSprite
 from item_sprite import ItemSprite
 from hud import HUD  # Move creation to UIOverlayFactory?
@@ -29,25 +32,7 @@ class View2D(View):
         self.__player_sprite = PlayerSprite(model.player, [self.__player_sprites])
 
         self.load_menus()
-        self.load_items()  # MOVE INTO ROOM IF POSSIBLE (needs view reference)
-
-
-    def load_items(self):
-        ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
-                       (3 * Settings.PIXEL_SCALE, 3 * Settings.PIXEL_SCALE),
-                       'pillar_a', [self.__item_sprites])
-
-        ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
-                       (4 * Settings.PIXEL_SCALE, 4 * Settings.PIXEL_SCALE),
-                       'pillar_e', [self.__item_sprites])
-
-        ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
-                       (6 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
-                       'pillar_i', [self.__item_sprites])
-
-        ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
-                       (9 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
-                       'pillar_p', [self.__item_sprites])
+        # self.load_items()  # MOVE INTO ROOM IF POSSIBLE (needs view reference)
 
     def update(self, model):
         if model.main_menu:
@@ -64,7 +49,6 @@ class View2D(View):
             self.draw_battle()
             return
 
-
         if pygame.mouse.get_visible():
             pygame.mouse.set_visible(False)
 
@@ -72,6 +56,109 @@ class View2D(View):
         dungeon = model.dungeon
         player = model.player
         self.draw_frame(dungeon, player)
+
+    def load_room(self, room):
+        self.world_sprites.empty()  # Clear sprites from previous room
+        # view.item_sprites.empty()
+        self.room_ui.clear()
+
+        self.room_ui = room.tiles.copy()
+
+        # Draw world sprites
+        for row, col in self.room_ui.keys():
+            if self.room_ui[(row, col)] == Settings.OPEN_FLOOR:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+            if self.room_ui[(row, col)] == Settings.BRICK_WALL:
+                WorldSprite(Settings.SPRITE_PATHS['brick'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.BRICK_WALL, [self.world_sprites])
+            elif self.room_ui[(row, col)] == Settings.PIT:
+                WorldSprite(Settings.SPRITE_PATHS['pit'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.PIT, [self.world_sprites])
+            elif self.room_ui[(row, col)] == Settings.ROCK:
+                WorldSprite(Settings.SPRITE_PATHS['rock'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.ROCK, [self.world_sprites])
+            elif self.room_ui[(row, col)] == Settings.GATE:
+                WorldSprite(Settings.SPRITE_PATHS['gate'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.GATE, [self.world_sprites])
+            elif self.room_ui[(row, col)] == Settings.EXIT:
+                WorldSprite(Settings.SPRITE_PATHS['exit'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.EXIT, [self.world_sprites])
+            elif self.room_ui[(row, col)] == Settings.DOOR:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                DoorSprite(Settings.SPRITE_PATHS['door'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           Settings.DOOR, [self.door_sprites])
+
+            elif self.room_ui[(row, col)] == Settings.PILLAR_A:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'pillar_a', [self.item_sprites])
+            elif self.room_ui[(row, col)] == Settings.PILLAR_E:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'pillar_e', [self.item_sprites])
+            elif self.room_ui[(row, col)] == Settings.PILLAR_I:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'pillar_i', [self.item_sprites])
+            elif self.room_ui[(row, col)] == Settings.PILLAR_P:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'pillar_p', [self.item_sprites])
+
+    # def load_items(self):
+    #     ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
+    #                    (3 * Settings.PIXEL_SCALE, 3 * Settings.PIXEL_SCALE),
+    #                    'pillar_a', [self.__item_sprites])
+    #
+    #     ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
+    #                    (4 * Settings.PIXEL_SCALE, 4 * Settings.PIXEL_SCALE),
+    #                    'pillar_e', [self.__item_sprites])
+    #
+    #     ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
+    #                    (6 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
+    #                    'pillar_i', [self.__item_sprites])
+    #
+    #     ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+    #                    (9 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
+    #                    'pillar_p', [self.__item_sprites])
 
     def load_menus(self):
         # Build main menu
@@ -122,11 +209,22 @@ class View2D(View):
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')
         self.__screen.fill(Settings.ROOM_BG_FLOOR_COLOR)
-        self.draw_dungeon(dungeon)
+
+        # Skip round trip to dungeon.draw() method  by drawing directly
+        # from this view's world_sprites Group
+        self.__world_sprites.draw(self.screen)
+        # self.draw_dungeon(dungeon)
+
         self.__item_sprites.draw(self.__surface)
         self.__door_sprites.draw(self.__surface)
         self.draw_player(player)
         self.draw_hud(player)
+
+        pygame.draw.rect(self.screen, (255,255,255), self.player_sprite.rect, 2)
+        print(f'({str(player.x)}, {str(player.y)})')
+
+        for s in self.__world_sprites:
+            pygame.draw.rect(self.screen, (255,255,255), s.rect, 1)
 
         pygame.display.update()
         self.clock.tick(Settings.FPS)

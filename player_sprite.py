@@ -10,8 +10,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.__width = self.__image.get_width()
         self.__height = self.__image.get_height()
         self.__rect = self.image.get_rect(
-            topleft=(player.x * Settings.PIXEL_SCALE,  # Might need to be topleft=...
-                    player.y * Settings.PIXEL_SCALE))
+            topleft=(player.x * Settings.PIXEL_SCALE,
+                     player.y * Settings.PIXEL_SCALE),
+            size=(self.__width, self.__height))
 
     def get_rect(self):
         return (self.__player.x * Settings.PIXEL_SCALE,

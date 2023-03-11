@@ -1,6 +1,7 @@
 import pygame
 import sys
 from model import Model
+from settings import Settings
 from view_2d import View2D
 
 class Controller2D:
@@ -12,6 +13,8 @@ class Controller2D:
         self.__mouse_clicked = False
 
     def run(self):
+        self.load_view2d_ui()  # Might not need
+
         while self.__running:
             # 1) Get input from the user
             for event in pygame.event.get():
@@ -48,7 +51,6 @@ class Controller2D:
         self.__view = view
 
     def check_player_can_move(self, player, dungeon, view, keys):
-        # Iterate over all world sprites, colliderect()
         dx, dy = 0, 0
 
         if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -65,27 +67,62 @@ class Controller2D:
 
         player_rect = view.player_sprite.rect
 
+        # for w_sprite in view.world_sprites:
+        #     # w_rect = pygame.Rect(w_sprite.rect)
+        #     if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
+        #                           view.player_sprite.width,
+        #                           view.player_sprite.height) \
+        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
+        #         if dx < 0:  # Moving west
+        #             dx = (w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE
+        #             if dx > Settings.COLLISION_TOLERANCE:
+        #                 dx = 0
+        #         elif dx >= 0:  # Moving east (or not moving)
+        #             dx = (w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE
+        #             if dx < Settings.COLLISION_TOLERANCE:
+        #                 dx = 0
+        #
+        #     if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
+        #                           view.player_sprite.width,
+        #                           view.player_sprite.height) \
+        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
+        #         if dy < 0:  # Moving north
+        #             dy = (w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE
+        #             if dy > Settings.COLLISION_TOLERANCE:
+        #                 dy = 0
+        #         elif dy >= 0:  # Moving south (or not moving)
+        #             dy = (w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE
+        #             if dy < Settings.COLLISION_TOLERANCE:
+        #                 dy = 0
+
         for w_sprite in view.world_sprites:
-            w_rect = w_sprite.rect
-            if w_rect.colliderect(player_rect.x + dx, player_rect.y,
+            # w_rect = pygame.Rect(w_sprite.rect)
+            if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
                                   view.player_sprite.width,
-                                  view.player_sprite.height):
+                                  view.player_sprite.height) \
+                    and w_sprite.tile_type != Settings.OPEN_FLOOR:
                 if dx < 0:  # Moving west
-                    dx = w_rect.right - player_rect.left
-                elif dy >= 0:  # Moving east (or not moving)
-                    dy = w_rect.left - player_rect.right
+                    dx = ((w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
+                    break
+                elif dx >= 0:  # Moving east (or not moving)
+                    dx = ((w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
+                    break
 
-            if w_rect.colliderect(player_rect.x, player_rect.y + dy,
+            if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
                                   view.player_sprite.width,
-                                  view.player_sprite.height):
+                                  view.player_sprite.height) \
+                    and w_sprite.tile_type != Settings.OPEN_FLOOR:
                 if dy < 0:  # Moving north
-                    dy = w_rect.bottom - player_rect.top
+                    dy = ((w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
+                    break
                 elif dy >= 0:  # Moving south (or not moving)
-                    dy = w_rect.top - player_rect.bottom
+                    dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
+                    break
 
-        # Update player pos
-        player_rect.x += dx
-        player_rect.y += dy
+        self.__model.player.x += dx
+        self.__model.player.y += dy
+
+
 
     def handle_menu_events(self, event):
         if self.__model.main_menu:
@@ -114,6 +151,19 @@ class Controller2D:
                         elif button.name == 'options':
                             pass  # options menu
 
+    # def check_world_collision(self, dx, dy):
+    #     if self.__view:
+    #         p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
+    #         for tile in self.__view.world_sprites:
+    #             x_collide = p_rect.x + dx
+    #             y_collide = p_rect.y + dy
+    #             if x_collide.colliderect(tile.rect) \
+    #                     or y_collide.colliderect(tile.rect):
+    #                 return True
+    #
+    #     return False
+
+
     def check_item_collision(self):
         if self.__view:
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
@@ -126,7 +176,6 @@ class Controller2D:
 
     def check_door_collision(self):
         if self.__view:
-            print(str(self.__view.door_sprites))
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
             for door in self.__view.door_sprites:
                 if p_rect.colliderect(door.rect):
@@ -134,6 +183,17 @@ class Controller2D:
                     # self.__view.menus['hud'].add_item(item)
                     self.__view.door_sprites.remove(door)
                     self.__view.door_sprites.update()
+
+
+    def load_view2d_ui(self):
+        # load dungeon
+        self.__view.load_room(self.__model.dungeon.current_room)
+
+        # load room
+
+        # load player
+
+
 
     @property
     def model(self):

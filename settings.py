@@ -112,5 +112,6 @@ class Settings:
     HUD_POS_POTION_HEALTH = (220, 430)
 
 
-
+    # Collision Detection
+    COLLISION_TOLERANCE = 0.05
 

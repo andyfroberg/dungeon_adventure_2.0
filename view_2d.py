@@ -22,7 +22,7 @@ class View2D(View):
         self.__world_sprites = pygame.sprite.Group()
         self.__door_sprites = pygame.sprite.Group()
         self.__item_sprites = pygame.sprite.Group()
-        self.__monster_sprites = pygame.sprite.Group()
+        self.__dungeon_character_sprites = pygame.sprite.Group()
 
         self.__menus = {}
 
@@ -30,6 +30,7 @@ class View2D(View):
         self.__room_ui = {}
 
         self.__player_sprite = PlayerSprite(model.player, [self.__player_sprites])
+        # self.__player_sprite.image = self.__player_sprite.image_segment((0, 0, 20, 20))
 
         self.load_menus()
         # self.load_items()  # MOVE INTO ROOM IF POSSIBLE (needs view reference)
@@ -204,11 +205,11 @@ class View2D(View):
         self.draw_player(player)
         self.draw_hud(player)
 
-        pygame.draw.rect(self.screen, (255,255,255), self.player_sprite.rect, 2)
+        # pygame.draw.rect(self.screen, (255,255,255), self.player_sprite.rect, 2)
         # print(f'({str(player.x)}, {str(player.y)})')
 
-        for s in self.__world_sprites:
-            pygame.draw.rect(self.screen, (255,255,255), s.rect, 1)
+        # for s in self.__world_sprites:
+        #     pygame.draw.rect(self.screen, (255,255,255), s.rect, 1)
 
         pygame.display.update()
         self.clock.tick(Settings.FPS)

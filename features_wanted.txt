@@ -1,6 +1,7 @@
 
 
 Features
+[ ] falling pit takes damage (and maybe resets you in the last door you came through)
 [ ] Need key to open door
 [ ] Need boss key to open door to exit
 [ ] Need boss key to open door to exit
@@ -8,6 +9,7 @@ Features
 [ ] take damage when falling into a falling pit
 [ ] Main game menu
 [ ] Pause menu
+[ ] Win menu / Escaped dungeon
 [ ] Death menu / game over menu (show what killed player - falling pit, ogre, etc.)
 [ ] Save and load game - (maybe use __str__ or __get_attr__ to create string of all instance fields,
 then load_state() or some other method to load the state back in when the player loads a game)

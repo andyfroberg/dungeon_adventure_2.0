@@ -6,7 +6,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         super().__init__(groups)
         self.__player = player
         self.__image = pygame.image.load(
-            'sprites/warrior_sp_1.png').convert_alpha()
+            'sprites/stock/warrior_25.png').convert_alpha()  ### new file ###
         self.__width = self.__image.get_width()
         self.__height = self.__image.get_height()
         self.__rect = self.image.get_rect(
@@ -18,6 +18,14 @@ class PlayerSprite(pygame.sprite.Sprite):
         return (self.__player.x * Settings.PIXEL_SCALE,
                 self.__player.y * Settings.PIXEL_SCALE,
                 self.__width, self.__height)
+
+    ### new ###
+    def image_segment(self, rect):
+        area = pygame.Rect(rect)
+        image = pygame.Surface(area.size).convert()
+        image.blit(self.__image, (0, 0), area)
+        return image
+    ### new ###
 
     @property
     def player(self):

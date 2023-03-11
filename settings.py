@@ -113,5 +113,5 @@ class Settings:
 
 
     # Collision Detection
-    COLLISION_TOLERANCE = 0.05
+    COLLISION_TOLERANCE = 1
 

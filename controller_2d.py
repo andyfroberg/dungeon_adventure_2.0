@@ -67,6 +67,12 @@ class Controller2D:
 
         player_rect = view.player_sprite.rect
 
+        dx = self.player_move_x(dx, player_rect, view)
+        self.__model.player.x += dx
+
+        dy = self.player_move_y(dy, player_rect, view)
+        self.__model.player.y += dy
+
         # for w_sprite in view.world_sprites:
         #     # w_rect = pygame.Rect(w_sprite.rect)
         #     if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
@@ -95,34 +101,67 @@ class Controller2D:
         #             if dy < Settings.COLLISION_TOLERANCE:
         #                 dy = 0
 
+        # for w_sprite in view.world_sprites:
+        #     # w_rect = pygame.Rect(w_sprite.rect)
+        #     if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
+        #                           view.player_sprite.width,
+        #                           view.player_sprite.height) \
+        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
+        #         if dx < 0:  # Moving west
+        #             dx = ((w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
+        #             break
+        #         elif dx >= 0:  # Moving east (or not moving)
+        #             dx = ((w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
+        #             break
+        #
+        #     if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
+        #                           view.player_sprite.width,
+        #                           view.player_sprite.height) \
+        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
+        #         if dy < 0:  # Moving north
+        #             dy = ((w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
+        #             break
+        #         elif dy >= 0:  # Moving south (or not moving)
+        #             dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
+        #             break
+        #
+        # self.__model.player.x += dx
+        # self.__model.player.y += dy
+
+    def player_move_x(self, dx, player_rect, view):
         for w_sprite in view.world_sprites:
-            # w_rect = pygame.Rect(w_sprite.rect)
-            if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
-                                  view.player_sprite.width,
-                                  view.player_sprite.height) \
-                    and w_sprite.tile_type != Settings.OPEN_FLOOR:
-                if dx < 0:  # Moving west
-                    dx = ((w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
-                    break
-                elif dx >= 0:  # Moving east (or not moving)
-                    dx = ((w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
-                    break
+            if dx < 0:
+                if w_sprite.rect.colliderect(
+                        player_rect.x + dx - Settings.COLLISION_TOLERANCE,
+                        player_rect.y, view.player_sprite.width,
+                        view.player_sprite.height) \
+                        and w_sprite.tile_type != Settings.OPEN_FLOOR:
+                    dx = ((w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE)
+            elif dx >= 0:  # Moving east (or not moving)
+                if w_sprite.rect.colliderect(
+                        player_rect.x + dx + Settings.COLLISION_TOLERANCE,
+                        player_rect.y, view.player_sprite.width,
+                        view.player_sprite.height) \
+                        and w_sprite.tile_type != Settings.OPEN_FLOOR:
+                    dx = ((w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE)
 
-            if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
-                                  view.player_sprite.width,
-                                  view.player_sprite.height) \
-                    and w_sprite.tile_type != Settings.OPEN_FLOOR:
-                if dy < 0:  # Moving north
-                    dy = ((w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
-                    break
-                elif dy >= 0:  # Moving south (or not moving)
-                    dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
-                    break
+        return dx
 
-        self.__model.player.x += dx
-        self.__model.player.y += dy
-
-
+    def player_move_y(self, dy, player_rect, view):
+        for w_sprite in view.world_sprites:
+            if dy < 0:
+                if w_sprite.rect.colliderect(player_rect.x,
+                        player_rect.y + dy - Settings.COLLISION_TOLERANCE,
+                        view.player_sprite.width, view.player_sprite.height) \
+                        and w_sprite.tile_type != Settings.OPEN_FLOOR:
+                    dy = ((w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE)
+            elif dy >= 0:  # Moving south (or not moving)
+                if w_sprite.rect.colliderect(player_rect.x,
+                        player_rect.y + dy + Settings.COLLISION_TOLERANCE,
+                        view.player_sprite.width, view.player_sprite.height) \
+                        and w_sprite.tile_type != Settings.OPEN_FLOOR:
+                    dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE)
+        return dy
 
     def handle_menu_events(self, event):
         if self.__model.main_menu:

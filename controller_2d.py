@@ -39,6 +39,8 @@ class Controller2D:
             # Check door collisions
             self.check_door_collision()
 
+
+
             # Check player collision with monsters
 
 
@@ -68,65 +70,34 @@ class Controller2D:
         player_rect = view.player_sprite.rect
 
         dx = self.player_move_x(dx, player_rect, view)
-        self.__model.player.x += dx
+        player.x += dx
 
         dy = self.player_move_y(dy, player_rect, view)
-        self.__model.player.y += dy
+        player.y += dy
 
-        # for w_sprite in view.world_sprites:
-        #     # w_rect = pygame.Rect(w_sprite.rect)
-        #     if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
-        #                           view.player_sprite.width,
-        #                           view.player_sprite.height) \
-        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
-        #         if dx < 0:  # Moving west
-        #             dx = (w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE
-        #             if dx > Settings.COLLISION_TOLERANCE:
-        #                 dx = 0
-        #         elif dx >= 0:  # Moving east (or not moving)
-        #             dx = (w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE
-        #             if dx < Settings.COLLISION_TOLERANCE:
-        #                 dx = 0
-        #
-        #     if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
-        #                           view.player_sprite.width,
-        #                           view.player_sprite.height) \
-        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
-        #         if dy < 0:  # Moving north
-        #             dy = (w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE
-        #             if dy > Settings.COLLISION_TOLERANCE:
-        #                 dy = 0
-        #         elif dy >= 0:  # Moving south (or not moving)
-        #             dy = (w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE
-        #             if dy < Settings.COLLISION_TOLERANCE:
-        #                 dy = 0
 
-        # for w_sprite in view.world_sprites:
-        #     # w_rect = pygame.Rect(w_sprite.rect)
-        #     if w_sprite.rect.colliderect(player_rect.x + dx, player_rect.y,
-        #                           view.player_sprite.width,
-        #                           view.player_sprite.height) \
-        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
-        #         if dx < 0:  # Moving west
-        #             dx = ((w_sprite.rect.right - player_rect.left) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
-        #             break
-        #         elif dx >= 0:  # Moving east (or not moving)
-        #             dx = ((w_sprite.rect.left - player_rect.right) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
-        #             break
-        #
-        #     if w_sprite.rect.colliderect(player_rect.x, player_rect.y + dy,
-        #                           view.player_sprite.width,
-        #                           view.player_sprite.height) \
-        #             and w_sprite.tile_type != Settings.OPEN_FLOOR:
-        #         if dy < 0:  # Moving north
-        #             dy = ((w_sprite.rect.bottom - player_rect.top) / Settings.PIXEL_SCALE) + Settings.COLLISION_TOLERANCE
-        #             break
-        #         elif dy >= 0:  # Moving south (or not moving)
-        #             dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE) - Settings.COLLISION_TOLERANCE
-        #             break
-        #
-        # self.__model.player.x += dx
-        # self.__model.player.y += dy
+        # player_tile = (int(player.x), int(player.y))
+        # if dungeon.current_room.tiles[player_tile] == Settings.DOOR:
+        #     self.pass_through_door('east', dungeon)
+
+        if dx > 0:  # Moving east
+            if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.DOOR:  # AND no door north AND no door south
+                self.pass_through_door('east', dungeon)
+        elif dx < 0:  # Moving west
+            if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.DOOR:  # AND no door north AND no door south
+                self.pass_through_door('west', dungeon)
+        else:  # No x movement
+            pass
+
+        if dy > 0:  # Moving south
+            if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.DOOR:  # AND no door east AND no door west
+                self.pass_through_door('south', dungeon)
+        elif dy < 0:  # Moving north
+            if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.DOOR:  # AND no door east AND no door west
+                self.pass_through_door('north', dungeon)
+        else:  # No y movement
+            pass
+
 
     def player_move_x(self, dx, player_rect, view):
         for w_sprite in view.world_sprites:
@@ -162,6 +133,39 @@ class Controller2D:
                         and w_sprite.tile_type != Settings.OPEN_FLOOR:
                     dy = ((w_sprite.rect.top - player_rect.bottom) / Settings.PIXEL_SCALE)
         return dy
+
+    def pass_through_door(self, direction, dungeon):
+        room_loc = dungeon.current_room_loc
+        print('triggered')
+
+        if direction == 'north':
+            # if room_loc[1] - 1 < 0:
+            #     return
+            new_room = dungeon.all_rooms[(room_loc[0], room_loc[1] - 1)]
+            dungeon.current_room_loc = (room_loc[0], room_loc[1] - 1)  # Player shouldn't mutate dungeon's state. Ask Tom about this.
+            self.__model.player.y = dungeon.current_room_size[1] - 2  # Needs to be 2 due to multiple calls (causes key error)
+        if direction == 'south':
+            # if room_loc[1] + 1 > dungeon.current_room_size[1] - 1:
+            #     return
+            new_room = dungeon.all_rooms[(room_loc[0], room_loc[1] + 1)]   # DANGER ZONE - CHECK OUT OF BOUNDS ERRORS
+            dungeon.current_room_loc = (room_loc[0], room_loc[1] + 1)  # Player shouldn't mutate dungeon's state. Ask Tom about this.
+            self.__model.player.y = 2
+        if direction == 'east':
+            # if room_loc[0] + 1 > dungeon.current_room_size[0] - 1:
+            #     return
+            new_room = dungeon.all_rooms[(room_loc[0] + 1, room_loc[1])]  # DANGER ZONE - CHECK OUT OF BOUNDS ERRORS
+            dungeon.current_room_loc = (room_loc[0] + 1, room_loc[1])  # Player shouldn't mutate dungeon's state. Ask Tom about this.
+            self.__model.player.x = 2
+        if direction == 'west':
+            # if room_loc[0] - 1 < 0:
+            #     return
+            new_room = dungeon.all_rooms[(room_loc[0] - 1, room_loc[1])]  # DANGER ZONE - CHECK OUT OF BOUNDS ERRORS
+            dungeon.current_room_loc = (room_loc[0] - 1, room_loc[1])  # Player shouldn't mutate dungeon's state. Ask Tom about this.
+            self.__model.player.x = dungeon.current_room_size[0] - 2
+
+        print(str(dungeon.current_room_loc))
+        dungeon.load_room(new_room)  # DANGER ZONE - CHECK OUT OF BOUNDS ERRORS
+        self.__view.load_room(dungeon.current_room)
 
     def handle_menu_events(self, event):
         if self.__model.main_menu:

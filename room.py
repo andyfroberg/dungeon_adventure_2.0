@@ -4,6 +4,7 @@ class Room:
         self.__list_state = list_state
         self.__tiles = {}
         self.load_tiles()
+        # print(str(self.__tiles))
 
     def load_tiles(self):
         self.__size = (len(self.__list_state[0]), len(self.__list_state))
@@ -21,6 +22,10 @@ class Room:
     @property
     def tiles(self):
         return self.__tiles
+
+    @property
+    def size(self):
+        return self.__size
 
 
 if __name__ == "__main__":

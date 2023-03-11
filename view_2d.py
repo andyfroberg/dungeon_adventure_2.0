@@ -60,6 +60,7 @@ class View2D(View):
     def load_room(self, room):
         self.world_sprites.empty()  # Clear sprites from previous room
         # view.item_sprites.empty()
+        self.__door_sprites.empty()
         self.room_ui.clear()
 
         self.room_ui = room.tiles.copy()
@@ -143,23 +144,6 @@ class View2D(View):
                             col * Settings.PIXEL_SCALE),
                            'pillar_p', [self.item_sprites])
 
-    # def load_items(self):
-    #     ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
-    #                    (3 * Settings.PIXEL_SCALE, 3 * Settings.PIXEL_SCALE),
-    #                    'pillar_a', [self.__item_sprites])
-    #
-    #     ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
-    #                    (4 * Settings.PIXEL_SCALE, 4 * Settings.PIXEL_SCALE),
-    #                    'pillar_e', [self.__item_sprites])
-    #
-    #     ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
-    #                    (6 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
-    #                    'pillar_i', [self.__item_sprites])
-    #
-    #     ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
-    #                    (9 * Settings.PIXEL_SCALE, 6 * Settings.PIXEL_SCALE),
-    #                    'pillar_p', [self.__item_sprites])
-
     def load_menus(self):
         # Build main menu
         main_menu = UIOverlayFactory.create_main_menu()
@@ -221,7 +205,7 @@ class View2D(View):
         self.draw_hud(player)
 
         pygame.draw.rect(self.screen, (255,255,255), self.player_sprite.rect, 2)
-        print(f'({str(player.x)}, {str(player.y)})')
+        # print(f'({str(player.x)}, {str(player.y)})')
 
         for s in self.__world_sprites:
             pygame.draw.rect(self.screen, (255,255,255), s.rect, 1)

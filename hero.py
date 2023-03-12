@@ -20,7 +20,7 @@ class Hero(DungeonCharacter, metaclass=ABCMeta):
             return False
 
     @abstractmethod
-    def special(self, opponent):
+    def special(self):
         pass
 
     def num_attacks(self, opponent):

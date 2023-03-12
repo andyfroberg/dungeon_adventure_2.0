@@ -22,6 +22,9 @@ class UIOverlay(metaclass=ABCMeta):
     def draw(self, view):
         pass
 
+    def add_button(self, button):
+        self.__buttons.append(button)
+
     @property
     def name(self):
         return self.__name

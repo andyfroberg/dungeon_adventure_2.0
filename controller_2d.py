@@ -197,6 +197,22 @@ class Controller2D:
                         elif button.name == 'options':
                             pass  # options menu
 
+        # Should proably move to battle() method or even a Battle class.
+        if self.__model.battle:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in self.__view.menus['battle'].buttons:
+                    bounding_rect = pygame.Rect(button.rect)
+                    if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                        if button.name == 'attack':
+                            self.__model.player.hero.attack(self.__model.opponent)
+                        elif button.name == 'crushing':
+                            self.__model.player.hero.special(self.__model.opponent)
+                        elif button.name == 'heal':
+                            self.__model.player.hero.special()
+                        elif button.name == 'surprise':
+                            self.__model.player.hero.special(self.__model.opponent)
+
+
     # def check_world_collision(self, dx, dy):
     #     if self.__view:
     #         p_rect = pygame.Rect(self.__view.player_sprite.get_rect())

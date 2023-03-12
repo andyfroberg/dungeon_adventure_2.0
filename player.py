@@ -14,7 +14,6 @@ class Player:
         self.__y_top = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
         self.__y_bottom = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
         self.speed = Settings.PLAYER_SPEED
-        self.__hp = 100
         self.__keys = 0
         self.__hero = hero
         self.__inventory = {

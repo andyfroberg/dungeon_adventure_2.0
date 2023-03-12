@@ -19,7 +19,7 @@ class Model:
         self.__main_menu = True  # Should these be moved to controller?
         self.__pause_menu = False  # Should these be moved to controller?
         self.__options_menu = False  # Should these be moved to controller?
-        self.__battle = False  # Should these be moved to controller?
+        self.__battle = False  # Should these be moved to controller? Battle class?
         self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
 
     def register_view(self, view):

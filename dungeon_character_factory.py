@@ -83,7 +83,11 @@ class DungeonCharacterFactory:
 
     @staticmethod
     def generate_monster_name():
-        first = ["vold", "mung", "blist", "bron", "fear", "cold", "shax"]
+        """
+        Creates monster-esque names for the monsters that the hero
+        must battle. Just for fun :)
+        """
+        first = ["Vold", "Mung", "Blist", "Bron", "Fear", "Cold", "Shax"]
         middle = ["a", "e", "i", "o", "u", "y"]
         last = ["mort", "flan", "snort", "borg", "gart", "mox", "bart"]
 

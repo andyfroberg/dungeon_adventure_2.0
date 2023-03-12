@@ -171,6 +171,15 @@ class View2D(View):
                            (row * Settings.PIXEL_SCALE,
                             col * Settings.PIXEL_SCALE),
                            'ogre', [self.__dungeon_character_sprites])
+            elif self.room_ui[(row, col)] == Settings.SKELETON:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                DungeonCharacterSprite(Settings.SPRITE_PATHS['skeleton'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'skeleton', [self.__dungeon_character_sprites])
     def load_menus(self):
         # Build main menu
         main_menu = UIOverlayFactory.create_main_menu()

@@ -61,21 +61,21 @@ class UIOverlayFactory:
                              battle_ui_buttons, player, opponent)
 
         if isinstance(opponent, Gremlin):
-            battle_ui.add_battle_ui_layer('battle/battle_gremlin.png', Settings.WINDOW_TOP_LEFT)
+            battle_ui.add_battle_ui_layer('battle/battle_gremlin_2.png', Settings.WINDOW_TOP_LEFT)
         elif isinstance(opponent, Ogre):
             battle_ui.add_battle_ui_layer('battle/battle_ogre.png', Settings.WINDOW_TOP_LEFT)
         elif isinstance(opponent, Skeleton):
-            battle_ui.add_battle_ui_layer('battle/battle_ogre.png', Settings.WINDOW_TOP_LEFT)
+            battle_ui.add_battle_ui_layer('battle/battle_skeleton_2.png', Settings.WINDOW_TOP_LEFT)
         else:
-            raise ValueError('The opponent does not have a valid Hero type.')
+            raise ValueError('The opponent does not have a valid Monster type.')
 
 
-        if isinstance(player, Priestess):
-            pass
-        elif isinstance(player, Thief):
-            pass
-        elif isinstance(player.hero_type, Warrior):
-            pass
+        if isinstance(player.hero, Priestess):
+            battle_ui.add_battle_ui_layer('battle/battle_priestess.png', Settings.WINDOW_TOP_LEFT)
+        elif isinstance(player.hero, Thief):
+            battle_ui.add_battle_ui_layer('battle/battle_thief.png', Settings.WINDOW_TOP_LEFT)
+        elif isinstance(player.hero, Warrior):
+            battle_ui.add_battle_ui_layer('battle/battle_warrior.png', Settings.WINDOW_TOP_LEFT)
         else:
             raise ValueError('The player does not have a valid Hero type.')
 

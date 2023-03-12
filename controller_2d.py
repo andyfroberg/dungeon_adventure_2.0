@@ -241,7 +241,7 @@ class Controller2D:
     #############################################################
 
     def check_near_dcs(self):
-        if self.__view:
+        if self.__view and self.__model.battle == False:
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
             for dc in self.__view.dungeon_character_sprites:
                 if hypot(p_rect.centerx - dc.rect.centerx,

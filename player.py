@@ -5,8 +5,8 @@ import math
 
 
 class Player:
-    def __init__(self, hero_type):  # hero_type param for informal testing only
-        self.__name = ''
+    def __init__(self, hero):  # hero_type param for informal testing only
+        self.__name = hero.name
         self.__x = Settings.PLAYER_START_POS[0]
         self.__x_left = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
         self.__x_right = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT
@@ -16,7 +16,7 @@ class Player:
         self.speed = Settings.PLAYER_SPEED
         self.__hp = 100
         self.__keys = 0
-        self.__hero_type = hero_type  # Not needed - for testing only
+        self.__hero = hero
         self.__inventory = {
             "pillar_a": 0,
             "pillar_e": 0,
@@ -178,8 +178,8 @@ class Player:
         self.__hp = new_hp
 
     @property
-    def hero_type(self):
-        return self.__hero_type
+    def hero(self):
+        return self.__hero
 
     @property
     def keys(self):

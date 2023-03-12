@@ -2,6 +2,7 @@
 
 Features
 [ ] falling pit takes damage (and maybe resets you in the last door you came through)
+[ ] remove monsters that have already been battled from the map
 [ ] Need key to open door
 [ ] Need boss key to open door to exit
 [ ] Need boss key to open door to exit

@@ -6,6 +6,7 @@ from world_sprite import WorldSprite
 from item_sprite import ItemSprite
 from door_sprite import DoorSprite
 from player_sprite import PlayerSprite
+from dungeon_character_sprite import DungeonCharacterSprite
 from item_sprite import ItemSprite
 from hud import HUD  # Move creation to UIOverlayFactory?
 
@@ -47,7 +48,7 @@ class View2D(View):
 
         if model.battle:
             self.load_battle(model.player, model.opponent)
-            self.draw_battle()
+            self.draw_battle(model.player)
             return
 
         if pygame.mouse.get_visible():
@@ -58,15 +59,16 @@ class View2D(View):
         player = model.player
         self.draw_frame(dungeon, player)
 
-    def load_room(self, room):
-        self.world_sprites.empty()  # Clear sprites from previous room
-        # view.item_sprites.empty()
+    def load_room(self, room, player):
+        self.__world_sprites.empty()  # Clear sprites from previous room
+        self.__item_sprites.empty()
+        self.__dungeon_character_sprites.empty()
         self.__door_sprites.empty()
-        self.room_ui.clear()
+        self.__room_ui.clear()
 
         self.room_ui = room.tiles.copy()
 
-        # Draw world sprites
+        # World sprites
         for row, col in self.room_ui.keys():
             if self.room_ui[(row, col)] == Settings.OPEN_FLOOR:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
@@ -108,43 +110,67 @@ class View2D(View):
                             col * Settings.PIXEL_SCALE),
                            Settings.DOOR, [self.door_sprites])
 
+            # Item sprites
             elif self.room_ui[(row, col)] == Settings.PILLAR_A:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.OPEN_FLOOR, [self.world_sprites])
-                ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
-                           (row * Settings.PIXEL_SCALE,
-                            col * Settings.PIXEL_SCALE),
-                           'pillar_a', [self.item_sprites])
+                if player.inv['pillar_a'] == 0:
+                    ItemSprite(Settings.SPRITE_PATHS['pillar_a'],
+                               (row * Settings.PIXEL_SCALE,
+                                col * Settings.PIXEL_SCALE),
+                               'pillar_a', [self.item_sprites])
             elif self.room_ui[(row, col)] == Settings.PILLAR_E:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.OPEN_FLOOR, [self.world_sprites])
-                ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
-                           (row * Settings.PIXEL_SCALE,
-                            col * Settings.PIXEL_SCALE),
-                           'pillar_e', [self.item_sprites])
+                if player.inv['pillar_e'] == 0:
+                    ItemSprite(Settings.SPRITE_PATHS['pillar_e'],
+                               (row * Settings.PIXEL_SCALE,
+                                col * Settings.PIXEL_SCALE),
+                               'pillar_e', [self.item_sprites])
             elif self.room_ui[(row, col)] == Settings.PILLAR_I:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.OPEN_FLOOR, [self.world_sprites])
-                ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
-                           (row * Settings.PIXEL_SCALE,
-                            col * Settings.PIXEL_SCALE),
-                           'pillar_i', [self.item_sprites])
+                if player.inv['pillar_i'] == 0:
+                    ItemSprite(Settings.SPRITE_PATHS['pillar_i'],
+                               (row * Settings.PIXEL_SCALE,
+                                col * Settings.PIXEL_SCALE),
+                               'pillar_i', [self.item_sprites])
             elif self.room_ui[(row, col)] == Settings.PILLAR_P:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.OPEN_FLOOR, [self.world_sprites])
-                ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+                if player.inv['pillar_p'] == 0:
+                    ItemSprite(Settings.SPRITE_PATHS['pillar_p'],
+                               (row * Settings.PIXEL_SCALE,
+                                col * Settings.PIXEL_SCALE),
+                               'pillar_p', [self.item_sprites])
+
+            # Dungeon character sprites
+            elif self.room_ui[(row, col)] == Settings.GREMLIN:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                DungeonCharacterSprite(Settings.SPRITE_PATHS['gremlin'],
                            (row * Settings.PIXEL_SCALE,
                             col * Settings.PIXEL_SCALE),
-                           'pillar_p', [self.item_sprites])
-
+                           'gremlin', [self.__dungeon_character_sprites])
+            elif self.room_ui[(row, col)] == Settings.OGRE:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                DungeonCharacterSprite(Settings.SPRITE_PATHS['ogre'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'ogre', [self.__dungeon_character_sprites])
     def load_menus(self):
         # Build main menu
         main_menu = UIOverlayFactory.create_main_menu()
@@ -182,8 +208,10 @@ class View2D(View):
         hud_ui.add_hud_ui_layer('hud/use_health_potion_0.25x.png', (320, 430))
         self.__menus['hud'] = hud_ui
 
-    def draw_battle(self):
+    def draw_battle(self, player):
         self.__menus['battle'].draw(self)
+        self.draw_hud(player)
+        pygame.display.update()
 
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
@@ -202,6 +230,7 @@ class View2D(View):
 
         self.__item_sprites.draw(self.__surface)
         self.__door_sprites.draw(self.__surface)
+        self.__dungeon_character_sprites.draw(self.__surface)
         self.draw_player(player)
         self.draw_hud(player)
 
@@ -297,12 +326,12 @@ class View2D(View):
         self.__door_sprites = sprites
 
     @property
-    def monster_sprites(self):
-        return self.__monster_sprites
+    def dungeon_character_sprites(self):
+        return self.__dungeon_character_sprites
 
-    @monster_sprites.setter
-    def monster_sprites(self, sprites):
-        self.__monster_sprites = sprites
+    @dungeon_character_sprites.setter
+    def dungeon_character_sprites(self, sprites):
+        self.__dungeon_character_sprites = sprites
 
 
 

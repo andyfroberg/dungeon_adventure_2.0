@@ -2,12 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96ce9220-d71b-4349-8278-2da3b905416d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dungeon_character_sprite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/battle_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/battle_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dungeon_character.py" beforeDir="false" afterPath="$PROJECT_DIR$/dungeon_character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dungeon_character_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/dungeon_character_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dungeon_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/dungeon_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/features_wanted.txt" beforeDir="false" afterPath="$PROJECT_DIR$/features_wanted.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gremlin.py" beforeDir="false" afterPath="$PROJECT_DIR$/gremlin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/hero.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hud.py" beforeDir="false" afterPath="$PROJECT_DIR$/hud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/monster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ogre.py" beforeDir="false" afterPath="$PROJECT_DIR$/ogre.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player_sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/player_sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/priestess.py" beforeDir="false" afterPath="$PROJECT_DIR$/priestess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/skeleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thief.py" beforeDir="false" afterPath="$PROJECT_DIR$/thief.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui_overlay_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_overlay_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/view_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warrior.py" beforeDir="false" afterPath="$PROJECT_DIR$/warrior.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +177,8 @@
       <workItem from="1678251531031" duration="197000" />
       <workItem from="1678257564403" duration="290000" />
       <workItem from="1678330569492" duration="8920000" />
-      <workItem from="1678468495948" duration="40583000" />
+      <workItem from="1678468495948" duration="41101000" />
+      <workItem from="1678549281903" duration="29106000" />
     </task>
     <servers />
   </component>
@@ -190,9 +208,9 @@
     <SUITE FILE_PATH="coverage/src$game_entry_point.coverage" NAME="game_entry_point Coverage Results" MODIFIED="1676745567104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$game_2d.coverage" NAME="game_2d Coverage Results" MODIFIED="1677342058364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$controller_2d.coverage" NAME="controller_2d Coverage Results" MODIFIED="1678331628732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1678519770449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1678586684097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$controller.coverage" NAME="controller Coverage Results" MODIFIED="1676171553866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$settings.coverage" NAME="settings Coverage Results" MODIFIED="1678170339193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/src$dungeon_adventure.coverage" NAME="dungeon_adventure Coverage Results" MODIFIED="1677945927656" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/src$dungeon_adventure.coverage" NAME="dungeon_adventure Coverage Results" MODIFIED="1678549302305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

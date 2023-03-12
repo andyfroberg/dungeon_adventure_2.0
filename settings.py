@@ -120,3 +120,54 @@ class Settings:
     # Collision Detection
     COLLISION_TOLERANCE = 1
 
+    # Monster's Vision Distance
+    MONSTER_VISION_DISTANCE = 3
+
+    # Dungeon Character Stats
+    DC_STATS = {
+        'priestess': {
+            "hp": 75,
+            "attack_speed": 5,
+            "hit_prob": 0.7,
+            "damage_range": (25, 45),
+            "block_prob": 0.3,
+        },
+        'thief': {
+            "hp": 75,
+            "attack_speed": 6,
+            "hit_prob": 0.8,
+            "damage_range": (20, 40),
+            "block_prob": 0.4,
+        },
+        'warrior': {
+            "hp": 125,
+            "attack_speed": 4,
+            "hit_prob": 0.8,
+            "damage_range": (35, 60),
+            "block_prob": 0.2,
+        },
+        'gremlin': {
+            "hp": 70,
+            "attack_speed": 5,
+            "hit_prob": 0.8,
+            "damage_range": (15, 30),
+            "heal_prob": 0.4,
+            "heal_range": (20, 40),
+        },
+        'ogre': {
+            "hp": 200,
+            "attack_speed": 2,
+            "hit_prob": 0.6,
+            "damage_range": (30, 60),
+            "heal_prob": 0.1,
+            "heal_range": (30, 60),
+        },
+        'skeleton': {
+            "hp": 100,
+            "attack_speed": 3,
+            "hit_prob": 0.8,
+            "damage_range": (30, 50),
+            "heal_prob": 0.3,
+            "heal_range": (30, 50),
+        },
+    }

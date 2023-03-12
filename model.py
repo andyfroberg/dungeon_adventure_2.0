@@ -2,6 +2,7 @@ import pygame
 from dungeon import Dungeon
 from dungeon_factory import DungeonFactory
 from settings import Settings
+from dungeon_character import DungeonCharacter
 # from hero import Hero
 from warrior import Warrior
 # from priestess import Priestess
@@ -13,13 +14,13 @@ class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = Dungeon(DungeonFactory.create_dungeon_easy())
-        self.__player = Player(Warrior('test warrior'))
+        self.__player = Player(Warrior('Andy', 75, 5, 0.7, (25, 45), 0.3))
         self.__clock = pygame.time.Clock()
-        self.__main_menu = True
-        self.__pause_menu = False
-        self.__options_menu = False
-        self.__battle = False
-        # self.__opponent = Ogre('Ogre 1')  # DELETE LATER - FOR TESTING ONLY
+        self.__main_menu = True  # Should these be moved to controller?
+        self.__pause_menu = False  # Should these be moved to controller?
+        self.__options_menu = False  # Should these be moved to controller?
+        self.__battle = False  # Should these be moved to controller?
+        self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
 
     def register_view(self, view):
         self.__views.append(view)
@@ -86,6 +87,13 @@ class Model:
     @property
     def opponent(self):
         return self.__opponent
+
+    @opponent.setter
+    def opponent(self, opponent):
+        if not isinstance(opponent, DungeonCharacter):
+            raise ValueError('The battle opponent must be a DungeonCharacter.')
+
+        self.__opponent = opponent
 
     @property
     def player_name(self) -> str:

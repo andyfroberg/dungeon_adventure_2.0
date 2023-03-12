@@ -184,3 +184,7 @@ class Player:
     @property
     def keys(self):
         return self.__keys
+
+    @property
+    def inv(self):
+        return self.__inventory

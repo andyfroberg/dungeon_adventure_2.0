@@ -3,6 +3,7 @@ from menu_ui import MenuUI
 from battle_ui import BattleUI
 from button  import Button
 from settings import Settings
+from dungeon_character_factory import DungeonCharacterFactory
 from warrior import Warrior
 from thief import Thief
 from priestess import Priestess
@@ -54,16 +55,17 @@ class UIOverlayFactory:
         attack_btn = Button('attack', 'menu/continue.png', 50, 500, 323, 46)
         heal_btn = Button('heal', 'menu/save_game.png', 50, 550, 323, 46)
         battle_ui_buttons = [attack_btn, heal_btn]
-        battle_ui = BattleUI('Battle Menu', 'Dungeon Escape - Battle!', Settings.BG_BLACK,
+        custom_caption = f'Battling {opponent.name}!'
+        battle_ui = BattleUI('Battle Menu', custom_caption, Settings.BG_BLACK,
                              [('battle/battle_bg_brick.png', Settings.WINDOW_TOP_LEFT)],
                              battle_ui_buttons, player, opponent)
 
         if isinstance(opponent, Gremlin):
-            pass
+            battle_ui.add_battle_ui_layer('battle/battle_gremlin.png', Settings.WINDOW_TOP_LEFT)
         elif isinstance(opponent, Ogre):
             battle_ui.add_battle_ui_layer('battle/battle_ogre.png', Settings.WINDOW_TOP_LEFT)
         elif isinstance(opponent, Skeleton):
-            pass
+            battle_ui.add_battle_ui_layer('battle/battle_ogre.png', Settings.WINDOW_TOP_LEFT)
         else:
             raise ValueError('The opponent does not have a valid Hero type.')
 

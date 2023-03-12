@@ -1,96 +1,21 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
-# from hero import Hero
-# from priestess import Priestess
-# from warrior import Warrior
-# from thief import Thief
-# from monster import Monster
-# from gremlin import Gremlin
-# from ogre import Ogre
-# from skeleton import Skeleton
+from abc import ABCMeta, abstractmethod
 
 class DungeonCharacter(metaclass=ABCMeta):
 
-    def __init__(self, name: str) -> None:
-        self.__name: str = name
-        # self.__dc_stats = self.set_up_dc_stats()
+    def __init__(self, name, hp, attack_speed, hit_prob, damage_range):
+        self.__name = name
+        self.__hp = hp
+        self.__attack_speed = attack_speed
+        self.__hit_prob = hit_prob
+        self.__damage_range = damage_range
+        self.__attack_count = 0
 
     @abstractmethod
-    def set_up_dc_stats(self):
-        pass
-        # priestess = {
-        #     "hp": 75,
-        #     "attack_speed": 5,
-        #     "hit_prob": 0.7,
-        #     "damage_range": [25, 45],
-        # }
-        #
-        # thief = {
-        #     "hp": 75,
-        #     "attack_speed": 6,
-        #     "hit_prob": 0.8,
-        #     "damage_range": [20, 40],
-        # }
-        #
-        # warrior = {
-        #     "hp": 125,
-        #     "attack_speed": 4,
-        #     "hit_prob": 0.8,
-        #     "damage_range": [35, 60],
-        # }
-        #
-        # gremlin = {
-        #     "hp": 70,
-        #     "attack_speed": 5,
-        #     "hit_prob": 0.8,
-        #     "damage_range": [15, 30],
-        # }
-        #
-        # ogre = {
-        #     "hp": 200,
-        #     "attack_speed": 2,
-        #     "hit_prob": 0.6,
-        #     "damage_range": [30, 60],
-        # }
-        #
-        # skeleton = {
-        #     "hp": 100,
-        #     "attack_speed": 3,
-        #     "hit_prob": 0.8,
-        #     "damage_range": [30, 50],
-        # }
-        #
-        # if type(self) == Hero:
-        #     return Hero.set_up_stats()
-        #
-        #
-        # if type(self) == Hero:
-        #     if type(self) == Priestess:
-        #         pass
-        #     elif type(self) == Thief:
-        #         pass
-        #     elif type(self) == Warrior:
-        #         pass
-        #     else:
-        #         raise TypeError("Not a valid DungeonCharacter type.")
-        #
-        # elif type(self) == Monster:
-        #     if type(self) == Gremlin:
-        #         pass
-        #     elif type(self) == Ogre:
-        #         pass
-        #     elif type(self) == Skeleton:
-        #         pass
-        #     else:
-        #         raise TypeError("Not a valid DungeonCharacter type.")
-        # else:
-        #     raise TypeError("Not a valid DungeonCharacter type.")
-
-    @abstractmethod
-    def attack(self) -> None:
+    def attack(self, opponent):
         pass
 
     @property
-    def name(self) -> str:
+    def name(self):
         """
         Returns the name of the character
         :return: str - The name of the shape
@@ -98,16 +23,16 @@ class DungeonCharacter(metaclass=ABCMeta):
         return self.__name
 
     @name.setter
-    def name(self, name: str) -> None:
+    def name(self, name):
         """
         Sets the name of the character
         :param name: str - The name of the character
         :return: None
         """
-        self.__name: str = name
+        self.__name = name
 
     @property
-    def hp(self) -> int:
+    def hp(self):
         """
         Returns the health points of the character
         :return: int - The current health points of the character
@@ -115,16 +40,16 @@ class DungeonCharacter(metaclass=ABCMeta):
         return self.__hp
 
     @hp.setter
-    def hp(self, hp: int) -> None:
+    def hp(self, hp):
         """
         Sets the health points of the character
         :param name: str - The name of the character
         :return: None
         """
-        self.__hp: int = hp
+        self.__hp = hp
 
     @property
-    def damage_range(self) -> tuple:
+    def damage_range(self):
         """
         Returns the damage range of the character
         :return: tuple - The current damage range of the character
@@ -132,16 +57,16 @@ class DungeonCharacter(metaclass=ABCMeta):
         return self.__damage_range
 
     @damage_range.setter
-    def damage_range(self, damage_range: tuple) -> None:
+    def damage_range(self, damage_range):
         """
         Sets the damage range of the character
         :param d_range: tuple - The damage range the character
         :return: None
         """
-        self.__damage_range: tuple = damage_range
+        self.__damage_range = damage_range
 
     @property
-    def attack_speed(self) -> int:
+    def attack_speed(self):
         """
         Returns the attack speed of the character
         :return: int - The attack speed of the character
@@ -149,16 +74,16 @@ class DungeonCharacter(metaclass=ABCMeta):
         return self.__attack_speed
 
     @attack_speed.setter
-    def attack_speed(self, attack_speed: int) -> None:
+    def attack_speed(self, attack_speed):
         """
         Sets the attack speed of the character
         :param attack_speed: int - The attack speed the character
         :return: None
         """
-        self.__attack_speed: int = attack_speed
+        self.__attack_speed = attack_speed
 
     @property
-    def hit_prob(self) -> float:
+    def hit_prob(self):
         """
         Returns the hit probability of the character
         :return: int - The hit probability of the character
@@ -166,10 +91,18 @@ class DungeonCharacter(metaclass=ABCMeta):
         return self.__hit_prob
 
     @hit_prob.setter
-    def hit_prob(self, hit_prob: int) -> None:
+    def hit_prob(self, hit_prob):
         """
         Sets the hit probability of the character
         :param hit_prob: int - The hit probability the character
         :return: None
         """
-        self.__hit_prob: int = hit_prob
+        self.__hit_prob = hit_prob
+
+    @property
+    def attack_count(self):
+        return self.__attack_count
+
+    @attack_count.setter
+    def attack_count(self, count):
+        self.__attack_count = count

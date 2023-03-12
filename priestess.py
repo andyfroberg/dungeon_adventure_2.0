@@ -3,17 +3,10 @@ from hero import Hero
 
 
 class Priestess(Hero):
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self.__dc_stats: dict = {
-            "hp": 75,
-            "attack_speed": 5,
-            "hit_prob": 0.7,
-            "damage_range": [25, 45],
-        }
-        self.__hero_stats: dict = {
-            "block_prob": 0.2,
-        }
+    def __init__(self, name, hp, attack_speed, hit_prob, damage_range,
+                 block_prob):
+        super().__init__(name, hp, attack_speed, hit_prob, damage_range,
+                         block_prob)
     
     def attack(self) -> None:
         pass

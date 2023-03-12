@@ -6,7 +6,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         super().__init__(groups)
         self.__player = player
         self.__image = pygame.image.load(
-            'sprites/stock/warrior_25.png').convert_alpha()  ### new file ###
+            'sprites/stock/warrior_25.png').convert_alpha()
         self.__width = self.__image.get_width()
         self.__height = self.__image.get_height()
         self.__rect = self.image.get_rect(

@@ -14,7 +14,9 @@ class HUD(UIOverlay):
 
     def draw(self, view, player):
         pygame.mouse.set_visible(True)
-        pygame.draw.rect(view.screen, Settings.BG_BLACK, Settings.HUD_RECT)
+        pygame.draw.rect(view.screen, (0, 0, 60), Settings.HUD_RECT, 0, 10)
+        pygame.draw.rect(view.screen, (180, 180, 180), Settings.HUD_RECT, 5, 10)
+        pygame.draw.rect(view.screen, (255, 255, 255), Settings.HUD_RECT, 2,10)
 
         if super().background_layers:
             for layer, pos in super().background_layers:

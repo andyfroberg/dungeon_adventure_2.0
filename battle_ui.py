@@ -31,7 +31,7 @@ class BattleUI(UIOverlay):
             for layer, pos in self.__battle_ui_layers:
                 view.screen.blit(layer, pos)
 
-        pygame.display.update()
+        # pygame.display.update()
 
     def add_battle_ui_layer(self, img_path, img_pos):
         self.__battle_ui_layers.append((pygame.image.load(img_path), img_pos))

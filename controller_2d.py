@@ -1,7 +1,11 @@
 import pygame
 import sys
+from math import hypot
 from model import Model
 from settings import Settings
+from ogre import Ogre
+from thief import Thief
+from dungeon_character_factory import DungeonCharacterFactory
 from view_2d import View2D
 
 class Controller2D:
@@ -39,10 +43,9 @@ class Controller2D:
             # Check door collisions
             self.check_door_collision()
 
-
-
-            # Check player collision with monsters
-
+            # Check player collision with other dungeon characters
+            # self.check_dc_collision()
+            self.check_near_dcs()
 
             # Update model -does this need to be split into multiple funcs now?
             # ie model might not just be able to "update" based on logic
@@ -165,7 +168,7 @@ class Controller2D:
 
         print(str(dungeon.current_room_loc))
         dungeon.load_room(new_room)  # DANGER ZONE - CHECK OUT OF BOUNDS ERRORS
-        self.__view.load_room(dungeon.current_room)
+        self.__view.load_room(dungeon.current_room, self.__model.player)
 
     def handle_menu_events(self, event):
         if self.__model.main_menu:
@@ -208,7 +211,7 @@ class Controller2D:
 
 
     def check_item_collision(self):
-        if self.__view:
+        if self.__view:  # Needed?
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
             for item in self.__view.item_sprites:
                 if p_rect.colliderect(item.rect):
@@ -218,7 +221,7 @@ class Controller2D:
                     self.__view.item_sprites.update()
 
     def check_door_collision(self):
-        if self.__view:
+        if self.__view:  # Needed?
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
             for door in self.__view.door_sprites:
                 if p_rect.colliderect(door.rect):
@@ -227,15 +230,42 @@ class Controller2D:
                     self.__view.door_sprites.remove(door)
                     self.__view.door_sprites.update()
 
+    ######## Method has been updated by check_near_dcs()  ########
+    def check_dc_collision(self):
+        if self.__view:  # Needed?
+            p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
+            for dc in self.__view.dungeon_character_sprites:
+                if p_rect.colliderect(dc.rect):
+                    self.__model.opponent = self.get_opponent(dc.character_type)
+                    self.__model.battle = True
+    #############################################################
+
+    def check_near_dcs(self):
+        if self.__view:
+            p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
+            for dc in self.__view.dungeon_character_sprites:
+                if hypot(p_rect.centerx - dc.rect.centerx,
+                         p_rect.centery - dc.rect.centery) < \
+                        Settings.MONSTER_VISION_DISTANCE * Settings.PIXEL_SCALE:
+                    self.__model.opponent = self.get_battle_opponent(dc.character_type)
+                    self.__model.battle = True
+
 
     def load_view2d_ui(self):
         # load dungeon
-        self.__view.load_room(self.__model.dungeon.current_room)
+        self.__view.load_room(self.__model.dungeon.current_room, self.__model.player)
 
         # load room
 
         # load player
 
+    def get_battle_opponent(self, character_type):
+        if character_type == 'gremlin':
+            return DungeonCharacterFactory.create_gremlin()
+        elif character_type == 'ogre':
+            return DungeonCharacterFactory.create_ogre()
+        elif character_type == 'skeleton':
+            return DungeonCharacterFactory.create_skeleton()
 
 
     @property

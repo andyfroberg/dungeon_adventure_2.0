@@ -9,7 +9,7 @@ class Ogre(Monster):
                          heal_prob, heal_range)
 
     def attack(self, opponent):
-        pass
+        return super().attack(opponent)
 
     def heal(self):
-        pass
+        return super().heal()

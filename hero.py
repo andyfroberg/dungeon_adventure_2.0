@@ -10,10 +10,9 @@ class Hero(DungeonCharacter, metaclass=ABCMeta):
         super().__init__(name, hp, attack_speed, hit_prob, damage_range)
         self.__block_prob = block_prob
 
-    @abstractmethod
     def attack(self, opponent):
-        if random.random() < super().hit_prob:
-            hit_points = random.randint(super().damage_range[0], super().damage_range[1])
+        if random.random() < self.hit_prob:
+            hit_points = random.randint(self.damage_range[0], self.damage_range[1])
             opponent.hp -= hit_points  # handle fainting in controller.
             return True, 'attack_success'
         else:  # Attack failed

@@ -228,20 +228,33 @@ class Controller2D:
                         attack_result = None
                         if button.name == 'attack':
                             attack_result = self.__model.player.hero.attack(self.__model.opponent)[1]
-                            self.__model.player.hero.hp = 0 # REMOVE LINE - testing only
                         elif button.name == 'crushing':
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'heal':
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'surprise':
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
+
                         self.__view.draw_battle_message(attack_result)
 
-                # If opponent dead -> end battle & remove moster from board
-                if self.__model.opponent.hp <= 0:
-                    self.__view.draw_battle_message('battle_won')
-                    self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
-                    self.__model.battle = False
+                        # Give the monster a chance to heal after a succesful
+                        # hero attack. (Note that the Priestess's special
+                        # ability (heal) will not cause the monster to try to
+                        # heal as it does not decrease a monster's hit points.
+                        print(str(self.__model.opponent))
+                        if attack_result[0] and attack_result[1] != 'heal':
+                            heal_result = self.__model.opponent.heal()[1]
+                            self.__view.draw_battle_message(heal_result)
+
+                        self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player.hero)[1])
+
+                        # If opponent dead -> end battle & remove moster from board
+                        if self.__model.opponent.hp <= 0:
+                            self.__view.draw_battle_message('battle_won')
+                            self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
+                            self.__model.battle = False
+
+
 
                 # # If player dead -> GAME OVER
                 # if self.__model.player.hp <= 0:

@@ -103,7 +103,7 @@ class Settings:
     SURPRISE_FAILED_PATH = 'battle/surprise_failed.png'
     ENEMY_ATTACK_SUCCESS_PATH = 'battle/opponent_attack_success.png'
     ENEMY_ATTACK_FAILED_PATH = 'battle/opponent_attack_failed.png'
-    ENEMY_HEAL_SUCCESS_PATH = 'battle/opponent_heal_success.png'
+    ENEMY_HEAL_SUCCESS_PATH = 'battle/opponent_heal_success_2.png'
     ENEMY_HEAL_FAILED_PATH = 'battle/opponent_heal_failed.png'
     BATTLE_WON_PATH = 'battle/battle_won.png'
 

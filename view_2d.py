@@ -247,6 +247,14 @@ class View2D(View):
             self.screen.blit(pygame.image.load(Settings.HEAL_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
         elif message_type == 'heal_failed':
             self.screen.blit(pygame.image.load(Settings.HEAL_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'monster_heal_success':
+            self.screen.blit(pygame.image.load(Settings.ENEMY_HEAL_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'monster_heal_failed':
+            self.screen.blit(pygame.image.load(Settings.ENEMY_HEAL_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'monster_attack_success':
+            self.screen.blit(pygame.image.load(Settings.ENEMY_ATTACK_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'monster_attack_failed':
+            self.screen.blit(pygame.image.load(Settings.ENEMY_ATTACK_FAILED_PATH), Settings.BATTLE_MSG_RECT)
 
         elif message_type == 'battle_won':
             # display battle won message then end battle (in controller)

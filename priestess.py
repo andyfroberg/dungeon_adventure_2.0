@@ -21,9 +21,9 @@ class Priestess(Hero):
         if random.random() < special_prob:
             hit_points = random.randint(25, 75)
             opponent.hp -= hit_points
-            super().hp += hit_points
-            if super().hp > 75:
-                super().hp = 75
+            self.hp += hit_points
+            if self.hp > 75:
+                self.hp = 75
             return True, 'heal_success'
         else:  # surprise attack failed
             return False, 'heal_failed'

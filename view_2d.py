@@ -222,6 +222,36 @@ class View2D(View):
         self.draw_hud(player)
         pygame.display.update()
 
+    def draw_battle_message(self, message_type):
+        pygame.draw.rect(self.screen, (0, 0, 60), Settings.BATTLE_MSG_RECT, 0, 10)
+        pygame.draw.rect(self.screen, (180, 180, 180), Settings.BATTLE_MSG_RECT, 5, 10)
+        pygame.draw.rect(self.screen, (255, 255, 255), Settings.BATTLE_MSG_RECT, 2, 10)
+        if message_type == 'attack_success':
+            self.screen.blit(pygame.image.load(Settings.ATTACK_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'attack_failed':
+            self.screen.blit(pygame.image.load(Settings.ATTACK_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'crushing_success':
+            self.screen.blit(pygame.image.load(Settings.CRUSHING_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'crushing_failed':
+            self.screen.blit(pygame.image.load(Settings.CRUSHINGS_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'surprise_success':
+            self.screen.blit(pygame.image.load(Settings.SUPRISE_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'surprise_failed':
+            self.screen.blit(pygame.image.load(Settings.SURPRISE_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'heal_success':
+            self.screen.blit(pygame.image.load(Settings.HEAL_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'heal_failed':
+            self.screen.blit(pygame.image.load(Settings.HEAL_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+
+        elif message_type == 'battle_won':
+            # display battle won message then end battle (in controller)
+            self.screen.blit(pygame.image.load(Settings.BATTLE_WON_PATH), Settings.BATTLE_MSG_RECT)
+        elif message_type == 'game_over':
+            pass
+
+        pygame.display.update()
+        pygame.time.wait(3000)
+
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
 

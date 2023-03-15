@@ -52,9 +52,9 @@ class UIOverlayFactory:
 
     @staticmethod
     def create_battle_menu(player, opponent):
-        attack_btn = Button('attack', 'battle/attack.png', 230, 150, 151, 31)
+        attack_btn = Button('attack', 'battle/attack.png', 245, 230, 151, 31)
         battle_ui_buttons = [attack_btn]
-        custom_caption = f'Battling {opponent.name}!'
+        custom_caption = f'Battling {opponent.hp}!'
         battle_ui = BattleUI('Battle Menu', custom_caption, Settings.BG_BLACK,
                              [('battle/battle_bg_brick.png', Settings.WINDOW_TOP_LEFT)],
                              battle_ui_buttons, player, opponent)
@@ -71,13 +71,13 @@ class UIOverlayFactory:
 
         if isinstance(player.hero, Priestess):
             battle_ui.add_battle_ui_layer('battle/battle_priestess.png', Settings.WINDOW_TOP_LEFT)
-            battle_ui.add_button(Button('heal', 'battle/heal.png', 250, 150, 98, 31))
+            battle_ui.add_button(Button('heal', 'battle/heal.png', 275, 300, 98, 31))
         elif isinstance(player.hero, Thief):
             battle_ui.add_battle_ui_layer('battle/battle_thief.png', Settings.WINDOW_TOP_LEFT)
-            battle_ui.add_button(Button('surprise', 'battle/surprise_attack.png', 250, 150, 191, 71))
+            battle_ui.add_button(Button('surprise', 'battle/surprise_attack.png', 230, 290, 191, 71))
         elif isinstance(player.hero, Warrior):
             battle_ui.add_battle_ui_layer('battle/battle_warrior.png', Settings.WINDOW_TOP_LEFT)
-            battle_ui.add_button(Button('crushing', 'battle/crushing_blow.png', 200, 200, 191, 71))
+            battle_ui.add_button(Button('crushing', 'battle/crushing_blow.png', 230, 290, 191, 71))
         else:
             raise ValueError('The player does not have a valid Hero type.')
 

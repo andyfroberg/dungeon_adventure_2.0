@@ -87,7 +87,22 @@ class Settings:
     MONSTER_OGRE_PATH = 'sprites/warrior_sp_1.png'  # Need to create sprite
     MONSTER_SKELETON_PATH = 'sprites/warrior_sp_1.png'  # Need to create sprite
 
-    # Backgrounge colors
+    # Battle Overlay Text Paths
+    ATTACK_SUCCESS_PATH = 'battle/attack_success.png'
+    ATTACK_FAILED_PATH = 'battle/attack_failed.png'
+    CRUSHING_SUCCESS_PATH = 'battle/crushing_success.png'
+    CRUSHINGS_FAILED_PATH = 'battle/crushing_failed.png'
+    HEAL_SUCCESS_PATH = 'battle/heal_success.png'
+    HEAL_FAILED_PATH = 'battle/heal_failed.png'
+    SUPRISE_SUCCESS_PATH = 'battle/surprise_success.png'
+    SURPRISE_FAILED_PATH = 'battle/surprise_failed.png'
+    ENEMY_ATTACK_SUCCESS_PATH = 'battle/opponent_attack_success.png'
+    ENEMY_ATTACK_FAILED_PATH = 'battle/opponent_attack_failed.png'
+    ENEMY_HEAL_SUCCESS_PATH = 'battle/opponent_heal_success.png'
+    ENEMY_HEAL_FAILED_PATH = 'battle/opponent_heal_failed.png'
+    BATTLE_WON_PATH = 'battle/battle_won.png'
+
+    # Background colors
     BG_BLACK = (0, 0, 0)
     ROOM_BG_FLOOR_COLOR = (178, 178, 178)  # Medium gray to match floor color
 
@@ -115,6 +130,10 @@ class Settings:
     HUD_POS_PILLAR_I = (550, 430)
     HUD_POS_PILLAR_P = (600, 430)
     HUD_POS_POTION_HEALTH = (220, 430)
+
+    # Battle HUD
+    BATTLE_HUD_RECT = (200, 190, 250, 200)
+    BATTLE_MSG_RECT = (130, 10, 400, 100)
 
 
     # Collision Detection

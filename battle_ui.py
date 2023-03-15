@@ -23,13 +23,20 @@ class BattleUI(UIOverlay):
             for layer, pos in super().background_layers:
                 view.screen.blit(layer, pos)
 
-        if super().buttons:
-            for button in super().buttons:
-                view.screen.blit(button.img, button.pos)
-
         if self.__battle_ui_layers:
             for layer, pos in self.__battle_ui_layers:
                 view.screen.blit(layer, pos)
+
+        pygame.draw.rect(view.screen, (0, 0, 60),
+                         Settings.BATTLE_HUD_RECT, 0, 10)
+        pygame.draw.rect(view.screen, (180, 180, 180),
+                         Settings.BATTLE_HUD_RECT, 5, 10)
+        pygame.draw.rect(view.screen, (255, 255, 255),
+                         Settings.BATTLE_HUD_RECT, 2, 10)
+
+        if super().buttons:
+            for button in super().buttons:
+                view.screen.blit(button.img, button.pos)
 
         # pygame.display.update()
 

@@ -30,7 +30,7 @@ class HUD(UIOverlay):
             for layer, pos in self.__hud_ui_layers:
                 view.screen.blit(layer, pos)
 
-        pygame.draw.rect(view.screen, (0, 250, 0), (100, 450, player.hp * 0.75 , 10))
+        pygame.draw.rect(view.screen, (0, 250, 0), (100, 450, player.hero.hp * 0.75 , 10))
 
         # pygame.display.update(Settings.HUD_RECT)  # Drastically reduces performance. Workaround?
 

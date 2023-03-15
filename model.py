@@ -5,8 +5,8 @@ from settings import Settings
 from dungeon_character import DungeonCharacter
 # from hero import Hero
 from warrior import Warrior
-# from priestess import Priestess
-# from thief import Thief
+from priestess import Priestess
+from thief import Thief
 from ogre import Ogre ### DELETE LATER - for testing only
 from player import Player
 
@@ -14,7 +14,7 @@ class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = Dungeon(DungeonFactory.create_dungeon_easy())
-        self.__player = Player(Warrior('Andy', 75, 5, 0.7, (25, 45), 0.3))
+        self.__player = Player(Thief('Andy', 75, 5, 0.7, (25, 45), 0.3))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True  # Should these be moved to controller?
         self.__pause_menu = False  # Should these be moved to controller?

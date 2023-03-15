@@ -3,6 +3,7 @@ import sys
 from math import hypot
 from model import Model
 from settings import Settings
+from time import sleep
 from ogre import Ogre
 from thief import Thief
 from dungeon_character_factory import DungeonCharacterFactory
@@ -15,6 +16,7 @@ class Controller2D:
         self.__view = None
         self.__running = True
         self.__mouse_clicked = False
+        self.__current_battle_dc = None  # Workaround - global field not optimal
 
     def run(self):
         self.load_view2d_ui()  # Might not need
@@ -30,6 +32,7 @@ class Controller2D:
                 keys = pygame.key.get_pressed()
 
                 self.__mouse_clicked = False  # Reset to avoid multiple clicks
+
                 self.handle_menu_events(event)
 
             # Check if player can move
@@ -44,7 +47,6 @@ class Controller2D:
             self.check_door_collision()
 
             # Check player collision with other dungeon characters
-            # self.check_dc_collision()
             self.check_near_dcs()
 
             # Update model -does this need to be split into multiple funcs now?
@@ -203,14 +205,27 @@ class Controller2D:
                 for button in self.__view.menus['battle'].buttons:
                     bounding_rect = pygame.Rect(button.rect)
                     if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                        attack_result = None
                         if button.name == 'attack':
-                            self.__model.player.hero.attack(self.__model.opponent)
+                            attack_result = self.__model.player.hero.attack(self.__model.opponent)[1]
                         elif button.name == 'crushing':
-                            self.__model.player.hero.special(self.__model.opponent)
+                            attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'heal':
-                            self.__model.player.hero.special()
+                            attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'surprise':
-                            self.__model.player.hero.special(self.__model.opponent)
+                            attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
+                        self.__view.draw_battle_message(attack_result)
+
+                # If opponent dead -> end battle
+                if self.__model.opponent.hp <= 0:
+                    self.__view.draw_battle_message('battle_won')
+
+                    # Remove monster from game board
+                    self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
+                    self.__model.battle = False
+
+                # If player dead -> GAME OVER
+
 
 
     # def check_world_collision(self, dx, dy):
@@ -246,16 +261,6 @@ class Controller2D:
                     self.__view.door_sprites.remove(door)
                     self.__view.door_sprites.update()
 
-    ######## Method has been updated by check_near_dcs()  ########
-    def check_dc_collision(self):
-        if self.__view:  # Needed?
-            p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
-            for dc in self.__view.dungeon_character_sprites:
-                if p_rect.colliderect(dc.rect):
-                    self.__model.opponent = self.get_opponent(dc.character_type)
-                    self.__model.battle = True
-    #############################################################
-
     def check_near_dcs(self):
         if self.__view and self.__model.battle == False:
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
@@ -265,6 +270,7 @@ class Controller2D:
                         Settings.MONSTER_VISION_DISTANCE * Settings.PIXEL_SCALE:
                     self.__model.opponent = self.get_battle_opponent(dc.character_type)
                     self.__model.battle = True
+                    self.__current_battle_dc = dc
 
 
     def load_view2d_ui(self):

@@ -35,6 +35,12 @@ class Controller2D:
 
                 self.handle_menu_events(event)
 
+            # Check if player is still alive
+            # If player dead -> GAME OVER
+            if self.__model.player.hero.hp <= 0:
+                self.__model.player_dead = True
+                self.__view.draw_game_over()
+
             # Check if player can move
             # Check colliderect() with all sprites in the room
             self.check_player_can_move(self.__model.player,
@@ -208,6 +214,7 @@ class Controller2D:
                         attack_result = None
                         if button.name == 'attack':
                             attack_result = self.__model.player.hero.attack(self.__model.opponent)[1]
+                            self.__model.player.hero.hp = 0
                         elif button.name == 'crushing':
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'heal':
@@ -216,29 +223,16 @@ class Controller2D:
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         self.__view.draw_battle_message(attack_result)
 
-                # If opponent dead -> end battle
+                # If opponent dead -> end battle & remove moster from board
                 if self.__model.opponent.hp <= 0:
                     self.__view.draw_battle_message('battle_won')
-
-                    # Remove monster from game board
                     self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
                     self.__model.battle = False
 
-                # If player dead -> GAME OVER
-
-
-
-    # def check_world_collision(self, dx, dy):
-    #     if self.__view:
-    #         p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
-    #         for tile in self.__view.world_sprites:
-    #             x_collide = p_rect.x + dx
-    #             y_collide = p_rect.y + dy
-    #             if x_collide.colliderect(tile.rect) \
-    #                     or y_collide.colliderect(tile.rect):
-    #                 return True
-    #
-    #     return False
+                # # If player dead -> GAME OVER
+                # if self.__model.player.hp <= 0:
+                #     self.__model.player_dead = True
+                #     self.__view.draw_game_over()
 
 
     def check_item_collision(self):

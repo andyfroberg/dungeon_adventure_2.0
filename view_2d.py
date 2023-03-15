@@ -194,10 +194,11 @@ class View2D(View):
         # Build load game menu
 
         # Build pause menu
-        pause_menu = UIOverlayFactory.create_pause_menu()
-        self.__menus['pause'] = pause_menu
+        self.__menus['pause'] = UIOverlayFactory.create_pause_menu()
 
         # Game over menu
+        self.__menus['gameover'] = UIOverlayFactory.create_game_over_menu()
+
 
         # Load HUD
         self.load_hud()
@@ -257,6 +258,11 @@ class View2D(View):
 
     def draw_pause_menu(self):
         self.__menus['pause'].draw(self)
+
+    def draw_game_over(self):
+        self.screen.blit(pygame.image.load(Settings.GAME_OVER_PATH), Settings.WINDOW_TOP_LEFT)
+        pygame.time.wait(3000)
+        self.__menus['gameover'].draw(self)
 
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')

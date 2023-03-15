@@ -87,6 +87,11 @@ class Settings:
     MONSTER_OGRE_PATH = 'sprites/warrior_sp_1.png'  # Need to create sprite
     MONSTER_SKELETON_PATH = 'sprites/warrior_sp_1.png'  # Need to create sprite
 
+
+    # Menu Paths
+    GAME_OVER_PATH = 'menu/game_over_v2.png'
+    GAME_OVER_MENU_PATH = 'menu/game_over_menu.png'
+
     # Battle Overlay Text Paths
     ATTACK_SUCCESS_PATH = 'battle/attack_success.png'
     ATTACK_FAILED_PATH = 'battle/attack_failed.png'

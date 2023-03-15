@@ -51,6 +51,23 @@ class UIOverlayFactory:
         return pause_menu
 
     @staticmethod
+    def create_game_over_menu():
+        gameover_continue_btn = Button('continue', 'menu/continue.png', 50, 50,
+                                    323, 46)
+        gameover_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 250,
+                                     323, 46)
+        gameover_quit_btn = Button('options', 'menu/load_game_v1.png', 50, 150,
+                                   323, 46)
+        gameover_menu_buttons = [gameover_continue_btn, gameover_main_menu_btn,
+                                 gameover_quit_btn]
+        gameover_menu = MenuUI('Game Over Menu', 'GAME OVER',
+                            (10, 10, 10), [(Settings.GAME_OVER_MENU_PATH,
+                                            Settings.WINDOW_TOP_LEFT)],
+                            gameover_menu_buttons)
+
+        return gameover_menu
+
+    @staticmethod
     def create_battle_menu(player, opponent):
         attack_btn = Button('attack', 'battle/attack.png', 245, 230, 151, 31)
         battle_ui_buttons = [attack_btn]

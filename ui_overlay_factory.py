@@ -31,6 +31,22 @@ class UIOverlayFactory:
         return main_menu
 
     @staticmethod
+    def create_start_menu():
+        priestess_btn = Button('priestess', Settings.CHOOSE_PRIESTESS_PATH, 290,
+                                       250, 241, 41)
+        thief_btn = Button('thief', Settings.CHOOSE_THIEF_PATH, 290, 300,
+                                        241, 41)
+        warrior_btn = Button('warrior', Settings.CHOOSE_WARRIOR_PATH, 290, 350,
+                                   241, 41)
+        start_buttons = [priestess_btn, thief_btn, warrior_btn]
+        start_menu = MenuUI('Start Menu', 'Choose a Hero Character', (10, 10, 10),
+                            [(Settings.START_MENU_PATH, Settings.WINDOW_TOP_LEFT),
+                            (Settings.CHOOSE_CHARACTER_PATH, (200, 100, 401, 101))],
+                            start_buttons)
+
+        return start_menu
+
+    @staticmethod
     def create_pause_menu():
         pause_continue_btn = Button('continue', 'menu/continue.png', 50, 50,
                                     323, 46)
@@ -71,7 +87,7 @@ class UIOverlayFactory:
     def create_battle_menu(player, opponent):
         attack_btn = Button('attack', 'battle/attack.png', 245, 230, 151, 31)
         battle_ui_buttons = [attack_btn]
-        custom_caption = f'Battling {opponent.hp}!'
+        custom_caption = f'Battling {opponent.name} - Health: {opponent.hp}!'
         battle_ui = BattleUI('Battle Menu', custom_caption, Settings.BG_BLACK,
                              [('battle/battle_bg_brick.png', Settings.WINDOW_TOP_LEFT)],
                              battle_ui_buttons, player, opponent)

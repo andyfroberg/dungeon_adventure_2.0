@@ -91,6 +91,11 @@ class Settings:
     # Menu Paths
     GAME_OVER_PATH = 'menu/game_over_v2.png'
     GAME_OVER_MENU_PATH = 'menu/game_over_menu.png'
+    START_MENU_PATH = 'menu/start_menu.png'
+    CHOOSE_CHARACTER_PATH = 'menu/choose_character.png'
+    CHOOSE_PRIESTESS_PATH = 'menu/choose_priestess.png'
+    CHOOSE_THIEF_PATH = 'menu/choose_thief.png'
+    CHOOSE_WARRIOR_PATH = 'menu/choose_warrior.png'
 
     # Battle Overlay Text Paths
     ATTACK_SUCCESS_PATH = 'battle/attack_success.png'

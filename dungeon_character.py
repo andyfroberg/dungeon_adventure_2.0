@@ -5,6 +5,7 @@ class DungeonCharacter(metaclass=ABCMeta):
     def __init__(self, name, hp, attack_speed, hit_prob, damage_range):
         self.__name = name
         self.__hp = hp
+        self.__max_hp = hp
         self.__attack_speed = attack_speed
         self.__hit_prob = hit_prob
         self.__damage_range = damage_range
@@ -47,6 +48,10 @@ class DungeonCharacter(metaclass=ABCMeta):
         :return: None
         """
         self.__hp = hp
+
+    @property
+    def max_hp(self):
+        return self.__max_hp
 
     @property
     def damage_range(self):

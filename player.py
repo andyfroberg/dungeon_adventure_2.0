@@ -7,6 +7,7 @@ import math
 class Player:
     def __init__(self, hero):  # hero_type param for informal testing only
         self.__name = hero.name
+        self.__hp = hero.hp
         self.__x = Settings.PLAYER_START_POS[0]
         self.__x_left = Settings.PLAYER_START_POS[0] - Settings.PLAYER_BOUNDING_RECT
         self.__x_right = Settings.PLAYER_START_POS[0] + Settings.PLAYER_BOUNDING_RECT

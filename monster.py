@@ -28,6 +28,8 @@ class Monster(DungeonCharacter, metaclass=ABCMeta):
         # heal itself!)
         if random.random() < self.__heal_prob:
             self.hp += random.randint(self.__heal_range[0], self.__heal_range[1])
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
             return True, 'monster_heal_success'
         else:  # Heal failed
             return False, 'monster_heal_failed'

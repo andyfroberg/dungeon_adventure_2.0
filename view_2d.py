@@ -43,6 +43,10 @@ class View2D(View):
             self.draw_game_over()
             return
 
+        if model.start_menu:
+            self.draw_start_menu()
+            return
+
         if model.main_menu:
             # self.load_menus()
             self.draw_main_menu()
@@ -191,6 +195,7 @@ class View2D(View):
         self.__menus['main'] = UIOverlayFactory.create_main_menu()
 
         # Build character selection menu
+        self.__menus['start'] = UIOverlayFactory.create_start_menu()
 
         # Build game difficulty menu
 
@@ -250,12 +255,12 @@ class View2D(View):
         elif message_type == 'monster_heal_success':
             self.screen.blit(pygame.image.load(Settings.ENEMY_HEAL_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
         elif message_type == 'monster_heal_failed':
-            self.screen.blit(pygame.image.load(Settings.ENEMY_HEAL_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+            # self.screen.blit(pygame.image.load(Settings.ENEMY_HEAL_FAILED_PATH), Settings.BATTLE_MSG_RECT)
+            pass
         elif message_type == 'monster_attack_success':
             self.screen.blit(pygame.image.load(Settings.ENEMY_ATTACK_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
         elif message_type == 'monster_attack_failed':
             self.screen.blit(pygame.image.load(Settings.ENEMY_ATTACK_FAILED_PATH), Settings.BATTLE_MSG_RECT)
-
         elif message_type == 'battle_won':
             # display battle won message then end battle (in controller)
             self.screen.blit(pygame.image.load(Settings.BATTLE_WON_PATH), Settings.BATTLE_MSG_RECT)
@@ -267,6 +272,9 @@ class View2D(View):
 
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
+
+    def draw_start_menu(self):
+        self.__menus['start'].draw(self)
 
     def draw_pause_menu(self):
         self.__menus['pause'].draw(self)

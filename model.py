@@ -15,14 +15,15 @@ class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = Dungeon(DungeonFactory.create_dungeon_easy())
-        self.__player = Player(DungeonCharacterFactory.create_warrior('Andy'))
+        self.__player = Player(DungeonCharacterFactory.create_thief('Andy'))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True  # Should these be moved to controller?
+        self.__start_menu = False
         self.__pause_menu = False  # Should these be moved to controller?
         self.__options_menu = False  # Should these be moved to controller?
         self.__gameover = False
         self.__battle = False  # Should these be moved to controller? Battle class?
-        self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
+        self.__opponent = None
 
     def register_view(self, view):
         self.__views.append(view)
@@ -55,6 +56,10 @@ class Model:
     def player(self):
         return self.__player
 
+    @player.setter
+    def player(self, player):
+        self.__player = player
+
     def get_player_inventory(self) -> dict:
         return self.__player_inventory
 
@@ -69,6 +74,14 @@ class Model:
     @main_menu.setter
     def main_menu(self, boolean):
         self.__main_menu = boolean
+
+    @property
+    def start_menu(self):
+        return self.__start_menu
+
+    @start_menu.setter
+    def start_menu(self, boolean):
+        self.__start_menu = boolean
 
     @property
     def pause_menu(self):

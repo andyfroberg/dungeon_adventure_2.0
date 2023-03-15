@@ -25,15 +25,15 @@ class MenuUI(UIOverlay):
 
     def draw(self, view):
         pygame.mouse.set_visible(True)
-        pygame.display.set_caption(super().caption)
-        view.screen.fill(super().background_color)
+        pygame.display.set_caption(self.caption)
+        view.screen.fill(self.background_color)
 
-        if super().background_layers:
-            for layer, pos in super().background_layers:
+        if self.background_layers:
+            for layer, pos in self.background_layers:
                 view.screen.blit(layer, pos)
 
-        if super().buttons:
-            for button in super().buttons:
+        if self.buttons:
+            for button in self.buttons:
                 view.screen.blit(button.img, button.pos)
 
         pygame.display.update()

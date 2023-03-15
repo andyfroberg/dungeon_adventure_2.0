@@ -18,7 +18,7 @@ class Controller2D:
         self.__mouse_clicked = False
         self.__current_battle_dc = None  # Workaround - global field not optimal
 
-    def run(self):
+    def main_loop(self):
         self.load_view2d_ui()  # Might not need
 
         while self.__running:
@@ -38,8 +38,10 @@ class Controller2D:
             # Check if player is still alive
             # If player dead -> GAME OVER
             if self.__model.player.hero.hp <= 0:
-                self.__model.player_dead = True
-                self.__view.draw_game_over()
+                self.__model.gameover = True
+                self.__model.battle = False
+                self.__model.main_menu = False
+                self.__model.pause_menu = False
 
             # Check if player can move
             # Check colliderect() with all sprites in the room
@@ -59,6 +61,18 @@ class Controller2D:
             # ie model might not just be able to "update" based on logic
             # above
             self.__model.update(keys)
+
+    def menu_loop(self, menu):
+        while self.__menu_loop:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                keys = pygame.key.get_pressed()
+                self.__mouse_clicked = False  # Reset to avoid multiple clicks
+
+                self.handle_menu_events(event)
 
     def add_view(self, view):
         self.__view = view
@@ -214,7 +228,7 @@ class Controller2D:
                         attack_result = None
                         if button.name == 'attack':
                             attack_result = self.__model.player.hero.attack(self.__model.opponent)[1]
-                            self.__model.player.hero.hp = 0
+                            self.__model.player.hero.hp = 0 # REMOVE LINE - testing only
                         elif button.name == 'crushing':
                             attack_result = self.__model.player.hero.special(self.__model.opponent)[1]
                         elif button.name == 'heal':
@@ -233,6 +247,18 @@ class Controller2D:
                 # if self.__model.player.hp <= 0:
                 #     self.__model.player_dead = True
                 #     self.__view.draw_game_over()
+
+        if self.__model.gameover:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in self.__view.menus['gameover'].buttons:
+                    bounding_rect = pygame.Rect(button.rect)
+                    if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                        if button.name == 'new game':
+                            self.model.main_menu = False  # start new game
+                        elif button.name == 'load game':
+                            pass  # load saved game
+                        elif button.name == 'options':
+                            pass  # options menu
 
 
     def check_item_collision(self):
@@ -294,8 +320,8 @@ class Controller2D:
 
     @running.setter
     def running(self, is_running: bool):
-        # Validate input
-        self.__running = is_running
+        if type(is_running) is bool:
+            self.__running = is_running
 
 
 if __name__ == "__main__":

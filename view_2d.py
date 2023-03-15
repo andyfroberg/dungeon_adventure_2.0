@@ -37,6 +37,12 @@ class View2D(View):
         # self.load_items()  # MOVE INTO ROOM IF POSSIBLE (needs view reference)
 
     def update(self, model):
+
+        # Heirarchy of if statements matters - can cause weirdness
+        if model.gameover:
+            self.draw_game_over()
+            return
+
         if model.main_menu:
             # self.load_menus()
             self.draw_main_menu()
@@ -182,8 +188,7 @@ class View2D(View):
                            'skeleton', [self.__dungeon_character_sprites])
     def load_menus(self):
         # Build main menu
-        main_menu = UIOverlayFactory.create_main_menu()
-        self.__menus['main'] = main_menu
+        self.__menus['main'] = UIOverlayFactory.create_main_menu()
 
         # Build character selection menu
 
@@ -198,7 +203,6 @@ class View2D(View):
 
         # Game over menu
         self.__menus['gameover'] = UIOverlayFactory.create_game_over_menu()
-
 
         # Load HUD
         self.load_hud()
@@ -260,8 +264,8 @@ class View2D(View):
         self.__menus['pause'].draw(self)
 
     def draw_game_over(self):
-        self.screen.blit(pygame.image.load(Settings.GAME_OVER_PATH), Settings.WINDOW_TOP_LEFT)
-        pygame.time.wait(3000)
+        # self.screen.blit(pygame.image.load(Settings.GAME_OVER_PATH), Settings.WINDOW_TOP_LEFT)
+        # pygame.time.wait(3000)
         self.__menus['gameover'].draw(self)
 
     def draw_frame(self, dungeon, player):

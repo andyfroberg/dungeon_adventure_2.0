@@ -52,16 +52,16 @@ class UIOverlayFactory:
 
     @staticmethod
     def create_game_over_menu():
-        gameover_continue_btn = Button('continue', 'menu/continue.png', 50, 50,
+        gameover_continue_btn = Button('continue', 'menu/continue.png', 180, 250,
                                     323, 46)
-        gameover_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 250,
+        gameover_main_menu_btn = Button('main', 'menu/main_menu.png', 180, 320,
                                      323, 46)
-        gameover_quit_btn = Button('options', 'menu/load_game_v1.png', 50, 150,
+        gameover_quit_btn = Button('quit', 'menu/quit.png', 180, 390,
                                    323, 46)
         gameover_menu_buttons = [gameover_continue_btn, gameover_main_menu_btn,
                                  gameover_quit_btn]
         gameover_menu = MenuUI('Game Over Menu', 'GAME OVER',
-                            (10, 10, 10), [(Settings.GAME_OVER_MENU_PATH,
+                            (10, 10, 10), [(Settings.GAME_OVER_PATH,
                                             Settings.WINDOW_TOP_LEFT)],
                             gameover_menu_buttons)
 

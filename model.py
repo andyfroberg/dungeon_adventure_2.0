@@ -19,6 +19,7 @@ class Model:
         self.__main_menu = True  # Should these be moved to controller?
         self.__pause_menu = False  # Should these be moved to controller?
         self.__options_menu = False  # Should these be moved to controller?
+        self.__gameover = False
         self.__battle = False  # Should these be moved to controller? Battle class?
         self.__opponent = None  # DELETE LATER - FOR TESTING ONLY
 
@@ -83,6 +84,14 @@ class Model:
     @battle.setter
     def battle(self, boolean):
         self.__battle = boolean
+
+    @property
+    def gameover(self):
+        return self.__gameover
+
+    @gameover.setter
+    def gameover(self, boolean):
+        self.__gameover = boolean
 
     @property
     def opponent(self):

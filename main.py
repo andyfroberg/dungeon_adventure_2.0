@@ -5,4 +5,4 @@ if __name__ == "__main__":
     game = Controller2D()
     view = View2D(game.model)
     game.add_view(view)
-    game.run()
+    game.main_loop()

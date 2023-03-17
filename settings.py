@@ -100,6 +100,10 @@ class Settings:
     CHOOSE_WARRIOR_PATH = 'menu/choose_warrior.png'
     THANKS_FOR_PLAYING = 'menu/thanks_for_playing.png'
     GET_TO_EXIT = 'menu/get_to_exit.png'
+    DIFFICULTY_MENU_PATH = 'menu/difficulty_bg.png'
+    MODE_EASY = 'menu/easy.png'
+    MODE_NORMAL = 'menu/normal.png'
+    MODE_HARD = 'menu/hard.png'
 
     # Battle Overlay Text Paths
     ATTACK_SUCCESS_PATH = 'battle/attack_success.png'

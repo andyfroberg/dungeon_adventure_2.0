@@ -173,7 +173,7 @@ class DungeonFactory:
 
     # bottom right (normal)
     ROOM_2_2_NORMAL = [
-        ['B', 'B', 'B', 'D', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+        ['B', 'B', 'B', 'D', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'e', 'B', 'B'],
         ['B', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'B'],
         ['D', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'B'],
         ['B', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'B'],
@@ -211,16 +211,16 @@ class DungeonFactory:
 
     @staticmethod
     def create_dungeon_easy():
-        return DungeonFactory.rooms_dict_easy
+        return Dungeon(DungeonFactory.rooms_dict_easy)
 
     @staticmethod
     def create_dungeon_normal():
-        return DungeonFactory.rooms_dict_normal
+        return Dungeon(DungeonFactory.rooms_dict_normal)
 
     @staticmethod
     def create_dungeon_hard():
-        return DungeonFactory.rooms_dict_hard
+        return Dungeon(DungeonFactory.rooms_dict_hard)
 
     @staticmethod
     def create_dungeon_extreme():
-        return DungeonFactory.rooms_dict_extreme
+        return Dungeon(DungeonFactory.rooms_dict_extreme)

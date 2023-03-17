@@ -14,11 +14,12 @@ from player import Player
 class Model:
     def __init__(self):
         self.__views = []
-        self.__dungeon = Dungeon(DungeonFactory.create_dungeon_normal())
+        self.__dungeon = DungeonFactory.create_dungeon_easy()
         self.__player = Player(DungeonCharacterFactory.create_thief('Andy'))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True  # Should these be moved to controller?
         self.__start_menu = False
+        self.__difficulty_menu = False
         self.__pause_menu = False  # Should these be moved to controller?
         self.__options_menu = False  # Should these be moved to controller?
         self.__gameover = False
@@ -94,6 +95,14 @@ class Model:
         self.__pause_menu = boolean
 
     @property
+    def difficulty_menu(self):
+        return self.__difficulty_menu
+
+    @difficulty_menu.setter
+    def difficulty_menu(self, boolean):
+        self.__difficulty_menu = boolean
+
+    @property
     def battle(self):
         return self.__battle
 
@@ -116,6 +125,8 @@ class Model:
     @win.setter
     def win(self, boolean):
         self.__win = boolean
+
+
 
     @property
     def opponent(self):

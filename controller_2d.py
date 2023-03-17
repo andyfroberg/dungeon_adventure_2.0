@@ -8,6 +8,7 @@ from time import sleep
 from ogre import Ogre
 from thief import Thief
 from dungeon_character_factory import DungeonCharacterFactory
+from dungeon_factory import DungeonFactory
 from view_2d import View2D
 
 from player_sprite import PlayerSprite
@@ -61,19 +62,22 @@ class Controller2D:
                     self.__view.draw_get_to_exit()
                     self.__display_once['get_to_exit'] = 1
 
-            # Check if player can move
-            # Check colliderect() with all sprites in the room
-            self.check_player_can_move(self.__model.player,
-                                       self.__model.dungeon, self.__view, keys)
+            if not self.__model.main_menu and not self.__model.pause_menu \
+                    and not self.__model.difficulty_menu and not self.__model.battle \
+                    and not self.__model.gameover:
+                # Check if player can move
+                # Check colliderect() with all sprites in the room
+                self.check_player_can_move(self.__model.player,
+                                           self.__model.dungeon, self.__view, keys)
 
-            # Check player collision with items
-            self.check_item_collision()
+                # Check player collision with items
+                self.check_item_collision()
 
-            # Check door collisions
-            self.check_door_collision()
+                # Check door collisions
+                self.check_door_collision()
 
-            # Check player collision with other dungeon characters
-            self.check_near_dcs()
+                # Check player collision with other dungeon characters
+                self.check_near_dcs()
 
             # Update model -does this need to be split into multiple funcs now?
             # ie model might not just be able to "update" based on logic
@@ -258,7 +262,22 @@ class Controller2D:
                         self.__view.player_sprites.empty()
                         self.__view.player_sprite = PlayerSprite(
                             self.__model.player, [self.__view.player_sprites])
+                        self.__model.difficulty_menu = True
                         self.__model.start_menu = False
+
+        if self.__model.difficulty_menu:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in self.__view.menus['difficulty'].buttons:
+                    bounding_rect = pygame.Rect(button.rect)
+                    if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                        if button.name == 'easy':
+                            self.__model.dungeon = DungeonFactory.create_dungeon_easy()
+                        elif button.name == 'normal':
+                            self.__model.dungeon = DungeonFactory.create_dungeon_normal()
+                        elif button.name == 'hard':
+                            self.__model.dungeon = DungeonFactory.create_dungeon_hard()
+
+                        self.__model.difficulty_menu = False
 
         if self.__model.pause_menu:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -280,52 +299,6 @@ class Controller2D:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
                 self.__model.player.use_health_potion()
-
-        # # Should proably move to battle() method or even a Battle class.
-        # if self.__model.battle:
-        #     if event.type == pygame.MOUSEBUTTONDOWN:
-        #         for button in self.__view.menus['battle'].buttons:
-        #             bounding_rect = pygame.Rect(button.rect)
-        #             if bounding_rect.collidepoint(pygame.mouse.get_pos()):
-        #                 attack_result = None
-        #                 if button.name == 'attack':
-        #                     attack_result = self.__model.player.hero.attack(self.__model.opponent)
-        #                 elif button.name == 'crushing':
-        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
-        #                 elif button.name == 'heal':
-        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
-        #                 elif button.name == 'surprise':
-        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
-        #
-        #                 self.__view.draw_battle_message(attack_result[1])
-        #
-        #                 # If opponent dead -> end battle & remove moster from board
-        #                 if self.__model.opponent.hp <= 0:
-        #                     self.__view.draw_battle_message('battle_won')
-        #                     self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
-        #                     self.__model.battle = False
-        #                     return
-        #
-        #                 # Give the monster a chance to heal after a succesful
-        #                 # hero attack. (Note that the Priestess's special
-        #                 # ability (heal) will not cause the monster to try to
-        #                 # heal as it does not decrease a monster's hit points.
-        #                 if not attack_result[0] or attack_result[1] == 'heal_failed':
-        #                     pass
-        #                 else:
-        #                     self.__view.draw_battle_message(self.__model.opponent.heal()[1])
-        #
-        #                 self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player.hero)[1])
-        #
-        #                 if self.__model.player.hero.hp < 0:
-        #                     self.__model.player.hero.hp = 0
-
-
-
-                # # If player dead -> GAME OVER
-                # if self.__model.player.hp <= 0:
-                #     self.__model.player_dead = True
-                #     self.__view.draw_game_over()
 
         if self.__model.gameover:
             if event.type == pygame.MOUSEBUTTONDOWN:

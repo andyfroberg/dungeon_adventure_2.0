@@ -47,6 +47,21 @@ class UIOverlayFactory:
         return start_menu
 
     @staticmethod
+    def create_difficulty_menu():
+        easy_btn = Button('easy', Settings.MODE_EASY, 390, 150, 348, 120)
+        normal_btn = Button('normal', Settings.MODE_NORMAL, 390, 250, 348, 120)
+        # hard_btn = Button('hard', Settings.MODE_HARD, 390, 350, 348, 120)
+        difficulty_buttons = [easy_btn, normal_btn]
+        difficulty_menu = MenuUI('Difficulty Menu', 'Choose a Difficulty Level',
+                            (10, 10, 10),
+                            [(Settings.DIFFICULTY_MENU_PATH,
+                              Settings.WINDOW_TOP_LEFT)],
+                            difficulty_buttons)
+
+        return difficulty_menu
+
+
+    @staticmethod
     def create_pause_menu():
         pause_continue_btn = Button('continue', 'menu/continue.png', 50, 50,
                                     323, 46)

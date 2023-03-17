@@ -38,13 +38,18 @@ class View2D(View):
 
     def update(self, model):
 
-        # Heirarchy of if statements matters - can cause weirdness
+        # Hierarchy of if statements matters due to menus overlaying
+        # one top of another
         if model.gameover:
             self.draw_game_over()
             return
 
         if model.win:
             self.draw_win_menu()
+            return
+
+        if model.difficulty_menu:
+            self.draw_difficulty_menu()
             return
 
         if model.start_menu:
@@ -219,6 +224,7 @@ class View2D(View):
         self.__menus['start'] = UIOverlayFactory.create_start_menu()
 
         # Build game difficulty menu
+        self.__menus['difficulty'] = UIOverlayFactory.create_difficulty_menu()
 
         # Build options menu
 
@@ -333,6 +339,9 @@ class View2D(View):
 
     def draw_pause_menu(self):
         self.__menus['pause'].draw(self)
+
+    def draw_difficulty_menu(self):
+        self.__menus['difficulty'].draw(self)
 
     def draw_game_over(self):
         # self.screen.blit(pygame.image.load(Settings.GAME_OVER_PATH), Settings.WINDOW_TOP_LEFT)

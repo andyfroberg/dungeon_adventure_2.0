@@ -43,6 +43,7 @@ class Settings:
     PILLAR_E = 'E'
     PILLAR_I = 'I'
     PILLAR_P = 'P'
+    HEALTH_POTION = 'H'
 
     # Sprite Paths - World sprites
     SPRITE_PATHS = {
@@ -58,6 +59,7 @@ class Settings:
         'pillar_e': 'sprites/pillar_e_50x50.png',
         'pillar_i': 'sprites/pillar_i_50x50.png',
         'pillar_p': 'sprites/pillar_p_50x50.png',
+        'health_potion': 'sprites/potion_health_25x25.png',
         'priestess': 'sprites/warrior_sp_1.png',
         'thief': 'sprites/warrior_sp_1.png',
         'warrior': 'sprites/warrior_sp_1.png',
@@ -135,7 +137,7 @@ class Settings:
 
     # HUD
     HUD_RECT = (0, 400, 700, 100)
-    HUD_POS_HEALTH = (20, 450)
+    HUD_POS_HEALTH = (10, 420)
     HUD_POS_PILLAR_A = (450, 430)
     HUD_POS_PILLAR_E = (500, 430)
     HUD_POS_PILLAR_I = (550, 430)
@@ -145,6 +147,20 @@ class Settings:
     # Battle HUD
     BATTLE_HUD_RECT = (200, 190, 250, 200)
     BATTLE_MSG_RECT = (130, 10, 400, 100)
+
+    # HUD Letters and Numbers
+    HUD_LETTERS = {
+        '0': 'sprites/0.png',
+        '1': 'sprites/1.png',
+        '2': 'sprites/2.png',
+        '3': 'sprites/3.png',
+        '4': 'sprites/4.png',
+        '5': 'sprites/5.png',
+        '6': 'sprites/6.png',
+        '7': 'sprites/7.png',
+        '8': 'sprites/8.png',
+        '9': 'sprites/9.png',
+    }
 
 
     # Collision Detection

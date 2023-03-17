@@ -22,7 +22,7 @@ class Model:
         self.__pause_menu = False  # Should these be moved to controller?
         self.__options_menu = False  # Should these be moved to controller?
         self.__gameover = False
-        self.__win = True
+        self.__win = False
         self.__battle = False  # Should these be moved to controller? Battle class?
         self.__opponent = None
 
@@ -41,8 +41,9 @@ class Model:
     def update(self, keys_pressed):
         if not self.__main_menu and not self.__pause_menu \
                 and not self.__options_menu:
+
             # Update player state
-            # self.__player.update(keys_pressed, self.__dungeon)
+            self.__player.update(keys_pressed)
 
             # Update Dungeon state
             self.__dungeon.update()  # Currently nothing in this method

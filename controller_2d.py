@@ -13,8 +13,9 @@ from view_2d import View2D
 from player_sprite import PlayerSprite
 
 class Controller2D:
-    def __init__(self):
+    def __init__(self, game):
         pygame.init()
+        self.__game = game
         self.__model = Model()
         self.__view = None
         self.__running = True
@@ -33,6 +34,13 @@ class Controller2D:
 
                 # Get the keys the player is pressing this loop iteration.
                 keys = pygame.key.get_pressed()
+
+                # Handle player health potion. Does not use key.get_pressed()
+                # because we only want to handle a single key press.
+                # (key.get_pressed() returns multiple key press events.)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        self.__model.player.use_health_potion()
 
                 self.__mouse_clicked = False  # Reset to avoid multiple clicks
 
@@ -208,8 +216,7 @@ class Controller2D:
                     bounding_rect = pygame.Rect(button.rect)
                     if bounding_rect.collidepoint(pygame.mouse.get_pos()):
                         if button.name == 'main':
-                            self.__model.win = False
-                            self.__model.main_menu = True
+                            self.__game.refresh_game()
                         elif button.name == 'quit':
                             self.__view.draw_game_quit()
                             pygame.quit()
@@ -307,12 +314,14 @@ class Controller2D:
                 for button in self.__view.menus['gameover'].buttons:
                     bounding_rect = pygame.Rect(button.rect)
                     if bounding_rect.collidepoint(pygame.mouse.get_pos()):
-                        if button.name == 'new game':
+                        if button.name == 'continue':
                             self.model.main_menu = False  # start new game
-                        elif button.name == 'load game':
-                            pass  # load saved game
-                        elif button.name == 'options':
-                            pass  # options menu
+                        elif button.name == 'main':
+                            self.__game.refresh_game()
+                        elif button.name == 'quit':
+                            self.__view.draw_game_quit()
+                            pygame.quit()
+                            sys.exit()
 
 
     def check_item_collision(self):

@@ -16,7 +16,7 @@ class HUD(UIOverlay):
         pygame.mouse.set_visible(True)
         pygame.draw.rect(view.screen, (0, 0, 60), Settings.HUD_RECT, 0, 10)
         pygame.draw.rect(view.screen, (180, 180, 180), Settings.HUD_RECT, 5, 10)
-        pygame.draw.rect(view.screen, (255, 255, 255), Settings.HUD_RECT, 2,10)
+        pygame.draw.rect(view.screen, (255, 255, 255), Settings.HUD_RECT, 2, 10)
 
         if super().background_layers:
             for layer, pos in super().background_layers:
@@ -30,7 +30,11 @@ class HUD(UIOverlay):
             for layer, pos in self.__hud_ui_layers:
                 view.screen.blit(layer, pos)
 
-        pygame.draw.rect(view.screen, (0, 250, 0), (100, 450, player.hero.hp * 0.75 , 10))
+        pygame.draw.rect(view.screen, (0, 250, 0), (90, 417, player.hero.hp * 0.75 , 15))
+
+        health_str = str(player.hero.hp)
+        for i, letter in enumerate(health_str):
+            view.screen.blit(pygame.image.load(Settings.HUD_LETTERS[letter]), (50 + (i * 41), 445 ))
 
         # pygame.display.update(Settings.HUD_RECT)  # Drastically reduces performance. Workaround?
 

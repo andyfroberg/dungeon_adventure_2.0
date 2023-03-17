@@ -173,6 +173,15 @@ class View2D(View):
                                (row * Settings.PIXEL_SCALE,
                                 col * Settings.PIXEL_SCALE),
                                'pillar_p', [self.item_sprites])
+            elif self.room_ui[(row, col)] == Settings.HEALTH_POTION:
+                WorldSprite(Settings.SPRITE_PATHS['floor'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.OPEN_FLOOR, [self.world_sprites])
+                ItemSprite(Settings.SPRITE_PATHS['health_potion'],
+                           (row * Settings.PIXEL_SCALE,
+                            col * Settings.PIXEL_SCALE),
+                           'health_potion', [self.item_sprites])
 
             # Dungeon character sprites
             elif self.room_ui[(row, col)] == Settings.GREMLIN:

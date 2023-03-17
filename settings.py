@@ -99,6 +99,7 @@ class Settings:
     CHOOSE_THIEF_PATH = 'menu/choose_thief.png'
     CHOOSE_WARRIOR_PATH = 'menu/choose_warrior.png'
     THANKS_FOR_PLAYING = 'menu/thanks_for_playing.png'
+    GET_TO_EXIT = 'menu/get_to_exit.png'
 
     # Battle Overlay Text Paths
     ATTACK_SUCCESS_PATH = 'battle/attack_success.png'

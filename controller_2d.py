@@ -21,6 +21,9 @@ class Controller2D:
         self.__running = True
         self.__mouse_clicked = False
         self.__current_battle_dc = None  # Workaround - global field not optimal
+        self.__display_once ={
+            'get_to_exit': 0,
+        }
 
     def main_loop(self):
         self.load_view2d_ui()  # Might not need
@@ -35,13 +38,6 @@ class Controller2D:
                 # Get the keys the player is pressing this loop iteration.
                 keys = pygame.key.get_pressed()
 
-                # Handle player health potion. Does not use key.get_pressed()
-                # because we only want to handle a single key press.
-                # (key.get_pressed() returns multiple key press events.)
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_p:
-                        self.__model.player.use_health_potion()
-
                 self.__mouse_clicked = False  # Reset to avoid multiple clicks
 
                 self.handle_menu_events(event)
@@ -53,6 +49,14 @@ class Controller2D:
                 self.__model.battle = False
                 self.__model.main_menu = False
                 self.__model.pause_menu = False
+
+            if not self.__display_once['get_to_exit']:
+                if self.__model.player.inv['pillar_a'] \
+                        and self.__model.player.inv['pillar_e'] \
+                        and self.__model.player.inv['pillar_i'] \
+                        and self.__model.player.inv['pillar_p']:
+                    self.__view.draw_get_to_exit()
+                    self.__display_once['get_to_exit'] = 1
 
             # Check if player can move
             # Check colliderect() with all sprites in the room
@@ -231,9 +235,9 @@ class Controller2D:
                             self.__model.start_menu = True
                             self.__model.main_menu = False
                         elif button.name == 'load game':
-                            pass  # load saved game
+                            self.__game.load_game()
                         elif button.name == 'options':
-                            pass  # options menu
+                            self.__game.save_game()
 
         if self.__model.start_menu:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -266,6 +270,13 @@ class Controller2D:
                             pass  # load saved game
                         elif button.name == 'options':
                             pass  # options menu
+
+        # Handle player health potion. Does not use key.get_pressed()
+        # because we only want to handle a single key press.
+        # (key.get_pressed() returns multiple key press events.)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                self.__model.player.use_health_potion()
 
         # Should proably move to battle() method or even a Battle class.
         if self.__model.battle:
@@ -345,7 +356,7 @@ class Controller2D:
                     self.__view.door_sprites.update()
 
     def check_near_dcs(self):
-        if self.__view and self.__model.battle == False:
+        if self.__view and not self.__model.battle:
             p_rect = pygame.Rect(self.__view.player_sprite.get_rect())
             for dc in self.__view.dungeon_character_sprites:
                 if hypot(p_rect.centerx - dc.rect.centerx,
@@ -354,11 +365,11 @@ class Controller2D:
                     self.__model.opponent = self.get_battle_opponent(dc.character_type)
                     self.__model.battle = True
                     self.__current_battle_dc = dc
-
+                    self.__view.dungeon_character_sprites.remove(dc)
+                    self.__view.dungeon_character_sprites.update()
 
     def win_game(self):
         self.__model.win = True
-
 
     def load_view2d_ui(self):
         # load dungeon

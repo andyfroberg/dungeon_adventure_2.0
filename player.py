@@ -24,6 +24,7 @@ class Player:
             "pillar_p": 0,
             "health_potion": 0,
         }
+        self.__item_refs = []
 
     def update(self, keys_pressed):
         # if keys_pressed[pygame.K_p]:
@@ -35,11 +36,10 @@ class Player:
 
     def pickup_item(self, item):
         self.__inventory[item.item_type] += 1
-        self.hero.hp -= 27
 
     def use_health_potion(self):
         if self.__inventory['health_potion'] > 0:
-            self.__hero.hp += 25
+            self.__hero.hp += 50
             self.__inventory['health_potion'] -= 1
         if self.__hero.hp > self.__hero.max_hp:
             self.__hero.hp = self.__hero.max_hp
@@ -103,3 +103,11 @@ class Player:
     @property
     def inv(self):
         return self.__inventory
+
+    @property
+    def item_refs(self):
+        return self.__item_refs
+
+    @item_refs.setter
+    def item_refs(self, item):
+        self.__item_refs = item

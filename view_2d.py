@@ -306,6 +306,14 @@ class View2D(View):
         pygame.display.update()
         pygame.time.wait(3000)
 
+    def draw_get_to_exit(self):
+        self.draw_message_box()
+        self.screen.blit(pygame.image.load(Settings.GET_TO_EXIT),
+                         Settings.BATTLE_MSG_RECT)
+        pygame.display.update()
+        pygame.time.wait(3000)
+
+
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
 

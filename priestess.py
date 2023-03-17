@@ -20,10 +20,9 @@ class Priestess(Hero):
         special_prob = 0.8  # Move these to Settings? Add to constructor?
         if random.random() < special_prob:
             hit_points = random.randint(25, 75)
-            opponent.hp -= hit_points
             self.hp += hit_points
-            if self.hp > 75:
-                self.hp = 75
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
             return True, 'heal_success'
         else:  # surprise attack failed
             return False, 'heal_failed'

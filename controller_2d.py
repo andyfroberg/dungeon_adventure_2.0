@@ -44,7 +44,7 @@ class Controller2D:
 
             # Check if player is still alive
             # If player dead -> GAME OVER
-            if self.__model.player.hp <= 0:
+            if self.__model.player.hero.hp <= 0:
                 self.__model.gameover = True
                 self.__model.battle = False
                 self.__model.main_menu = False
@@ -301,6 +301,7 @@ class Controller2D:
                             self.__view.draw_battle_message('battle_won')
                             self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
                             self.__model.battle = False
+                            return
 
                         # Give the monster a chance to heal after a succesful
                         # hero attack. (Note that the Priestess's special
@@ -311,7 +312,10 @@ class Controller2D:
                         else:
                             self.__view.draw_battle_message(self.__model.opponent.heal()[1])
 
-                        self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player)[1])
+                        self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player.hero)[1])
+
+                        if self.__model.player.hero.hp < 0:
+                            self.__model.player.hero.hp = 0
 
 
 

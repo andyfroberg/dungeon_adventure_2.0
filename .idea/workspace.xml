@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="96ce9220-d71b-4349-8278-2da3b905416d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller_2d.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dungeon_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/dungeon_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/view_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player_sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/player_sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +166,7 @@
       <workItem from="1678826623068" duration="29048000" />
       <workItem from="1678933385808" duration="132000" />
       <workItem from="1679017168724" duration="15112000" />
-      <workItem from="1679063638373" duration="5043000" />
+      <workItem from="1679063638373" duration="7805000" />
     </task>
     <servers />
   </component>
@@ -196,7 +196,7 @@
     <SUITE FILE_PATH="coverage/src$game_entry_point.coverage" NAME="game_entry_point Coverage Results" MODIFIED="1676745567104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$game_2d.coverage" NAME="game_2d Coverage Results" MODIFIED="1677342058364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$controller_2d.coverage" NAME="controller_2d Coverage Results" MODIFIED="1678331628732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1679068693974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1679071511895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$controller.coverage" NAME="controller Coverage Results" MODIFIED="1676171553866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$ui_overlay_factory.coverage" NAME="ui_overlay_factory Coverage Results" MODIFIED="1678603783100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/src$settings.coverage" NAME="settings Coverage Results" MODIFIED="1678170339193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

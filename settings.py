@@ -60,12 +60,12 @@ class Settings:
         'pillar_i': 'sprites/pillar_i_50x50.png',
         'pillar_p': 'sprites/pillar_p_50x50.png',
         'health_potion': 'sprites/potion_health_25x25.png',
-        'priestess': 'sprites/warrior_sp_1.png',
-        'thief': 'sprites/warrior_sp_1.png',
-        'warrior': 'sprites/warrior_sp_1.png',
-        'gremlin': 'sprites/warrior_sp_1.png',
-        'ogre': 'sprites/warrior_sp_1.png',
-        'skeleton': 'sprites/warrior_sp_1.png',
+        'priestess': 'sprites/priestess_v3_40.png',
+        'thief': 'sprites/thief_v3_40.png',
+        'warrior': 'sprites/warrior_v3_40.png',
+        'gremlin': 'sprites/gremlin_v3_40.png',
+        'ogre': 'sprites/ogre_v3_40.png',
+        'skeleton': 'sprites/skeleton_v3_40.png',
     }
 
     SPRITE_BRICK_PATH = 'sprites/brick_brown_50x50_v3.png'

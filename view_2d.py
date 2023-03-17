@@ -62,7 +62,7 @@ class View2D(View):
 
         if model.battle:
             self.load_battle(model.player, model.opponent)
-            self.draw_battle(model.player)
+            self.draw_battle(model.player, model.opponent)
             return
 
         if pygame.mouse.get_visible():
@@ -250,9 +250,10 @@ class View2D(View):
         hud_ui.add_hud_ui_layer('hud/use_health_potion_0.25x.png', (320, 430))
         self.__menus['hud'] = hud_ui
 
-    def draw_battle(self, player):
+    def draw_battle(self, player, opponent):
         self.__menus['battle'].draw(self)
         self.draw_hud(player)
+        self.draw_monster_health(opponent)
         pygame.display.update()
 
     def draw_battle_message(self, message_type):
@@ -299,6 +300,16 @@ class View2D(View):
                          Settings.BATTLE_MSG_RECT, 5, 10)
         pygame.draw.rect(self.screen, (255, 255, 255),
                          Settings.BATTLE_MSG_RECT, 2, 10)
+
+    def draw_monster_health(self, opponent):
+        self.__screen.blit(pygame.image.load('hud/hud_health_0.25x.png'), (455, 312))
+        pygame.draw.rect(self.__screen, (0, 250, 0),
+                         (530, 310, opponent.hp * 0.75, 15))
+
+        health_str = str(opponent.hp)
+        for i, letter in enumerate(health_str):
+            self.__screen.blit(pygame.image.load(Settings.HUD_LETTERS[letter]),
+                             (530 + (i * 41), 340))
 
     def draw_game_quit(self):
         self.draw_message_box()

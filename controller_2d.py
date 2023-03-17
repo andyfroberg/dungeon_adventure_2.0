@@ -40,6 +40,9 @@ class Controller2D:
 
                 self.__mouse_clicked = False  # Reset to avoid multiple clicks
 
+                if self.__model.battle:
+                    self.battle(event)
+
                 self.handle_menu_events(event)
 
             # Check if player is still alive
@@ -278,44 +281,44 @@ class Controller2D:
             if event.key == pygame.K_p:
                 self.__model.player.use_health_potion()
 
-        # Should proably move to battle() method or even a Battle class.
-        if self.__model.battle:
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                for button in self.__view.menus['battle'].buttons:
-                    bounding_rect = pygame.Rect(button.rect)
-                    if bounding_rect.collidepoint(pygame.mouse.get_pos()):
-                        attack_result = None
-                        if button.name == 'attack':
-                            attack_result = self.__model.player.hero.attack(self.__model.opponent)
-                        elif button.name == 'crushing':
-                            attack_result = self.__model.player.hero.special(self.__model.opponent)
-                        elif button.name == 'heal':
-                            attack_result = self.__model.player.hero.special(self.__model.opponent)
-                        elif button.name == 'surprise':
-                            attack_result = self.__model.player.hero.special(self.__model.opponent)
-
-                        self.__view.draw_battle_message(attack_result[1])
-
-                        # If opponent dead -> end battle & remove moster from board
-                        if self.__model.opponent.hp <= 0:
-                            self.__view.draw_battle_message('battle_won')
-                            self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
-                            self.__model.battle = False
-                            return
-
-                        # Give the monster a chance to heal after a succesful
-                        # hero attack. (Note that the Priestess's special
-                        # ability (heal) will not cause the monster to try to
-                        # heal as it does not decrease a monster's hit points.
-                        if not attack_result[0] or attack_result[1] == 'heal_failed':
-                            pass
-                        else:
-                            self.__view.draw_battle_message(self.__model.opponent.heal()[1])
-
-                        self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player.hero)[1])
-
-                        if self.__model.player.hero.hp < 0:
-                            self.__model.player.hero.hp = 0
+        # # Should proably move to battle() method or even a Battle class.
+        # if self.__model.battle:
+        #     if event.type == pygame.MOUSEBUTTONDOWN:
+        #         for button in self.__view.menus['battle'].buttons:
+        #             bounding_rect = pygame.Rect(button.rect)
+        #             if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+        #                 attack_result = None
+        #                 if button.name == 'attack':
+        #                     attack_result = self.__model.player.hero.attack(self.__model.opponent)
+        #                 elif button.name == 'crushing':
+        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
+        #                 elif button.name == 'heal':
+        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
+        #                 elif button.name == 'surprise':
+        #                     attack_result = self.__model.player.hero.special(self.__model.opponent)
+        #
+        #                 self.__view.draw_battle_message(attack_result[1])
+        #
+        #                 # If opponent dead -> end battle & remove moster from board
+        #                 if self.__model.opponent.hp <= 0:
+        #                     self.__view.draw_battle_message('battle_won')
+        #                     self.__view.dungeon_character_sprites.remove(self.__current_battle_dc)
+        #                     self.__model.battle = False
+        #                     return
+        #
+        #                 # Give the monster a chance to heal after a succesful
+        #                 # hero attack. (Note that the Priestess's special
+        #                 # ability (heal) will not cause the monster to try to
+        #                 # heal as it does not decrease a monster's hit points.
+        #                 if not attack_result[0] or attack_result[1] == 'heal_failed':
+        #                     pass
+        #                 else:
+        #                     self.__view.draw_battle_message(self.__model.opponent.heal()[1])
+        #
+        #                 self.__view.draw_battle_message(self.__model.opponent.attack(self.__model.player.hero)[1])
+        #
+        #                 if self.__model.player.hero.hp < 0:
+        #                     self.__model.player.hero.hp = 0
 
 
 
@@ -337,6 +340,56 @@ class Controller2D:
                             self.__view.draw_game_quit()
                             pygame.quit()
                             sys.exit()
+
+
+    def battle(self, event):
+        # self.__view.draw_monster_health(self.__model.opponent)
+        # Should proably move to battle() method or even a Battle class.
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for button in self.__view.menus['battle'].buttons:
+                bounding_rect = pygame.Rect(button.rect)
+                if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                    attack_result = None
+                    if button.name == 'attack':
+                        attack_result = self.__model.player.hero.attack(
+                            self.__model.opponent)
+                    elif button.name == 'crushing':
+                        attack_result = self.__model.player.hero.special(
+                            self.__model.opponent)
+                    elif button.name == 'heal':
+                        attack_result = self.__model.player.hero.special(
+                            self.__model.opponent)
+                    elif button.name == 'surprise':
+                        attack_result = self.__model.player.hero.special(
+                            self.__model.opponent)
+
+                    self.__view.draw_battle_message(attack_result[1])
+
+                    # If opponent dead -> end battle & remove moster from board
+                    if self.__model.opponent.hp <= 0:
+                        self.__view.draw_battle_message('battle_won')
+                        self.__view.dungeon_character_sprites.remove(
+                            self.__current_battle_dc)
+                        self.__model.battle = False
+                        return
+
+                    # Give the monster a chance to heal after a succesful
+                    # hero attack. (Note that the Priestess's special
+                    # ability (heal) will not cause the monster to try to
+                    # heal as it does not decrease a monster's hit points.
+                    if not attack_result[0] or attack_result[
+                        1] == 'heal_failed':
+                        pass
+                    else:
+                        self.__view.draw_battle_message(
+                            self.__model.opponent.heal()[1])
+
+                    self.__view.draw_battle_message(
+                        self.__model.opponent.attack(
+                            self.__model.player.hero)[1])
+
+                    if self.__model.player.hero.hp < 0:
+                        self.__model.player.hero.hp = 0
 
 
     def check_item_collision(self):

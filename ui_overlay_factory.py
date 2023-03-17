@@ -87,7 +87,7 @@ class UIOverlayFactory:
     def create_battle_menu(player, opponent):
         attack_btn = Button('attack', 'battle/attack.png', 245, 230, 151, 31)
         battle_ui_buttons = [attack_btn]
-        custom_caption = f'Battling {opponent.name} - Health: {opponent.hp}!'
+        custom_caption = f'Defeat the evil monster {opponent.name} to survive!'
         battle_ui = BattleUI('Battle Menu', custom_caption, Settings.BG_BLACK,
                              [('battle/battle_bg_brick.png', Settings.WINDOW_TOP_LEFT)],
                              battle_ui_buttons, player, opponent)

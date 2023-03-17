@@ -43,6 +43,10 @@ class View2D(View):
             self.draw_game_over()
             return
 
+        if model.win:
+            self.draw_win_menu()
+            return
+
         if model.start_menu:
             self.draw_start_menu()
             return
@@ -105,11 +109,11 @@ class View2D(View):
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.GATE, [self.world_sprites])
-            elif self.room_ui[(row, col)] == Settings.EXIT:
-                WorldSprite(Settings.SPRITE_PATHS['exit'],
-                            (row * Settings.PIXEL_SCALE,
-                             col * Settings.PIXEL_SCALE),
-                            Settings.EXIT, [self.world_sprites])
+            # elif self.room_ui[(row, col)] == Settings.EXIT:
+            #     WorldSprite(Settings.SPRITE_PATHS['exit'],
+            #                 (row * Settings.PIXEL_SCALE,
+            #                  col * Settings.PIXEL_SCALE),
+            #                 Settings.EXIT, [self.world_sprites])
             elif self.room_ui[(row, col)] == Settings.DOOR:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
@@ -119,6 +123,14 @@ class View2D(View):
                            (row * Settings.PIXEL_SCALE,
                             col * Settings.PIXEL_SCALE),
                            Settings.DOOR, [self.door_sprites])
+
+            ### Adding this block to test exit functionality ###
+            elif self.room_ui[(row, col)] == Settings.EXIT:
+                WorldSprite(Settings.SPRITE_PATHS['exit'],
+                            (row * Settings.PIXEL_SCALE,
+                             col * Settings.PIXEL_SCALE),
+                            Settings.EXIT, [self.world_sprites])
+            ### Adding this block to test exit functionality ###
 
             # Item sprites
             elif self.room_ui[(row, col)] == Settings.PILLAR_A:
@@ -209,6 +221,8 @@ class View2D(View):
         # Game over menu
         self.__menus['gameover'] = UIOverlayFactory.create_game_over_menu()
 
+        self.__menus['win'] = UIOverlayFactory.create_win_menu()
+
         # Load HUD
         self.load_hud()
 
@@ -233,9 +247,8 @@ class View2D(View):
         pygame.display.update()
 
     def draw_battle_message(self, message_type):
-        pygame.draw.rect(self.screen, (0, 0, 60), Settings.BATTLE_MSG_RECT, 0, 10)
-        pygame.draw.rect(self.screen, (180, 180, 180), Settings.BATTLE_MSG_RECT, 5, 10)
-        pygame.draw.rect(self.screen, (255, 255, 255), Settings.BATTLE_MSG_RECT, 2, 10)
+        self.draw_message_box()
+
         if message_type == 'attack_success':
             self.screen.blit(pygame.image.load(Settings.ATTACK_SUCCESS_PATH), Settings.BATTLE_MSG_RECT)
         elif message_type == 'attack_failed':
@@ -270,6 +283,20 @@ class View2D(View):
         pygame.display.update()
         pygame.time.wait(3000)
 
+    def draw_message_box(self):
+        pygame.draw.rect(self.screen, (0, 0, 60), Settings.BATTLE_MSG_RECT, 0,
+                         10)
+        pygame.draw.rect(self.screen, (180, 180, 180),
+                         Settings.BATTLE_MSG_RECT, 5, 10)
+        pygame.draw.rect(self.screen, (255, 255, 255),
+                         Settings.BATTLE_MSG_RECT, 2, 10)
+
+    def draw_game_quit(self):
+        self.draw_message_box()
+        self.screen.blit(pygame.image.load(Settings.THANKS_FOR_PLAYING), Settings.BATTLE_MSG_RECT)
+        pygame.display.update()
+        pygame.time.wait(3000)
+
     def draw_main_menu(self):
         self.__menus['main'].draw(self)
 
@@ -283,6 +310,9 @@ class View2D(View):
         # self.screen.blit(pygame.image.load(Settings.GAME_OVER_PATH), Settings.WINDOW_TOP_LEFT)
         # pygame.time.wait(3000)
         self.__menus['gameover'].draw(self)
+
+    def draw_win_menu(self):
+        self.__menus['win'].draw(self)
 
     def draw_frame(self, dungeon, player):
         pygame.display.set_caption('Dungeon Escape')

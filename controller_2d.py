@@ -108,6 +108,11 @@ class Controller2D:
         # if dungeon.current_room.tiles[player_tile] == Settings.DOOR:
         #     self.pass_through_door('east', dungeon)
 
+        if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.EXIT \
+                and player.inv['pillar_a'] == 1 and player.inv['pillar_e'] == 1 \
+                and player.inv['pillar_i'] == 1 and player.inv['pillar_p'] == 1:
+            self.win_game()
+
         if dx > 0:  # Moving east
             if dungeon.current_room.tiles[(int(player.x), int(player.y))] == Settings.DOOR:  # AND no door north AND no door south
                 self.pass_through_door('east', dungeon)
@@ -196,6 +201,20 @@ class Controller2D:
         self.__view.load_room(dungeon.current_room, self.__model.player)
 
     def handle_menu_events(self, event):
+
+        if self.__model.win:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in self.__view.menus['win'].buttons:
+                    bounding_rect = pygame.Rect(button.rect)
+                    if bounding_rect.collidepoint(pygame.mouse.get_pos()):
+                        if button.name == 'main':
+                            self.__model.win = False
+                            self.__model.main_menu = True
+                        elif button.name == 'quit':
+                            self.__view.draw_game_quit()
+                            pygame.quit()
+                            sys.exit()
+
         if self.__model.main_menu:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in self.__view.menus['main'].buttons:
@@ -203,7 +222,7 @@ class Controller2D:
                     if bounding_rect.collidepoint(pygame.mouse.get_pos()):
                         if button.name == 'new game':
                             self.__model.start_menu = True
-                            self.model.main_menu = False
+                            self.__model.main_menu = False
                         elif button.name == 'load game':
                             pass  # load saved game
                         elif button.name == 'options':
@@ -326,6 +345,10 @@ class Controller2D:
                     self.__model.opponent = self.get_battle_opponent(dc.character_type)
                     self.__model.battle = True
                     self.__current_battle_dc = dc
+
+
+    def win_game(self):
+        self.__model.win = True
 
 
     def load_view2d_ui(self):

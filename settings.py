@@ -96,6 +96,7 @@ class Settings:
     CHOOSE_PRIESTESS_PATH = 'menu/choose_priestess.png'
     CHOOSE_THIEF_PATH = 'menu/choose_thief.png'
     CHOOSE_WARRIOR_PATH = 'menu/choose_warrior.png'
+    THANKS_FOR_PLAYING = 'menu/thanks_for_playing.png'
 
     # Battle Overlay Text Paths
     ATTACK_SUCCESS_PATH = 'battle/attack_success.png'

@@ -101,7 +101,6 @@ class UIOverlayFactory:
         else:
             raise ValueError('The opponent does not have a valid Monster type.')
 
-
         if isinstance(player.hero, Priestess):
             battle_ui.add_battle_ui_layer('battle/battle_priestess.png', Settings.WINDOW_TOP_LEFT)
             battle_ui.add_button(Button('heal', 'battle/heal.png', 275, 300, 98, 31))
@@ -114,9 +113,21 @@ class UIOverlayFactory:
         else:
             raise ValueError('The player does not have a valid Hero type.')
 
-
-
         return battle_ui
+
+    @staticmethod
+    def create_win_menu():
+        win_main_menu_btn = Button('main', 'menu/win_menu_main_menu.png', 225, 250,
+                                     247, 34)
+        win_quit_btn = Button('quit', 'menu/win_menu_quit.png', 295, 320,
+                                   97, 38)
+        win_menu_buttons = [win_main_menu_btn, win_quit_btn]
+        win_menu = MenuUI('Win Menu', 'You Escaped!', (10, 10, 10),
+                          [('menu/win_menu.png', Settings.WINDOW_TOP_LEFT)],
+                          win_menu_buttons)
+
+        return win_menu
+
 
     @staticmethod
     def create_hud_ui(player, dungeon):

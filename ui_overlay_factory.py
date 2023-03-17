@@ -1,9 +1,7 @@
-from ui_overlay import UIOverlay
 from menu_ui import MenuUI
 from battle_ui import BattleUI
 from button  import Button
 from settings import Settings
-from dungeon_character_factory import DungeonCharacterFactory
 from warrior import Warrior
 from thief import Thief
 from priestess import Priestess
@@ -20,8 +18,8 @@ class UIOverlayFactory:
                                    50, 200, 242, 34)
         main_load_game_btn = Button('load game', 'menu/load_game_v2_0.75x.png',
                                     50, 250, 242, 34)
-        main_options_btn = Button('options', 'menu/options_v1_0.75x.png', 50,
-                                  300, 242, 34)
+        main_options_btn = Button('quit', 'menu/main_menu_quit.png',
+                                  50, 305, 242, 34)
         main_menu_buttons = [main_new_game_btn, main_load_game_btn,
                              main_options_btn]
         main_menu = MenuUI('Main Menu', 'Dungeon Escape - Main Menu',
@@ -48,10 +46,10 @@ class UIOverlayFactory:
 
     @staticmethod
     def create_difficulty_menu():
-        easy_btn = Button('easy', Settings.MODE_EASY, 390, 150, 348, 120)
-        normal_btn = Button('normal', Settings.MODE_NORMAL, 390, 250, 348, 120)
-        # hard_btn = Button('hard', Settings.MODE_HARD, 390, 350, 348, 120)
-        difficulty_buttons = [easy_btn, normal_btn]
+        easy_btn = Button('easy', Settings.MODE_EASY, 30, 50, 164, 30)
+        normal_btn = Button('normal', Settings.MODE_NORMAL, 30, 120, 164, 30)
+        hard_btn = Button('hard', Settings.MODE_HARD, 30, 190, 164, 30)
+        difficulty_buttons = [easy_btn, normal_btn, hard_btn]
         difficulty_menu = MenuUI('Difficulty Menu', 'Choose a Difficulty Level',
                             (10, 10, 10),
                             [(Settings.DIFFICULTY_MENU_PATH,
@@ -66,15 +64,15 @@ class UIOverlayFactory:
         pause_continue_btn = Button('continue', 'menu/continue.png', 50, 50,
                                     323, 46)
         pause_save_btn = Button('save', 'menu/save_game.png', 50, 100, 323, 46)
-        pause_load_btn = Button('options', 'menu/load_game_v1.png', 50, 150,
+        pause_load_btn = Button('load', 'menu/load_game_v1.png', 50, 150,
                                 323, 46)
-        pause_options_btn = Button('options', 'menu/options_v1.png', 50, 200,
+        pause_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 200,
                                    323, 46)
-        pause_main_menu_btn = Button('main', 'menu/main_menu.png', 50, 250,
+        pause_quit_btn = Button('quit', 'menu/quit.png', 50, 250,
                                      323, 46)
         pause_menu_buttons = [pause_continue_btn, pause_save_btn,
-                              pause_load_btn, pause_options_btn,
-                              pause_main_menu_btn]
+                              pause_load_btn, pause_main_menu_btn,
+                              pause_quit_btn]
         pause_menu = MenuUI('Pause Menu', 'Dungeon Escape - Paused',
                             (10, 10, 10), [('menu/main_menu_v1.png',
                             Settings.WINDOW_TOP_LEFT)], pause_menu_buttons)
@@ -142,7 +140,6 @@ class UIOverlayFactory:
                           win_menu_buttons)
 
         return win_menu
-
 
     @staticmethod
     def create_hud_ui(player, dungeon):

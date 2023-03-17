@@ -1,30 +1,24 @@
 import pygame
 from dungeon import Dungeon
 from dungeon_factory import DungeonFactory
-from settings import Settings
 from dungeon_character import DungeonCharacter
 from dungeon_character_factory import DungeonCharacterFactory
-# from hero import Hero
-from warrior import Warrior
-from priestess import Priestess
-from thief import Thief
-from ogre import Ogre ### DELETE LATER - for testing only
 from player import Player
 
 class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = DungeonFactory.create_dungeon_easy()
-        self.__player = Player(DungeonCharacterFactory.create_thief('Andy'))
+        self.__player = Player(DungeonCharacterFactory.create_thief('PlayerName'))
         self.__clock = pygame.time.Clock()
-        self.__main_menu = True  # Should these be moved to controller?
+        self.__main_menu = True
         self.__start_menu = False
         self.__difficulty_menu = False
-        self.__pause_menu = False  # Should these be moved to controller?
-        self.__options_menu = False  # Should these be moved to controller?
+        self.__pause_menu = False
+        self.__options_menu = False
         self.__gameover = False
         self.__win = False
-        self.__battle = False  # Should these be moved to controller? Battle class?
+        self.__battle = False
         self.__opponent = None
 
     def register_view(self, view):
@@ -126,8 +120,6 @@ class Model:
     def win(self, boolean):
         self.__win = boolean
 
-
-
     @property
     def opponent(self):
         return self.__opponent
@@ -172,55 +164,3 @@ class Model:
         :return: None
         """
         self.__dungeon = dungeon
-
-    @property
-    def quit(self) -> bool:
-        """
-        Returns if the player has quit the game.
-        :return: bool
-        """
-        return self.__quit
-
-    @quit.setter
-    def quit(self, val: bool) -> None:
-        """
-        Sets if the player has quit the game.
-        :param truth_value: bool
-        :return: None
-        """
-        self.__quit = val
-
-    @property
-    def player_won(self) -> bool:
-        """
-        Returns if the player has won the game.
-        :return: bool
-        """
-        return self.__player_has_won
-
-    @player_won.setter
-    def player_won(self, val: bool) -> None:
-        """
-        Sets if the player has won the game.
-        :param truth_value: bool
-        :return: None
-        """
-        self.__player_has_won = val
-
-    @property
-    def player_dead(self) -> bool:
-        """
-        Returns if the player has died.
-        :return: bool
-        """
-        return self.__player_is_dead
-
-    @player_dead.setter
-    def player_dead(self, val: bool) -> None:
-        """
-        Sets if the player has died.
-        :param truth_value: bool
-        :return: None
-        """
-        self.__player_is_dead = val
-

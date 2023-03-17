@@ -22,7 +22,6 @@ class Dungeon:
         self.__current_room = Room(room)
         self.__current_room_size = self.__current_room.size
 
-
     def update(self):
         pass
 

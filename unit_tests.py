@@ -7,6 +7,9 @@ from gremlin import Gremlin
 from model import Model
 from dungeon_character_factory import DungeonCharacterFactory
 from player import Player
+from controller_2d import Controller2D
+from view import View
+
 
 class DungeonTests(unittest.TestCase):
     """This class tests the main functionality of the DrawingProgram
@@ -443,7 +446,6 @@ class DungeonTests(unittest.TestCase):
     def test_player_setter(self):
         """
 
-        :return:
         """
         model = Model()
         player = Player()
@@ -455,6 +457,14 @@ class DungeonTests(unittest.TestCase):
         self.model.player_name = name
         self.assertEqual(self.model.player_name, name)
 
+    def test_player_name(self):
+        """
+
+        """
+        model = Model()
+        model.player_name = "Player 1"
+        self.assertEqual(model.player_name, "Player 1")
+
 
     def test_register_view(self):
         self.model.register_view(self.view)
@@ -464,6 +474,79 @@ class DungeonTests(unittest.TestCase):
         model = Model()
         with self.assertRaises(ValueError):
             self.model.opponent = "invalid_opponent"
+
+    def test_dungeon_property(self):
+        dungeon = Dungeon()
+        game = DungeonAdventure()
+        game.dungeon = dungeon
+        self.assertEqual(game.dungeon, dungeon)
+
+    def test_model_property(self):
+
+        model = Model()
+        self.__model = model
+        self.assertEqual(self.__model, model)
+
+    def test_get_player_inventory(self):
+        """
+        Test get_player_inventory method
+        """
+        expected_inventory = {'sword': 1, 'shield': 1}
+        self.__player_inventory = expected_inventory
+        self.assertEqual(self.get_player_inventory(), expected_inventory)
+
+    def test_main_menu_property(self):
+        """
+        Test main_menu property getter and setter
+        """
+        self.main_menu = True
+        self.assertTrue(self.main_menu)
+        self.main_menu = False
+        self.assertFalse(self.main_menu)
+
+    def test_start_menu_property(self):
+        """
+        Test start_menu property getter and setter
+        """
+        self.start_menu = True
+        self.assertTrue(self.start_menu)
+        self.start_menu = False
+        self.assertFalse(self.start_menu)
+
+    def test_pause_menu_property(self):
+        """
+        Test pause_menu property getter and setter
+        """
+        self.pause_menu = True
+        self.assertTrue(self.pause_menu)
+        self.pause_menu = False
+        self.assertFalse(self.pause_menu)
+
+    ########################################
+    # Tests for View
+    ########################################
+
+    def test_controller2D_init(self):
+        self.assertIsNotNone(self.controller)
+        self.assertIsInstance(self.controller, Controller2D)
+        self.assertIsInstance(self.controller._Controller2D__model, Model)
+        self.assertIsNone(self.controller._Controller2D__view)
+        self.assertTrue(self.controller._Controller2D__running)
+        self.assertFalse(self.controller._Controller2D__mouse_clicked)
+        self.assertIsNone(self.controller._Controller2D__current_battle_dc)
+        self.assertDictEqual(self.controller._Controller2D__display_once, {'get_to_exit': 0})
+
+    def test_add_view(self):
+        view = 'test_view'
+        self.controller.add_view(view)
+        self.assertEqual(self.controller._Controller2D__view, view)
+
+
+
+
+
+
+
 
 
 

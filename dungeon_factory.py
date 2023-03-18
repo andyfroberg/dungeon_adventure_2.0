@@ -12,7 +12,7 @@ class DungeonFactory:
     # top left (easy)
     ROOM_0_0_ENTRY_EASY = [
         ['B', 'B', 'G', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-        ['B', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'B'],
+        ['B', 'F', 'F', 'F', 'F', 'F', 'F', 'o', 'F', 'F', 'F', 'F', 'F', 'B'],
         ['B', 'F', 'X', 'X', 'R', 'F', 'F', 'F', 'H', 'I', 'F', 'H', 'F', 'B'],
         ['B', 'F', 'X', 'X', 'A', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'D'],
         ['B', 'F', 'F', 'F', 'R', 'F', 'E', 'F', 'F', 'F', 'F', 'F', 'F', 'B'],

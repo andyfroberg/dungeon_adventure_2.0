@@ -17,12 +17,12 @@ class Controller2D:
         self.__running = True
         self.__mouse_clicked = False
         self.__current_battle_dc = None  # Workaround - global field not optimal
-        self.__display_once ={
+        self.__display_once = {
             'get_to_exit': 0,
         }
 
     def main_loop(self):
-        self.load_view2d_ui()  # Might not need
+        self.load_view2d_room()
 
         while self.__running:
             # 1) Get input from the user
@@ -234,9 +234,6 @@ class Controller2D:
                     self.__model.difficulty_menu = True
 
     def handle_difficulty_menu_event(self, event):
-        count = 0
-        print(f'made it to diff menu: {count}')
-        count += 1
         if event.type == pygame.MOUSEBUTTONDOWN:
             for button in self.__view.menus['difficulty'].buttons:
                 bounding_rect = pygame.Rect(button.rect)
@@ -248,7 +245,7 @@ class Controller2D:
                     elif button.name == 'hard':
                         self.__model.dungeon = DungeonFactory.create_dungeon_hard()
 
-                    self.load_view2d_ui()
+                    self.load_view2d_room()
                     self.__model.difficulty_menu = False
                     self.__model.start_menu = False
 
@@ -382,15 +379,12 @@ class Controller2D:
     def win_game(self):
         self.__model.win = True
 
-    def load_view2d_ui(self):
+    def load_view2d_room(self):
         # load dungeon
         self.__view.load_room(self.__model.dungeon.current_room, self.__model.player)
 
-        # load room
-
-        # load player
-
-    def get_battle_opponent(self, character_type):
+    @staticmethod
+    def get_battle_opponent(character_type):
         if character_type == 'gremlin':
             return DungeonCharacterFactory.create_gremlin()
         elif character_type == 'ogre':
@@ -415,6 +409,3 @@ class Controller2D:
 
 if __name__ == "__main__":
     pass
-    # game = Controller2D()
-    # view = View2D(game.model)
-    # game.run()

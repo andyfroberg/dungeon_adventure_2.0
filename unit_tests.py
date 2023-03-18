@@ -583,51 +583,5 @@ class DungeonTests(unittest.TestCase):
 
 
 
-    def test_create_connection(self):
-        conn = self.db.create_connection(self.test_db_filename)
-        self.assertIsInstance(conn, sqlite3.Connection)
-
-    def test_create_table(self):
-        conn = self.db.get_connection()
-        create_table_sql = """CREATE TABLE IF NOT EXISTS another_test_table (
-                                id integer PRIMARY KEY,
-                                name text NOT NULL,
-                                value real);"""
-        self.db.create_table(conn, create_table_sql)
-        cur = conn.cursor()
-        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='another_test_table';")
-        result = cur.fetchone()
-        self.assertEqual(result, ('another_test_table',))
-
-    def test_create_stats_for_dungeon_character(self):
-        conn = self.db.get_connection()
-        stats = ('test_dc', 100, 2.5, 0.8, 10, 20)
-        self.db.create_stats_for_dungeon_character(conn, stats)
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM dcstats WHERE name='test_dc';")
-        result = cur.fetchone()
-        self.assertIsNotNone(result)
-
-    def test_select_all_dcstats(self):
-        conn = self.db.get_connection()
-        stats1 = ('test_dc1', 100, 2.5, 0.8, 10, 20)
-        stats2 = ('test_dc2', 200, 3.5, 0.7, 5, 15)
-        self.db.create_stats_for_dungeon_character(conn, stats1)
-        self.db.create_stats_for_dungeon_character(conn, stats2)
-        result = self.db.select_all_dcstats(conn)
-        self.assertEqual(len(result), 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()

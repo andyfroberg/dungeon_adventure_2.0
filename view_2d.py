@@ -57,7 +57,6 @@ class View2D(View):
             return
 
         if model.main_menu:
-            # self.load_menus()
             self.draw_main_menu()
             return
 
@@ -114,11 +113,6 @@ class View2D(View):
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.GATE, [self.world_sprites])
-            # elif self.room_ui[(row, col)] == Settings.EXIT:
-            #     WorldSprite(Settings.SPRITE_PATHS['exit'],
-            #                 (row * Settings.PIXEL_SCALE,
-            #                  col * Settings.PIXEL_SCALE),
-            #                 Settings.EXIT, [self.world_sprites])
             elif self.room_ui[(row, col)] == Settings.DOOR:
                 WorldSprite(Settings.SPRITE_PATHS['floor'],
                             (row * Settings.PIXEL_SCALE,
@@ -128,14 +122,11 @@ class View2D(View):
                            (row * Settings.PIXEL_SCALE,
                             col * Settings.PIXEL_SCALE),
                            Settings.DOOR, [self.door_sprites])
-
-            ### Adding this block to test exit functionality ###
             elif self.room_ui[(row, col)] == Settings.EXIT:
                 WorldSprite(Settings.SPRITE_PATHS['exit'],
                             (row * Settings.PIXEL_SCALE,
                              col * Settings.PIXEL_SCALE),
                             Settings.EXIT, [self.world_sprites])
-            ### Adding this block to test exit functionality ###
 
             # Item sprites
             elif self.room_ui[(row, col)] == Settings.PILLAR_A:
@@ -217,35 +208,20 @@ class View2D(View):
                             col * Settings.PIXEL_SCALE),
                            'skeleton', [self.__dungeon_character_sprites])
     def load_menus(self):
-        # Build main menu
         self.__menus['main'] = UIOverlayFactory.create_main_menu()
-
-        # Build character selection menu
         self.__menus['start'] = UIOverlayFactory.create_start_menu()
-
-        # Build game difficulty menu
         self.__menus['difficulty'] = UIOverlayFactory.create_difficulty_menu()
-
-        # Build options menu
-
-        # Build load game menu
-
-        # Build pause menu
         self.__menus['pause'] = UIOverlayFactory.create_pause_menu()
-
-        # Game over menu
         self.__menus['gameover'] = UIOverlayFactory.create_game_over_menu()
-
         self.__menus['win'] = UIOverlayFactory.create_win_menu()
 
-        # Load HUD
         self.load_hud()
 
     def load_battle(self, player, opponent):
         battle_ui = UIOverlayFactory.create_battle_menu(player, opponent)
         self.__menus['battle'] = battle_ui
 
-    def load_hud(self):  # passing dungeon might not be needed // # Move creation to UIOverlayFactory?
+    def load_hud(self):
         hud_ui = HUD('HUD', '', Settings.BG_BLACK, [], [], None)
         hud_ui.add_hud_ui_layer('hud/hud_health_0.25x.png', Settings.HUD_POS_HEALTH)
         hud_ui.add_hud_ui_layer('hud/pillar_a_bw_50x50.png', Settings.HUD_POS_PILLAR_A)
@@ -253,7 +229,7 @@ class View2D(View):
         hud_ui.add_hud_ui_layer('hud/pillar_i_bw_50x50.png', Settings.HUD_POS_PILLAR_I)
         hud_ui.add_hud_ui_layer('hud/pillar_p_bw_50x50.png', Settings.HUD_POS_PILLAR_P)
         hud_ui.add_hud_ui_layer('sprites/potion_health_50x50.png', Settings.HUD_POS_POTION_HEALTH)
-        hud_ui.add_hud_ui_layer('hud/use_health_potion_0.25x.png', (320, 430))
+        hud_ui.add_hud_ui_layer('hud/use_health_potion_0.25x.png', (340, 430))
         self.__menus['hud'] = hud_ui
 
     def draw_battle(self, player, opponent):

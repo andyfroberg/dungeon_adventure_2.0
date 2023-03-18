@@ -30,7 +30,7 @@ class Settings:
     OPEN_FLOOR = 'F'
     BRICK_WALL = 'B'
     GATE = 'G'
-    DOOR = 'D'  # No longer needed? Check codebase for 'Settings.DOOR' occurrences
+    DOOR = 'D'
     PIT = 'X'
     ROCK = 'R'
     PRIESTESS = 'p'
@@ -143,11 +143,11 @@ class Settings:
     # HUD
     HUD_RECT = (0, 400, 700, 100)
     HUD_POS_HEALTH = (10, 420)
-    HUD_POS_PILLAR_A = (450, 430)
-    HUD_POS_PILLAR_E = (500, 430)
-    HUD_POS_PILLAR_I = (550, 430)
-    HUD_POS_PILLAR_P = (600, 430)
-    HUD_POS_POTION_HEALTH = (220, 430)
+    HUD_POS_PILLAR_A = (460, 430)
+    HUD_POS_PILLAR_E = (510, 430)
+    HUD_POS_PILLAR_I = (560, 430)
+    HUD_POS_PILLAR_P = (610, 430)
+    HUD_POS_POTION_HEALTH = (224, 427)
 
     # Battle HUD
     BATTLE_HUD_RECT = (200, 190, 250, 200)

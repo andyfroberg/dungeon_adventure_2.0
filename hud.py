@@ -10,7 +10,7 @@ class HUD(UIOverlay):
         super().__init__(name, caption, background_color, background_layers,
                          buttons)
         self.__player = player
-        self.__hud_ui_layers = []  # is this needed?
+        self.__hud_ui_layers = []
 
     def draw(self, view, player):
         pygame.mouse.set_visible(True)
@@ -35,6 +35,11 @@ class HUD(UIOverlay):
         health_str = str(player.hero.hp)
         for i, letter in enumerate(health_str):
             view.screen.blit(pygame.image.load(Settings.HUD_LETTERS[letter]), (50 + (i * 41), 445 ))
+
+        potions_str = str(player.inv['health_potion'])
+        for i, letter in enumerate(potions_str):
+            view.screen.blit(pygame.image.load(Settings.HUD_LETTERS[letter]), (272 + (i * 41), 432 ))
+
 
         # pygame.display.update(Settings.HUD_RECT)  # Drastically reduces performance. Workaround?
 

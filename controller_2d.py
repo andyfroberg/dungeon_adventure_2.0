@@ -7,6 +7,7 @@ from player import Player
 from dungeon_factory import DungeonFactory
 from player_sprite import PlayerSprite
 
+
 class Controller2D:
     def __init__(self, game):
         pygame.init()

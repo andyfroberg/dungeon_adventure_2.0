@@ -20,12 +20,6 @@ class DungeonCharacterFactory:
 
     # Heroes
     def create_priestess(self, name):
-        # hp = Settings.DC_STATS['priestess']['hp']
-        # attack_speed = Settings.DC_STATS['priestess']['attack_speed']
-        # hit_prob = Settings.DC_STATS['priestess']['hit_prob']
-        # damage_range = Settings.DC_STATS['priestess']['damage_range']
-        # block_prob = Settings.DC_STATS['priestess']['block_prob']
-
         hp = self.__rows[0][2]
         attack_speed = self.__rows[0][3]
         hit_prob = self.__rows[0][4]
@@ -36,12 +30,6 @@ class DungeonCharacterFactory:
                          block_prob)
 
     def create_thief(self, name):
-        # hp = Settings.DC_STATS['thief']['hp']
-        # attack_speed = Settings.DC_STATS['thief']['attack_speed']
-        # hit_prob = Settings.DC_STATS['thief']['hit_prob']
-        # damage_range = Settings.DC_STATS['thief']['damage_range']
-        # block_prob = Settings.DC_STATS['thief']['block_prob']
-
         hp = self.__rows[1][2]
         attack_speed = self.__rows[1][3]
         hit_prob = self.__rows[1][4]
@@ -52,12 +40,6 @@ class DungeonCharacterFactory:
                      block_prob)
 
     def create_warrior(self, name):
-        # hp = Settings.DC_STATS['warrior']['hp']
-        # attack_speed = Settings.DC_STATS['warrior']['attack_speed']
-        # hit_prob = Settings.DC_STATS['warrior']['hit_prob']
-        # damage_range = Settings.DC_STATS['warrior']['damage_range']
-        # block_prob = Settings.DC_STATS['warrior']['block_prob']
-
         hp = self.__rows[2][2]
         attack_speed = self.__rows[2][3]
         hit_prob = self.__rows[2][4]
@@ -68,14 +50,6 @@ class DungeonCharacterFactory:
                        block_prob)
 
     def create_gremlin(self):
-        # rand_name = DungeonCharacterFactory.generate_monster_name()
-        # hp = Settings.DC_STATS['gremlin']['hp']
-        # attack_speed = Settings.DC_STATS['gremlin']['attack_speed']
-        # hit_prob = Settings.DC_STATS['gremlin']['hit_prob']
-        # damage_range = Settings.DC_STATS['gremlin']['damage_range']
-        # heal_prob = Settings.DC_STATS['gremlin']['heal_prob']
-        # heal_range = Settings.DC_STATS['gremlin']['heal_range']
-
         rand_name = self.generate_monster_name()
         hp = self.__rows[3][2]
         attack_speed = self.__rows[3][3]
@@ -88,14 +62,6 @@ class DungeonCharacterFactory:
                        heal_prob, heal_range)
 
     def create_ogre(self):
-        # rand_name = DungeonCharacterFactory.generate_monster_name()
-        # hp = Settings.DC_STATS['ogre']['hp']
-        # attack_speed = Settings.DC_STATS['ogre']['attack_speed']
-        # hit_prob = Settings.DC_STATS['ogre']['hit_prob']
-        # damage_range = Settings.DC_STATS['ogre']['damage_range']
-        # heal_prob = Settings.DC_STATS['ogre']['heal_prob']
-        # heal_range = Settings.DC_STATS['ogre']['heal_range']
-
         rand_name = self.generate_monster_name()
         hp = self.__rows[4][2]
         attack_speed = self.__rows[4][3]
@@ -108,19 +74,11 @@ class DungeonCharacterFactory:
                        heal_prob, heal_range)
 
     def create_skeleton(self):
-        # rand_name = self.generate_monster_name()
-        # hp = Settings.DC_STATS['skeleton']['hp']
-        # attack_speed = Settings.DC_STATS['skeleton']['attack_speed']
-        # hit_prob = Settings.DC_STATS['skeleton']['hit_prob']
-        # damage_range = Settings.DC_STATS['skeleton']['damage_range']
-        # heal_prob = Settings.DC_STATS['skeleton']['heal_prob']
-        # heal_range = Settings.DC_STATS['skeleton']['heal_range']
-
         rand_name = self.generate_monster_name()
-        hp = self.__rows[4][2]
-        attack_speed = self.__rows[4][3]
-        hit_prob = self.__rows[4][4]
-        damage_range = (self.__rows[4][5], self.__rows[4][6])
+        hp = self.__rows[5][2]
+        attack_speed = self.__rows[5][3]
+        hit_prob = self.__rows[5][4]
+        damage_range = (self.__rows[5][5], self.__rows[5][6])
         heal_prob = Settings.DC_STATS['skeleton']['heal_prob']
         heal_range = Settings.DC_STATS['skeleton']['heal_range']
 

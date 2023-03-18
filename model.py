@@ -3,13 +3,15 @@ from dungeon import Dungeon
 from dungeon_factory import DungeonFactory
 from dungeon_character import DungeonCharacter
 from dungeon_character_factory import DungeonCharacterFactory
+from da_database import DungeonAdventureDatabase
 from player import Player
 
 class Model:
     def __init__(self):
         self.__views = []
         self.__dungeon = DungeonFactory.create_dungeon_easy()
-        self.__player = Player(DungeonCharacterFactory.create_thief('PlayerName'))
+        self.__dc_factory = DungeonCharacterFactory()
+        self.__player = Player(self.dc_factory.create_thief('PlayerName'))
         self.__clock = pygame.time.Clock()
         self.__main_menu = True
         self.__start_menu = False
@@ -130,6 +132,10 @@ class Model:
             raise ValueError('The battle opponent must be a DungeonCharacter.')
 
         self.__opponent = opponent
+
+    @property
+    def dc_factory(self):
+        return self.__dc_factory
 
     @property
     def player_name(self) -> str:

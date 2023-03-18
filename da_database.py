@@ -52,37 +52,73 @@ class DungeonAdventureDatabase:
         conn.commit()
         return cur.lastrowid
 
-    def select_all_tasks(self, conn):
+    def select_all_dcstats(self, conn):
         """
         Query all rows in the tasks table
         :param conn: the Connection object
-        :return:
+        :return: All the rows of from the dcstats table
         """
         cur = conn.cursor()
-        cur.execute("SELECT * FROM tasks")
+        cur.execute("SELECT * FROM dcstats")
 
         rows = cur.fetchall()
 
-        for row in rows:
-            print(row)
+        return rows
 
-    # def update_task(conn, task):
-    #     """
-    #     update priority, begin_date, and end date of a task
-    #     :param conn:
-    #     :param task:
-    #     :return: project id
-    #     """
-    #     sql = ''' UPDATE tasks
-    #               SET priority = ? ,
-    #                   begin_date = ? ,
-    #                   end_date = ?
-    #               WHERE id = ?'''
-    #     cur = conn.cursor()
-    #     cur.execute(sql, task)
-    #     conn.commit()
+    def create_db_with_dc_stats(self):
+        sql_create_da_stats_table = """ CREATE TABLE IF NOT EXISTS dcstats (
+                                                    id integer PRIMARY KEY,
+                                                    name text NOT NULL,
+                                                    hp integer NOT NULL,
+                                                    attack_speed integer NOT NULL,
+                                                    hit_prob real NOT NULL,
+                                                    damage_range_low integer NOT NULL,
+                                                    damage_range_high integer NOT NULL
+                                                ); """
 
-    def :
+        if self.__conn is not None:
+            self.create_table(self.__conn, sql_create_da_stats_table)
+        else:
+            raise ConnectionError('Could not connect to the database.')
+
+        priestess = ('priestess', Settings.DC_STATS['priestess']['hp'],
+                     Settings.DC_STATS['priestess']['attack_speed'],
+                     Settings.DC_STATS['priestess']['hit_prob'],
+                     Settings.DC_STATS['priestess']['damage_range'][0],
+                     Settings.DC_STATS['priestess']['damage_range'][1])
+        thief = ('thief', Settings.DC_STATS['thief']['hp'],
+                 Settings.DC_STATS['thief']['attack_speed'],
+                 Settings.DC_STATS['thief']['hit_prob'],
+                 Settings.DC_STATS['thief']['damage_range'][0],
+                 Settings.DC_STATS['thief']['damage_range'][1])
+        warrior = ('warrior', Settings.DC_STATS['warrior']['hp'],
+                   Settings.DC_STATS['warrior']['attack_speed'],
+                   Settings.DC_STATS['warrior']['hit_prob'],
+                   Settings.DC_STATS['warrior']['damage_range'][0],
+                   Settings.DC_STATS['warrior']['damage_range'][1])
+        gremlin = ('gremlin', Settings.DC_STATS['gremlin']['hp'],
+                   Settings.DC_STATS['gremlin']['attack_speed'],
+                   Settings.DC_STATS['gremlin']['hit_prob'],
+                   Settings.DC_STATS['gremlin']['damage_range'][0],
+                   Settings.DC_STATS['gremlin']['damage_range'][1])
+        ogre = ('ogre', Settings.DC_STATS['ogre']['hp'],
+                Settings.DC_STATS['ogre']['attack_speed'],
+                Settings.DC_STATS['ogre']['hit_prob'],
+                Settings.DC_STATS['ogre']['damage_range'][0],
+                Settings.DC_STATS['ogre']['damage_range'][1])
+        skeleton = ('skeleton', Settings.DC_STATS['skeleton']['hp'],
+                    Settings.DC_STATS['skeleton']['attack_speed'],
+                    Settings.DC_STATS['skeleton']['hit_prob'],
+                    Settings.DC_STATS['skeleton']['damage_range'][0],
+                    Settings.DC_STATS['skeleton']['damage_range'][1])
+
+        self.create_stats_for_dungeon_character(self.__conn, priestess)
+        self.create_stats_for_dungeon_character(self.__conn, thief)
+        self.create_stats_for_dungeon_character(self.__conn, warrior)
+        self.create_stats_for_dungeon_character(self.__conn, gremlin)
+        self.create_stats_for_dungeon_character(self.__conn, ogre)
+        self.create_stats_for_dungeon_character(self.__conn, skeleton)
+
 
     @property
     def conn(self):
@@ -93,61 +129,5 @@ class DungeonAdventureDatabase:
         self.__conn = connection
 
 
-
 if __name__ == "__main__":
-    db = DungeonAdventureDatabase('dcstats.db')
-
-    sql_create_da_stats_table = """ CREATE TABLE IF NOT EXISTS dcstats (
-                                            id integer PRIMARY KEY,
-                                            name text NOT NULL,
-                                            hp integer NOT NULL,
-                                            attack_speed integer NOT NULL,
-                                            hit_prob real NOT NULL,
-                                            damage_range_low integer NOT NULL,
-                                            damage_range_high integer NOT NULL
-                                        ); """
-
-    if db.conn is not None:
-        db.create_table(db.conn, sql_create_da_stats_table)
-    else:
-        raise ConnectionError('Could not connect to the database.')
-
-
-
-    priestess = ('priestess', Settings.DC_STATS['priestess']['hp'],
-                 Settings.DC_STATS['priestess']['attack_speed'],
-                 Settings.DC_STATS['priestess']['hit_prob'],
-                 Settings.DC_STATS['priestess']['damage_range'][0],
-                 Settings.DC_STATS['priestess']['damage_range'][1])
-    thief = ('thief', Settings.DC_STATS['thief']['hp'],
-                 Settings.DC_STATS['thief']['attack_speed'],
-                 Settings.DC_STATS['thief']['hit_prob'],
-                 Settings.DC_STATS['thief']['damage_range'][0],
-                 Settings.DC_STATS['thief']['damage_range'][1])
-    warrior = ('warrior', Settings.DC_STATS['warrior']['hp'],
-                 Settings.DC_STATS['warrior']['attack_speed'],
-                 Settings.DC_STATS['warrior']['hit_prob'],
-                 Settings.DC_STATS['warrior']['damage_range'][0],
-                 Settings.DC_STATS['warrior']['damage_range'][1])
-    gremlin = ('gremlin', Settings.DC_STATS['gremlin']['hp'],
-                 Settings.DC_STATS['gremlin']['attack_speed'],
-                 Settings.DC_STATS['gremlin']['hit_prob'],
-                 Settings.DC_STATS['gremlin']['damage_range'][0],
-                 Settings.DC_STATS['gremlin']['damage_range'][1])
-    ogre = ('ogre', Settings.DC_STATS['ogre']['hp'],
-                 Settings.DC_STATS['ogre']['attack_speed'],
-                 Settings.DC_STATS['ogre']['hit_prob'],
-                 Settings.DC_STATS['ogre']['damage_range'][0],
-                 Settings.DC_STATS['ogre']['damage_range'][1])
-    skeleton = ('skeleton', Settings.DC_STATS['skeleton']['hp'],
-                 Settings.DC_STATS['skeleton']['attack_speed'],
-                 Settings.DC_STATS['skeleton']['hit_prob'],
-                 Settings.DC_STATS['skeleton']['damage_range'][0],
-                 Settings.DC_STATS['skeleton']['damage_range'][1])
-
-    db.create_stats_for_dungeon_character(db.conn, priestess)
-    db.create_stats_for_dungeon_character(db.conn, thief)
-    db.create_stats_for_dungeon_character(db.conn, warrior)
-    db.create_stats_for_dungeon_character(db.conn, gremlin)
-    db.create_stats_for_dungeon_character(db.conn, ogre)
-    db.create_stats_for_dungeon_character(db.conn, skeleton)
+    pass

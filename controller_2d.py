@@ -4,7 +4,6 @@ from math import hypot
 from model import Model
 from settings import Settings
 from player import Player
-from dungeon_character_factory import DungeonCharacterFactory
 from dungeon_factory import DungeonFactory
 from player_sprite import PlayerSprite
 
@@ -220,13 +219,13 @@ class Controller2D:
                 if bounding_rect.collidepoint(pygame.mouse.get_pos()):
                     if button.name == 'priestess':
                         self.__model.player = Player(
-                            DungeonCharacterFactory.create_priestess('player'))
+                            self.__model.dc_factory.create_priestess('player'))
                     elif button.name == 'thief':
                         self.__model.player = Player(
-                            DungeonCharacterFactory.create_thief('player'))
+                            self.__model.dc_factory.create_thief('player'))
                     elif button.name == 'warrior':
                         self.__model.player = Player(
-                            DungeonCharacterFactory.create_warrior('player'))
+                            self.__model.dc_factory.create_warrior('player'))
 
                     self.__view.player_sprites.empty()
                     self.__view.player_sprite = PlayerSprite(
@@ -383,14 +382,14 @@ class Controller2D:
         # load dungeon
         self.__view.load_room(self.__model.dungeon.current_room, self.__model.player)
 
-    @staticmethod
-    def get_battle_opponent(character_type):
+
+    def get_battle_opponent(self, character_type):
         if character_type == 'gremlin':
-            return DungeonCharacterFactory.create_gremlin()
+            return self.__model.dc_factory.create_gremlin()
         elif character_type == 'ogre':
-            return DungeonCharacterFactory.create_ogre()
+            return self.__model.dc_factory.create_ogre()
         elif character_type == 'skeleton':
-            return DungeonCharacterFactory.create_skeleton()
+            return self.__model.dc_factory.create_skeleton()
 
 
     @property

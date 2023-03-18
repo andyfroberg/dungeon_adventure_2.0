@@ -168,3 +168,7 @@ class Model:
         """
         self.__player_is_dead = val
 
+    @player.setter
+    def player(self, value):
+        self._player = value
+

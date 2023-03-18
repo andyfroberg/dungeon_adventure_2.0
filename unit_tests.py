@@ -3,6 +3,10 @@ from room import Room
 from adventurer import Adventurer
 from dungeon import Dungeon
 from dungeon_adventure import DungeonAdventure
+from gremlin import Gremlin
+from model import Model
+from dungeon_character_factory import DungeonCharacterFactory
+from player import Player
 
 class DungeonTests(unittest.TestCase):
     """This class tests the main functionality of the DrawingProgram
@@ -366,6 +370,102 @@ class DungeonTests(unittest.TestCase):
         da = DungeonAdventure(Adventurer("A"))
         da.set_player_is_dead(True)
         self.assertEqual(da.get_player_is_dead(), True)
+
+    def test_dungeonadventure_get_player_name(self):
+        """
+        Tests the get_player_name() function
+        """
+        da = DungeonAdventure(Adventurer("A"))
+        da.get_player_name()
+        self.assertEqual(da.get_player_name(), "A")
+
+    ########################################
+    # Tests for Gremlin
+    ########################################
+    def test_Gremlin_init(self):
+        a = Gremlin("B")
+        self.assertEqual(isinstance(a, Gremlin), True)
+
+    def test_monster_stats(self):
+        self.assertEqual(self.Gremlin.get_monster_stats(), {
+            "heal_prob": 0.4,
+            "heal_range": [20, 40]
+        })
+
+    ########################################
+    # Tests for Model
+    ########################################
+
+    def test_model_init(self):
+        """
+        Tests the init method of Model
+        """
+        model = Model()
+        self.assertEqual(isinstance(model, Model), True)
+
+
+    def test_player(self):
+        """
+
+        :return:
+        """
+        model = Model()
+        player = Player()
+        model.player = player
+        self.assertEqual(model.player, player)
+
+    def test_win(self):
+        model = Model()
+        self.assertFalse(model.win)
+        model.win = True
+        self.assertTrue(model.win)
+
+    def test_gameover(self):
+        """
+
+        :return:
+        """
+        model = Model()
+        self.assertFalse(model.gameover)
+        model.gameover = True
+        self.assertTrue(model.gameover)
+
+    def test_opponent(self):
+        """
+
+        :return:
+        """
+        model = Model()
+        opponent = DungeonCharacterFactory.create_thief('Opponent')
+        model.opponent = opponent
+        self.assertEqual(model, opponent)
+
+    def test_player_setter(self):
+        """
+
+        :return:
+        """
+        model = Model()
+        player = Player()
+        model.player = player
+        assert model.player == player
+
+    def test_set_player_name(self):
+        name = "John"
+        self.model.player_name = name
+        self.assertEqual(self.model.player_name, name)
+
+
+    def test_register_view(self):
+        self.model.register_view(self.view)
+        self.assertIn(self.view, self.model._Model__views)
+
+    def test_set_invalid_opponent(self):
+        model = Model()
+        with self.assertRaises(ValueError):
+            self.model.opponent = "invalid_opponent"
+
+
 
 
 

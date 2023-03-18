@@ -1,6 +1,4 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
-<<<<<<< HEAD
-
 from dungeon import Dungeon
 from model import Model
 from view import View
@@ -76,8 +74,6 @@ class Controller(metaclass=ABCMeta):
 
 
 
-=======
-
 
 class Controller(metaclass=ABCMeta):
 
@@ -96,4 +92,3 @@ class Controller(metaclass=ABCMeta):
         :return: None
         """
         print(str(self.__dungeon.get_adventurer()))
->>>>>>> main
